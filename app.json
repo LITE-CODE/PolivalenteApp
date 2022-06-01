@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "polivalente",
+    "slug": "polivalente",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
