@@ -1,5 +1,5 @@
 import { View, Image, TextInput, Text, TouchableOpacity} from 'react-native'
-import {useNavigate} from 'react-router-dom'
+
 import React, {useState} from 'react'
 
 
@@ -16,7 +16,6 @@ export default function SignIn() {
   return (
 
     
-
 
 
 
@@ -68,6 +67,7 @@ export default function SignIn() {
 <Text >Criar conta</Text>
 </View>
 </View>
+
 
 
   )

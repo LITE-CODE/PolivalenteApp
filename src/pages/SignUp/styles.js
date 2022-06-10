@@ -79,6 +79,18 @@ export const formulario = StyleSheet.create({
       fontFamily: 'Inter-Bold',
       color: '#F7F7F8',
       padding: 2
+    }, 
+
+    dropdown:{
+      backgroundColor: 'red',
+      justifyContent: 'center',
+      borderColor: '#F8DC6D',
+      height: 30,
+      width: '50%'
+    },
+    dropdownText:{
+      fontFamily: "Inter-Medium",
+      color: "#4A504E"
     }
 
 

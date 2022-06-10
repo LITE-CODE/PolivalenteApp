@@ -1,10 +1,22 @@
 {
   "expo": {
     "name": "polivalente",
-    "slug": "polivalente",
+   
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
-  }
+    ],
+  
+    "icon": "./src/assets/imgs/logo200px.png",
+
+    "ios": {
+      "bundleIdentifier": "com.bonfire.polivalente",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.bonfire.polivalente",
+      "versionCode": 1
+    }
+   
+      }
 }
