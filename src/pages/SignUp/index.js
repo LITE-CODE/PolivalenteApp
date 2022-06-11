@@ -1,10 +1,12 @@
 import { View, Image, TextInput, Text, TouchableOpacity} from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker';
-//import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import React, {useState} from 'react'
 
 import { main, formulario, footer } from './styles.js';
 import Dashboard from '../Dashboard';
+
+
 
 
 export default function SignIn() {
@@ -20,6 +22,14 @@ export default function SignIn() {
 
 
 
+  const handleToDashboard = () => {
+  
+    return (
+      <Dashboard/>
+    )
+  
+  }
+
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -27,9 +37,9 @@ export default function SignIn() {
     {label:'1° reg 1', value:'1° reg 1'},
     {label:'1° reg 2', value:'1° reg 2'},
     {label:'1° reg 3', value:'1° reg 3'},
-    {label:'1° reg 1', value:'1° reg 1'},
-    {label:'1° reg 2', value:'1° reg 2'},
-    {label:'1° reg 3', value:'1° reg 3'},
+    {label:'2° reg 1', value:'2° reg 1'},
+    {label:'2° reg 2', value:'2° reg 2'},
+    {label:'2° reg 3', value:'2° reg 3'},
    
     
   ]
@@ -144,6 +154,7 @@ borderStyle: 'solid',
 
 <TouchableOpacity
         style={formulario.button}
+        onPress={handleToDashboard}
 
       >
         <Text style={formulario.buttonText}>ENTRAR</Text>

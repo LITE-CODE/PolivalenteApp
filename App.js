@@ -1,14 +1,16 @@
 import { StatusBar, View,Text} from 'react-native';
 import AppLoading from 'expo-app-loading';
+import { getDatabase, ref, set, onValue, get, update } from "firebase/database";
 import { useFonts } from 'expo-font';
 import React from 'react';
 
+import { connectToDatabase } from './src/services/database/connectToDatabase';
 import Routes from './src/routes';
 
 
 
 
-export default function App() {
+export default  function App() {
 
   const [fontsLoaded] = useFonts({
 
@@ -21,6 +23,12 @@ export default function App() {
   if (!fontsLoaded){
     return <AppLoading />;
   }
+
+const connectDatabase =  connectToDatabase();
+
+if (connectDatabase.status === 'unsuccessful connection'){
+  return <AppLoading />;
+}
 
   return (
 
