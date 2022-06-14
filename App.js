@@ -5,12 +5,13 @@ import { useFonts } from 'expo-font';
 import React from 'react';
 
 import { connectToDatabase } from './src/services/database/connectToDatabase';
+import { getUser } from './src/services/database/getUser'
 import Routes from './src/routes';
 
 
 
 
-export default  function App() {
+export default  function App()  {
 
   const [fontsLoaded] = useFonts({
 
@@ -29,6 +30,7 @@ const connectDatabase =  connectToDatabase();
 if (connectDatabase.status === 'unsuccessful connection'){
   return <AppLoading />;
 }
+
 
   return (
 

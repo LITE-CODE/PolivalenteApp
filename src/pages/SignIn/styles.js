@@ -51,6 +51,7 @@ export const formulario = StyleSheet.create({
 
   inputError:{
     placeholderTextColor: 'red',
+    placeholderTextColor: 'red',
     borderBottomColor: 'red',
     outlineStyle: 'none',
   },
@@ -79,6 +80,11 @@ export const formulario = StyleSheet.create({
       fontFamily: 'Inter-Bold',
       color: '#F7F7F8',
       padding: 2
+    }, 
+    errorText: {
+      fontFamily: 'Inter-Medium',
+      color: 'red',
+      fontSize: 12
     }
 
 
