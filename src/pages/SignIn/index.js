@@ -39,7 +39,7 @@ export default function SignIn() {
     setErrorPassword(false)
     const dado = await getUser({email: email, password: password});
     setDado(dado)
-    console.log(dado)
+   
 if (dado.status === 'incorrect password'){ 
 
   setErrorPassword('incorrect password')

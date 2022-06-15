@@ -91,6 +91,15 @@ export const formulario = StyleSheet.create({
     dropdownText:{
       fontFamily: "Inter-Medium",
       color: "#4A504E"
+    },
+
+    errorText: {
+      justifyContent: 'center',
+      marginTop: 2,
+      marginBottom: 2,
+      fontFamily: 'Inter-Medium',
+      color: 'red',
+      fontSize: 12
     }
 
 

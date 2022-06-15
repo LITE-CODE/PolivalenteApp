@@ -5,6 +5,6 @@ import SignIn from '../pages/SignIn';
 
 export default function Routes(){
 
-return (<SignIn></SignIn>)
+return (<SignUp></SignUp>)
 
 }
