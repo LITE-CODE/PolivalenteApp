@@ -1,10 +1,20 @@
-import { View, Text } from 'react-native'
+import { View, Text, Image } from 'react-native'
 import React from 'react'
 
-export default function Dashboard() {
+import InformationContainer from '../../components/informationContainer'
+import Header from '../../components/Header/index'
+import { main } from './styles' 
+
+
+export default function Dashboard({navigation}) {
+
   return (
-    <View>
-      <Text>usuario logado</Text>
-    </View>
+
+  <View style={main.container}>
+    <Header navigation={navigation}/>
+
+  </View>
+
   )
+  
 }

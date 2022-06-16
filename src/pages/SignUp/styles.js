@@ -30,10 +30,10 @@ export const formulario = StyleSheet.create({
   input:{
     borderBottomColor: '#4A504E',
     justifyContent: 'center',
-    borderBottomWidth: '1px',
+    borderBottomWidth: 1,
     borderStyle: 'solid',
-    marginBottom: '15px',
-    marginTop: '15px',
+    marginBottom: 15,
+    marginTop: 15,
     paddingLeft: 10,
     width: '70%',
     height: 30
@@ -44,7 +44,7 @@ export const formulario = StyleSheet.create({
   inputFocus:{
     placeholderTextColor: '#F8DC6D',
     borderBottomColor: '#F8DC6D',
-    borderBottomWidth: '2px',
+    borderBottomWidth: 2,
     outlineStyle: 'none',
     width: '72%',
   },
@@ -111,7 +111,7 @@ export const footer = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
     flexDirection: 'row',
-    marginBottom: '15px',
+    marginBottom: 15,
     width: '100%',
     flex: 1
   

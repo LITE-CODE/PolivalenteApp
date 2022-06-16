@@ -18,6 +18,7 @@ export default function Routes(){
 
 return (
 
+
     <NavigationContainer>
 
       <Stack.Navigator initialRouteName={initialPage}>
@@ -45,3 +46,13 @@ return (
 )
 
 }
+
+
+
+/*
+
+
+avaliação de materia:
+
+nota < 5 = motivo obrigatorio
+ */
