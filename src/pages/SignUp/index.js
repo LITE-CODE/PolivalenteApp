@@ -27,7 +27,7 @@ const PersonalizedInput = (props) => {
     )
 }
 
-export default function SignIn() {
+export default function SignIn({navigation}) {
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -38,11 +38,7 @@ export default function SignIn() {
   const [value, setValue] = useState(null);
   const [verification, setVerification] = useState()
   const [data, setData] = useState();
-  const [onDashboard, setOnDashboard] = useState(false)
 
-if (onDashboard){
-  return (<Dashboard></Dashboard>)
-}
 
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-ZÀ-ú$*&@#]{4,10}$/;
   const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
@@ -60,7 +56,7 @@ if (onDashboard){
     if (!value) errorList.push('DROPDOWN')
 
     setError(errorList)
-    if (errorList.length !== 0) return console.log('campos não preechidos');
+    if (errorList.length !== 0) return;
 
     if (nameRegex.test(name) === false) return setVerification('invalid name');
     if (emailRegex.test(email) === false) return setVerification('invalid email');
@@ -76,7 +72,7 @@ if (onDashboard){
     if (existingUser.status != 'User not found') return setVerification('existing user');
 
     var user = await createUser({email: email, password: password,class: value, name: name})
-    setOnDashboard(true)
+    navigation.navigate('Dashboard')
 /*
     const user = await createUser({email: email, password: password, name: name, class: value});
     setData(user)
@@ -85,13 +81,7 @@ if (onDashboard){
   }
 
 
-  const handleToDashboard = () => {
-  
-    return (
-      <Dashboard/>
-    )
-  
-  }
+
 
 
 
@@ -213,7 +203,9 @@ borderStyle: 'solid',
  </View>
 
 <View style={footer.container}>
-<Text>Ja tem uma conta? Entrar</Text>
+<Text
+onPress={() => navigation.navigate('SignIn') }
+>Ja tem uma conta? Entrar</Text>
 
 </View>
 </View>

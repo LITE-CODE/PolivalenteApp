@@ -1,11 +1,14 @@
+//import CookieManager from '@react-native-cookies/cookies';
 import { getDatabase, ref, get } from "firebase/database";
 import { encodeKey, decodeKey} from "../codeKey";
 
 
-export const getUser = async  (user={}) => {
+export const getUser = async  (user={}, decoded) => {
 
-    var email = encodeKey(user?.email);
-    var password = encodeKey(user?.password)
+
+    var email = !decoded ? encodeKey(user?.email) : user.email;
+    var password = !decoded ? encodeKey(user?.password) : user.password
+
     var database = getDatabase();
 
     const reference = ref(database, 'registered/' + email);
@@ -21,6 +24,7 @@ export const getUser = async  (user={}) => {
             var pushUser =  snapshot.val();
             Object.entries(pushUser).forEach(([key, value]) => pushUser[key] = decodeKey(value));
             
+            console.log(user.password, pushUser.password)
 
 //check user password
             if ( user?.password !== pushUser.password ){
@@ -29,8 +33,14 @@ export const getUser = async  (user={}) => {
                     user: null
                 }
             }
-
-
+/*
+    CookieManager.set('user', {
+        name: 'encode email',
+        value: email,
+    }).then((done) => {
+        console.log('CookieManager.set =>', done);
+    });
+*/
 //return user object
 return {
     status: 'user found',

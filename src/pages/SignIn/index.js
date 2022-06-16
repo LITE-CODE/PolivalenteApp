@@ -1,15 +1,14 @@
 import { View, Image, TextInput, Text, TouchableOpacity} from 'react-native'
-
 import React, {useState, useEffect} from 'react'
 
 
 import { getUser } from '../../services/database/getUser.js';
 import { main, formulario, footer } from './styles.js';
 import Dashboard from '../Dashboard';
-import { set } from 'firebase/database';
 
 
-export default function SignIn() {
+
+export default function SignIn({navigation}) {
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -17,18 +16,10 @@ export default function SignIn() {
   const [focusPassword, setFocusPassword] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false); 
-  const [onDashboard, setOnDashboard] = useState(false)
   const [userNotFound, setUserNotFound] = useState(false)
   const [dado, setDado] = useState({});
 
- 
-  
-  
-  const pegarDado = async () =>  {
-    //const dado = await getUser({email:'joao@gmail.com', password: '1234567'});
-    setDado(dado)
 
-  }
 
   const verifyUser = async () => {
 
@@ -49,7 +40,9 @@ if (dado.status === 'incorrect password'){
    setUserNotFound(true)
 } else {
 setUserNotFound(false)
-    setOnDashboard(true);
+
+  navigation.navigate('Dashboard')
+
 }
   }
 
@@ -61,9 +54,7 @@ setUserNotFound(false)
 
 */
 
-if (onDashboard){
-  return (<Dashboard></Dashboard>)
-} 
+
   return (
 
     
@@ -135,7 +126,9 @@ if (onDashboard){
 
 <View style={footer.container}>
 <Text>Esqueceu a senha?</Text>
-<Text >Criar conta</Text>
+<Text 
+onPress={() => navigation.navigate('SignUp') }
+>Criar conta</Text>
 </View>
 </View>
 

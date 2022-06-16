@@ -1,4 +1,5 @@
-import { getDatabase, ref, get, set, onValue, update } from "firebase/database";
+//import CookieManager from '@react-native-cookies/cookies';
+import { getDatabase, ref, set } from "firebase/database";
 import { encodeKey, decodeKey} from "../codeKey";
 
 
@@ -22,7 +23,14 @@ var dataUser = {
 
 
  set(ref(database, 'registered/' + email), dataUser)  
-   
+   /*
+ CookieManager.set('user', {
+  name: 'encode email',
+  value: email,
+}).then((done) => {
+  console.log('CookieManager.set =>', done);
+});
+*/
     return {
         status: 'user created successfully',
         user: dataUser
