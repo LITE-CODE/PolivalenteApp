@@ -12,8 +12,7 @@ const Stack = createStackNavigator();
 
 export default function Routes(){
 
-    const [initialPage, setInitialPage] = useState('SignIn');
-
+    const [initialPage, setInitialPage] = useState('Dashboard');
 
 
 return (

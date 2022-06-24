@@ -5,8 +5,7 @@ export const main = StyleSheet.create({
 
   container:{
     backgroundColor: '#F7F7F8',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+
     width:' 100%',
     flex: 1,
   },
@@ -18,3 +17,27 @@ export const main = StyleSheet.create({
   }
 
 })
+
+export const information = StyleSheet.create({
+  container:{
+    marginTop: 90,
+    
+ 
+  }
+})
+
+export const categorys = StyleSheet.create({
+  container:{
+    
+    height: '60%',
+
+  },
+  double:{
+    height: '25%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+
+    marginTop: ' 5%'
+  }
+})
+
