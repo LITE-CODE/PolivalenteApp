@@ -5,14 +5,15 @@ export const main = StyleSheet.create({
 
   container:{
 
-      width: '45%',
-      height: '100%',
+      width: '70%',
+      height: '30%',
       borderRadius: 5,
       borderStyle: 'solid',
+      marginTop: '5%',
 borderColor: '#555555',
 borderWidth: 0.01,
 padding: '2%',
-justifyContent: 'space-around',
+justifyContent: 'center',
 alignItems: 'center',
 
 shadowColor: "#000",
@@ -28,12 +29,21 @@ elevation: 17,
   },
 
   title:{
-
+fontFamily:'inter-Black',
+fontSize: 24
   },
   description:{
-
+fontFamily: 'Inter-Medium',
+fontSize: 13.5,
+textAlign: 'center',
+marginBottom: 20
   },
   link:{
+    fontFamily: 'Inter-Bold',
+    color: '#F8DC6D',
+    borderBottomColor: '#F8DC6D',
+    borderStyle: 'solid',
+    borderBottomWidth: 0.5
 
   }
  

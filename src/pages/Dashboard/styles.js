@@ -7,6 +7,7 @@ export const main = StyleSheet.create({
     backgroundColor: '#F7F7F8',
 
     width:' 100%',
+    height: '100%',
     flex: 1,
   },
 
@@ -30,6 +31,7 @@ export const categorys = StyleSheet.create({
   container:{
     
     height: '60%',
+    alignItems: 'center'
 
   },
   double:{

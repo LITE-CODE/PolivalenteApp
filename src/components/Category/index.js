@@ -8,7 +8,9 @@ export default function Header(props) {
 const {navigation, component, title, description} = props;
 
   const handlerToComponent = () => {
-    if (!navigation && !component) return;
+    console.log('handle')
+
+  
     navigation.navigate(component);
 
   }
