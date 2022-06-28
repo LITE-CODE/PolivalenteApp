@@ -6,16 +6,17 @@ export const main = StyleSheet.create({
   container:{
 
       width: '70%',
-      height: '30%',
+      height: 200,
       borderRadius: 5,
       borderStyle: 'solid',
-      marginTop: '5%',
+      marginTop: '2.5%',
+      marginBottom: '2.5%',
 borderColor: '#555555',
-borderWidth: 0.01,
+borderWidth: 1,
 padding: '2%',
 justifyContent: 'center',
 alignItems: 'center',
-
+backgroundColor: '#F7F7F8',
 shadowColor: "#000",
 shadowOffset: {
 	width: 0,
@@ -29,7 +30,7 @@ elevation: 17,
   },
 
   title:{
-fontFamily:'inter-Black',
+fontFamily:'Inter-Black',
 fontSize: 24
   },
   description:{
@@ -43,7 +44,7 @@ marginBottom: 20
     color: '#F8DC6D',
     borderBottomColor: '#F8DC6D',
     borderStyle: 'solid',
-    borderBottomWidth: 0.5
+    borderBottomWidth: 1
 
   }
  

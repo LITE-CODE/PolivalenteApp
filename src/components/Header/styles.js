@@ -7,7 +7,7 @@ export const main = StyleSheet.create({
   justifyContent: 'space-between',
   alignItems: 'center',
   flexDirection: 'row',
-   height: '8%',
+   height: 65,
    width: '100%',
 borderStyle: 'solid',
 borderBottomColor: '#555555',

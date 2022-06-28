@@ -1,20 +1,27 @@
-import { View, Text, Image } from 'react-native'
+import { View, ScrollView, Text, Linking} from 'react-native'
 import React from 'react'
 
 import InformationContainer from '../../components/informationContainer'
 import Header from '../../components/Header/index'
 import Category from '../../components/Category'
-import { main, information, categorys } from './styles' 
+import { main, information, categorys, footer } from './styles' 
 
 
 
 export default function Dashboard({navigation}) {
 
+  const openProjectPage = () => {
+    Linking.openURL("https://github.com/Projeto-Bonfire")
+  }
   return (
 
-  <View style={main.container}>
+ <View  style={main.container}>
+   <ScrollView>
     <Header navigation={navigation}/>
-    <InformationContainer style={information.container}/>
+    <View style={main.line}></View>
+    <View style={information.container}>
+      <InformationContainer />
+    </View>
 
     <View style={categorys.container}>
      
@@ -58,7 +65,15 @@ export default function Dashboard({navigation}) {
       />
       
     </View>
-  </View>
+  
+    <View style={[main.line, {marginTop: '5%',}]}></View>
+    <View style={footer.container}>
+<Text style={footer.text}>
+  Desenvolvido pela equipe <Text style={footer.link} onPress={openProjectPage}>Bonfire</Text> © 2022
+</Text>
+    </View>
+  </ScrollView>
+ </View>
 
   )
   

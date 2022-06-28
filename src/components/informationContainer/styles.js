@@ -5,10 +5,9 @@ export const main = StyleSheet.create({
 
   container:{
     backgroundColor: '#4A504E',
-    width:'90%',
-    marginLeft: '5%',
-    marginRight: '5%',
-    height: '15%',
+    width:'92%',
+
+    height: 200,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -19,10 +18,12 @@ export const main = StyleSheet.create({
 
 text:{
     color: '#F7F7F8',
+    fontSize: 22,
     fontFamily: 'Inter-Bold'
 },
 secondText:{
     color: '#F7F7F8',
+    fontSize: 16,
     fontFamily: 'Inter-Medium'
 }
 
