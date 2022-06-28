@@ -12,8 +12,8 @@ export const main = StyleSheet.create({
 
   logo:{
     justifyContent:'center',
-    height: 200,
-    width: 200
+    width:200,
+    height:200
   }
 
 })

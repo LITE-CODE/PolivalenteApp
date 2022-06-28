@@ -1,4 +1,4 @@
-import { View, Image, TextInput, Text, TouchableOpacity} from 'react-native'
+import { View, Image, TextInput, Text, TouchableOpacity, Keyboard} from 'react-native'
 import React, {useState, useEffect} from 'react'
 
 
@@ -54,22 +54,49 @@ setUserNotFound(false)
 
 */
 
+const [keyboardStatus, setKeyboardStatus] = useState(undefined);
 
+useEffect(() => {
+  const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+    setKeyboardStatus("Keyboard Shown");
+  });
+  const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+    setKeyboardStatus("Keyboard Hidden");
+  });
+
+  return () => {
+    showSubscription.remove();
+    hideSubscription.remove();
+  };
+}, []);
+
+const isFocus = () =>  !focusEmail && !focusPassword;
   return (
 
     
- 
+
 
 
 
 <View style={main.container}>
 
 <View>
-      <Image
+
+      {keyboardStatus != 'Keyboard Shown' && (<Image
       source={require("../../assets/imgs/vetor.png")}
       style={main.logo}
-      />
+      />)}
+
+      {!isFocus() && (
+      <View style={{ 
+        width:'100%',
+       heigth: 140
+       
+      }}>
+
+        </View>)}
 </View>
+
 
 
 <View style={formulario.container}>
@@ -86,7 +113,12 @@ setUserNotFound(false)
       }}
       onFocus={() => setFocusEmail(true)}
       onBlur={() => setFocusEmail(false)}
+      autoCorrect={false}
+      multiline={false}
+
+      KeyboardType='email-address'
       placeholder={`EMAIL ${errorEmail == 'not field' ? '*' : '' }`}
+
      />
 
 <TextInput
@@ -95,12 +127,16 @@ setUserNotFound(false)
        focusPassword ? formulario.inputFocus:'',
        errorPassword ? formulario.inputError:''
       ]}
+     
       onChangeText={text => {
         setPassword(text)
         setErrorPassword(false)
 
       }
       }
+      secureTextEntry={true}
+      autoCorrect={false}
+      multiline={false}
       onFocus={() => setFocusPassword(true)}
       onBlur={() => setFocusPassword(false)}
       placeholder={`SENHA ${errorPassword == 'not field' ? '*' : '' }`}
@@ -124,12 +160,14 @@ setUserNotFound(false)
 
  </View>
 
+
 <View style={footer.container}>
-<Text>Esqueceu a senha?</Text>
+<Text>Esqueceu a senha</Text>
 <Text 
 onPress={() => navigation.navigate('SignUp') }
 >Criar conta</Text>
 </View>
+
 </View>
 
 
