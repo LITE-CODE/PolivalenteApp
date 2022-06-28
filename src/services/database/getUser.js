@@ -1,4 +1,4 @@
-//import CookieManager from '@react-native-cookies/cookies';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDatabase, ref, get } from "firebase/database";
 import { encodeKey, decodeKey} from "../codeKey";
 
@@ -35,7 +35,7 @@ export const getUser = async  (user={}, decoded) => {
             }
 /*
     CookieManager.set('user', {
-        name: 'encode email',
+        name: 'encodeEmail',
         value: email,
     }).then((done) => {
         console.log('CookieManager.set =>', done);
