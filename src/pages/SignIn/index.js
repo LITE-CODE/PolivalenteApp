@@ -87,14 +87,7 @@ const isFocus = () =>  !focusEmail && !focusPassword;
       style={main.logo}
       />)}
 
-      {!isFocus() && (
-      <View style={{ 
-        width:'100%',
-       heigth: 140
-       
-      }}>
-
-        </View>)}
+ 
 </View>
 
 
@@ -160,14 +153,14 @@ const isFocus = () =>  !focusEmail && !focusPassword;
 
  </View>
 
-
+ {keyboardStatus != 'Keyboard Shown' && (
 <View style={footer.container}>
 <Text>Esqueceu a senha</Text>
 <Text 
 onPress={() => navigation.navigate('SignUp') }
 >Criar conta</Text>
 </View>
-
+ )}
 </View>
 
 

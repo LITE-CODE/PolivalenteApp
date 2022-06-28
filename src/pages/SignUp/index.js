@@ -1,7 +1,7 @@
-import { View, Image, TextInput, Text, TouchableOpacity} from 'react-native'
+import { View, Image, TextInput, Text, TouchableOpacity, Keyboard} from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker';
 import {useNavigate} from 'react-router-dom'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 import { createUser } from '../../services/database/createUser.js';
 import { getUser } from '../../services/database/getUser.js';
@@ -27,6 +27,8 @@ const PersonalizedInput = (props) => {
     )
 }
 
+
+
 export default function SignIn({navigation}) {
 
   const [email, setEmail] = useState();
@@ -34,10 +36,9 @@ export default function SignIn({navigation}) {
   const [name, setName ] = useState();
   const [passwordTwo, setPasswordTwo] = useState();
   const [error, setError] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
+
   const [verification, setVerification] = useState()
-  const [data, setData] = useState();
+
 
 
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-ZÀ-ú$*&@#]{4,10}$/;
@@ -53,7 +54,7 @@ export default function SignIn({navigation}) {
     if (!email)  errorList.push('EMAIL');
     if (!password)  errorList.push('SENHA')
     if (!passwordTwo) errorList.push('REPETIR SENHA')
-    if (!value) errorList.push('DROPDOWN')
+
 
     setError(errorList)
     if (errorList.length !== 0) return;
@@ -81,20 +82,26 @@ export default function SignIn({navigation}) {
   }
 
 
+  const [keyboardStatus, setKeyboardStatus] = useState(undefined);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+      setKeyboardStatus("Keyboard Shown");
+    });
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+      setKeyboardStatus("Keyboard Hidden");
+    });
+  
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+  
 
 
 
 
-  const items = [
-    {label:'1° reg 1', value:'1° reg 1'},
-    {label:'1° reg 2', value:'1° reg 2'},
-    {label:'1° reg 3', value:'1° reg 3'},
-    {label:'2° reg 1', value:'2° reg 1'},
-    {label:'2° reg 2', value:'2° reg 2'},
-    {label:'2° reg 3', value:'2° reg 3'},
-   
-    
-  ]
 
 
 
@@ -104,10 +111,10 @@ export default function SignIn({navigation}) {
 <View style={main.container}>
 
 <View>
-      <Image
+{keyboardStatus != 'Keyboard Shown' && (<Image
       source={require("../../assets/imgs/vetor.png")}
       style={main.logo}
-      />
+      />)}
 </View>
 
 
@@ -144,53 +151,7 @@ onChangeText={text => {setPasswordTwo(text);setError(error.filter(x=>x!='REPETIR
 
 
 
-<DropDownPicker
-      open={open}
-      value={value}
-      items={items}
-      setOpen={setOpen}
-      setValue={setValue}
-      placeholder="SELECIONAR SALA"
-      placeholderStyle={formulario.dropdownText}
-  
-      style={{
-        width: '50%',
-        borderRadius: 5,
-borderColor: '#4A504E',
-borderWidth: 1,
-borderStyle: 'solid',
 
-        padding: 2, 
-        alignItems: 'center',  
-        
-      }}
-  
-      containerStyle={{
-   
-        width: '100%',
-        alignItems: 'center',  
-      
-      }}
-      dropDownContainerStyle={{
-   
-        marginTop: 5,
-        width: '50%',
-        alignItems: 'center',
-        padding: 2,
-        fontFamily: "Inter-Medium",
-        color: "#4A504E"
-      }}
-      listItemLabelStyle={{
-   padding: 1,
-   fontFamily: 'Inter-Medium'
-      }}
-
-      selectedItemLabelStyle={{
-        fontWeight: "bold"
-      }}
-      dropDownDirection="BOTTOM"
-      listMode="SCROLLVIEW"
-    />
 
 <TouchableOpacity
         style={formulario.button}
@@ -202,12 +163,18 @@ borderStyle: 'solid',
 
  </View>
 
+ {keyboardStatus != 'Keyboard Shown' && (
+
 <View style={footer.container}>
+
 <Text
 onPress={() => navigation.navigate('SignIn') }
 >Ja tem uma conta? Entrar</Text>
 
 </View>
+
+ )}
+
 </View>
 
 
