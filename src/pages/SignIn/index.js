@@ -1,6 +1,6 @@
 import { View, Image, TextInput, Text, TouchableOpacity, Keyboard} from 'react-native'
 import React, {useState, useEffect} from 'react'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { getUser } from '../../services/database/getUser.js';
 import { main, formulario, footer } from './styles.js';
@@ -18,9 +18,21 @@ export default function SignIn({navigation}) {
   const [errorPassword, setErrorPassword] = useState(false); 
   const [userNotFound, setUserNotFound] = useState(false)
   const [dado, setDado] = useState({});
+  const [user, setUser] = useState()
+/*
+  useEffect( () => {
+    checkUser()
+  }, []);
 
-
-
+  const checkUser = async () => {
+    const pushUser =  await AsyncStorage.getItem('user')
+    setUser(pushUser ? 'Dashboard' : 'SignIn')
+    console.log(pushUser)
+    if (pushUser){
+      navigation.navigate('Dashboard')
+    }
+  }
+  */
   const verifyUser = async () => {
 
 

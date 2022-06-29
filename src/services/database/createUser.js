@@ -3,20 +3,21 @@ import { getDatabase, ref, set } from "firebase/database";
 import { encodeKey, decodeKey} from "../codeKey";
 
 
-export const createUser = (user={}) => {
+export const createUser =  (user={}) => {
 
     var email = encodeKey(user?.email);
     var password = encodeKey(user?.password);
     var name = encodeKey(user?.name)
     var database = getDatabase();
-
+    var classe = '2reg2'
 
 
 
 var dataUser = {
     email,
     password,
-    name
+    name,
+    classe
 }
 
 
@@ -29,6 +30,16 @@ var dataUser = {
   console.log('CookieManager.set =>', done);
 });
 */
+
+try {
+  AsyncStorage.setItem('user', JSON.stringify(dataUser))
+} catch (e) {
+  // saving error
+  console.log(e)
+}
+
+
+
     return {
         status: 'user created successfully',
         user: dataUser

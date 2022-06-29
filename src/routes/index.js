@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /*  Initial Pages  */
 import SignUp from '../pages/SignUp';
@@ -16,25 +16,48 @@ import AvisosInternos from '../pages/subpages/AvisosInternos';
 import Calendario from '../pages/subpages/Calendario';
 import Horarios from '../pages/subpages/Horarios';
 import Sugestoes from '../pages/subpages/Sugestões';
+import { Text, View } from 'react-native';
 
+import Redirect from './Redirect';
 
 const Stack = createStackNavigator();
 
 export default function Routes(){
 
-    const [initialPage, setInitialPage] = useState('SignUp');
+    var initialPage = 'SignIn'
+    const [user, setUser] = useState()
 
+
+    useEffect( () => {
+      checkUser()
+    }, []);
+  
+    const checkUser = async () => {
+      const pushUser =  await AsyncStorage.getItem('user')
+      setUser(pushUser ? 'Dashboard' : 'SignIn')
+
+      if (pushUser) initialPage = 'Dashboard'
+      
+    }
 
 return (
 
 
     <NavigationContainer>
 
-      <Stack.Navigator initialRouteName={initialPage}>
+      <Stack.Navigator initialRouteName={'Redirect'}>
+
+
 
         <Stack.Screen
           name="SignIn"
           component={SignIn}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Redirect"
+          component={Redirect}
           options={{ headerShown: false }}
         />
 

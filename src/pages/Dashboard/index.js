@@ -14,10 +14,7 @@ export default function Dashboard({navigation}) {
     Linking.openURL("https://github.com/Projeto-Bonfire")
   }
 
-  CookieManager.get('encodeEmail')
-  .then((cookies) => {
-    console.log('CookieManager.get =>', cookies);
-  });
+
 
   return (
 

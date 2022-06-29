@@ -14,7 +14,7 @@ export const getUser = async  (user={}, decoded) => {
     const reference = ref(database, 'registered/' + email);
 
 
-    const data = get(reference).then((snapshot) => {
+    const data = get(reference).then(async (snapshot) => {
 
 
 
@@ -24,7 +24,7 @@ export const getUser = async  (user={}, decoded) => {
             var pushUser =  snapshot.val();
             Object.entries(pushUser).forEach(([key, value]) => pushUser[key] = decodeKey(value));
             
-            console.log(user.password, pushUser.password)
+
 
 //check user password
             if ( user?.password !== pushUser.password ){
@@ -33,6 +33,20 @@ export const getUser = async  (user={}, decoded) => {
                     user: null
                 }
             }
+
+            const dataUser = JSON.stringify({
+                name: pushUser.name ? pushUser.name : null,
+                class: pushUser.class ? pushUser.class : null,
+                email: pushUser.email ? pushUser.email : null,
+                password: pushUser.password ? pushUser.password : null,
+            })
+
+            try {
+                await AsyncStorage.setItem('user', dataUser)
+              } catch (e) {
+                // saving error
+                console.log(e)
+              }
 /*
     CookieManager.set('user', {
         name: 'encodeEmail',

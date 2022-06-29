@@ -1,5 +1,5 @@
 import { View, Image, TextInput, Text, TouchableOpacity, Keyboard} from 'react-native'
-import DropDownPicker from 'react-native-dropdown-picker';
+
 import {useNavigate} from 'react-router-dom'
 import React, {useState, useEffect} from 'react'
 
@@ -72,7 +72,7 @@ export default function SignIn({navigation}) {
     var existingUser  = await getUser({email: email, password: password});
     if (existingUser.status != 'User not found') return setVerification('existing user');
 
-    var user = await createUser({email: email, password: password,class: value, name: name})
+    var user = await createUser({email: email, password: password, name: name})
     navigation.navigate('Dashboard')
 /*
     const user = await createUser({email: email, password: password, name: name, class: value});
