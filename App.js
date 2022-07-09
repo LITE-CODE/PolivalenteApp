@@ -18,6 +18,7 @@ export default  function App()  {
     'Inter-Black': require('./src/assets/fonts/Inter-Black.ttf'),
     'Inter-Bold': require('./src/assets/fonts/Inter-Bold.ttf'),
     'Inter-Medium': require('./src/assets/fonts/Inter-Medium.ttf'),
+    'Inter-Light': require('./src/assets/fonts/Inter-Light.ttf'),
 
   })
 

@@ -19,6 +19,7 @@ export default function Redirect({navigation}) {
 
       if (pushUser){
         navigation.navigate('Dashboard')
+    
       }
     }
 

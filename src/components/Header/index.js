@@ -17,7 +17,7 @@ export default function Header(props) {
   return (
 <View 
 style={main.container}
-onPres
+
 >
     
       <Image

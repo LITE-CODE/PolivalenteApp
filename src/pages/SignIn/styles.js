@@ -51,7 +51,6 @@ export const formulario = StyleSheet.create({
 
   inputError:{
     placeholderTextColor: 'red',
-    placeholderTextColor: 'red',
     borderBottomColor: 'red',
     outlineStyle: 'none',
   },

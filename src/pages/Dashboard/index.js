@@ -19,8 +19,9 @@ export default function Dashboard({navigation}) {
   return (
 
  <View  style={main.container}>
+  <Header navigation={navigation}/>
    <ScrollView>
-    <Header navigation={navigation}/>
+    
     <View style={main.line}></View>
     <View style={information.container}>
       <InformationContainer />

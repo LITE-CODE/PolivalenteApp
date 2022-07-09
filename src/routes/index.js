@@ -24,21 +24,6 @@ const Stack = createStackNavigator();
 
 export default function Routes(){
 
-    var initialPage = 'SignIn'
-    const [user, setUser] = useState()
-
-
-    useEffect( () => {
-      checkUser()
-    }, []);
-  
-    const checkUser = async () => {
-      const pushUser =  await AsyncStorage.getItem('user')
-      setUser(pushUser ? 'Dashboard' : 'SignIn')
-
-      if (pushUser) initialPage = 'Dashboard'
-      
-    }
 
 return (
 
