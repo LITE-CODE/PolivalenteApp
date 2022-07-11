@@ -11,19 +11,19 @@ export default function Redirect({navigation}) {
 
     useEffect( () => {
       checkUser()
+     // navigation.navigate('SignIn')
     }, []);
   
     const checkUser = async () => {
       const pushUser =  await AsyncStorage.getItem('user')
 
 
-      if (pushUser){
-        navigation.navigate('Dashboard')
+        navigation.navigate( pushUser?'Dashboard' : 'SignIn')
     
-      }
+      
     }
 
-    navigation.navigate('SignIn')
+   
 
 return (<View>
 

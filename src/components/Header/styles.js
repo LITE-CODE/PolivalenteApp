@@ -8,10 +8,11 @@ export const main = StyleSheet.create({
   alignItems: 'center',
   flexDirection: 'row',
    height: 65,
-   width: '100%',
+   marginHorizontal: '1%',
+   width: '98%',
 borderStyle: 'solid',
 borderBottomColor: '#555555',
-borderBottomWidth: 0.01,
+borderBottomWidth: 0.85,
   },
 
   logo:{

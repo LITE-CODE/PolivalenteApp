@@ -87,7 +87,7 @@ data.unshift({id:'day', valor:day.toUpperCase(), title: true})
   return (
   <View style={main.container} >
     <Header navigation={navigation}/>
-    <View style={main.line}/>
+   
 
     <View style={list.container}>
 

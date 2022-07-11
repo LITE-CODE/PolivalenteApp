@@ -22,7 +22,7 @@ export default function Dashboard({navigation}) {
   <Header navigation={navigation}/>
    <ScrollView>
     
-    <View style={main.line}></View>
+    
     <View style={information.container}>
       <InformationContainer />
     </View>

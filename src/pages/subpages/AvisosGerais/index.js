@@ -62,7 +62,7 @@ const renderItem = ({ item }) => (
   return (
     <View style={main.container}>
       <Header navigation={navigation}/>
-      <View style={main.line}/>
+ 
 
       <FlatList
         style={{ marginTop: 30, width:'100%'}}
