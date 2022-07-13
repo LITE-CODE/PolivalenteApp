@@ -35,13 +35,7 @@ export default function Dashboard({navigation}) {
         navigation={navigation}
         component={'AvisosGerais'}
         />
-        <Category
-        title='Calendario'
-        description='Veja os proximos eventos da escola'
-        navigation={navigation}
-        component={'Calendario'}
-        />
-     
+    
         <Category
         title='Avisos Internos'
         description='Avisos referentes a turma'
@@ -69,16 +63,27 @@ export default function Dashboard({navigation}) {
       />
       
     </View>
-  
     <View style={[main.line, {marginTop: '5%',}]}></View>
     <View style={footer.container}>
 <Text style={footer.text}>
   Desenvolvido pela equipe <Text style={footer.link} onPress={openProjectPage}>Bonfire</Text> © 2022
 </Text>
     </View>
+
   </ScrollView>
+  
  </View>
 
   )
   
 }
+
+
+/*
+<Category
+        title='Calendario'
+        description='Veja os proximos eventos da escola'
+        navigation={navigation}
+        component={'Calendario'}
+/>
+*/
