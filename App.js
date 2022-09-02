@@ -1,17 +1,15 @@
-import { StatusBar, View,Text} from 'react-native';
+import { ThemeProvider } from 'styled-components';
+import { StatusBar, View, Text } from 'react-native';
 import AppLoading from 'expo-app-loading';
-import { getDatabase, ref, set, onValue, get, update } from "firebase/database";
 import { useFonts } from 'expo-font';
+import Routes from './src/routes';
 import React from 'react';
 
-import { connectToDatabase } from './src/services/database/connectToDatabase';
-import { getUser } from './src/services/database/getUser'
-import Routes from './src/routes';
+import { Container } from './src/styles/themes/globalStyles';
+import theme from './src/styles/themes/LightTheme';
 
 
-
-
-export default  function App()  {
+export default function App()  {
 
   const [fontsLoaded] = useFonts({
 
@@ -21,25 +19,22 @@ export default  function App()  {
     'Inter-Light': require('./src/assets/fonts/Inter-Light.ttf'),
 
   })
+  if (!fontsLoaded) return <AppLoading />;
 
-  if (!fontsLoaded){
-    return <AppLoading />;
-
-  }
-
-const connectDatabase =  connectToDatabase();
-
-if (connectDatabase.status === 'unsuccessful connection'){
-  return <AppLoading />;
-}
+/*
+  const { theme } = useTheme();
+  if (!theme) return <AppLoading />;
+*/
 
 
   return (
 
-<View style={{fontFamily: 'Inter-Medium', height: '100%'}}>
-    <StatusBar backgroundColor={"#F6D03C"} barStyle="light-content"></StatusBar>
-    <Routes/>
-    </View>
+<ThemeProvider theme={{theme}}>
+    <Container>
+      <StatusBar backgroundColor={"#F6D03C"} barStyle="light-content"></StatusBar>
+      <Routes/>
+    </Container>
+</ThemeProvider>
 
   );
 
