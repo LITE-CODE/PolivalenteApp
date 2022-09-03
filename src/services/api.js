@@ -7,7 +7,7 @@ const api = axios.create({
  
  api.interceptors.request.use(async (config) => {
  
-  const token = await storage.getItem('theme') || '';
+  const token = await storage.getItem('token') || '';
  
   
   config.headers = {

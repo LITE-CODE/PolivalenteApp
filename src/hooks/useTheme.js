@@ -1,36 +1,35 @@
 import storage from '@react-native-async-storage/async-storage';
 import { useColorScheme } from 'react-native';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import themes from '../styles/index';
-import { ThemeColors } from 'react-navigation';
+import {LightTheme} from '../styles/themes/LightTheme';
+import {DarkTheme} from '../styles/themes/DarkTheme';
 
-export default function useTheme() {
 
-    const deviceTheme = useColorScheme();
-    const [theme, setTheme] = useState(async (newTheme) => {
-        const theme = await storage.setItem('theme', newTheme);
+export const useTheme =  () =>  {
+
+ const deviceTheme = useColorScheme();
+    const [theme, setTheme] = useState(async () => {
+        const theme = await storage.getItem('theme');
+        if (!theme) await storage.setItem('theme', 'auto');
+        return theme
     });
 
-    const getTheme = async () =>{
-         const getThemed = await storage.getItem('theme');
-         if (!getThemed) return setTheme('auto');
-         setTheme(getThemed)
-    }
+    if (theme == 'auto') setTheme(deviceTheme);
 
-    getTheme();
-   
     switch(theme){
         case 'dark':
-            res = themes.DarkTheme;
+            res = DarkTheme;
         break
         case 'light':
-             res = themes.LightTheme;
+             res = LightTheme;
         break
         default:
-            res = deviceTheme == 'dark' ? themes.DarkTheme : ThemeColors.LightTheme;
+            res = deviceTheme == 'dark' ? DarkTheme : LightTheme;
     }
 
     return { theme: res, setTheme}
+
+
 
 }
