@@ -1,48 +1,46 @@
-import 'react-native-gesture-handler';
-import React, { useEffect, useState } from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import storage from "@react-native-async-storage/async-storage";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import React, { useEffect, useState } from "react";
+import AppLoading from "expo-app-loading";
+import "react-native-gesture-handler";
 
 /*  Initial Pages  */
-import SignUp from '../pages/SignUp';
-import SignIn from '../pages/SignIn';
-import Dashboard from '../pages/Dashboard';
+import Dashboard from "../pages/Dashboard";
+import SignUp from "../pages/SignUp";
+import SignIn from "../pages/SignIn";
 
 /*  Subpages of dashboard  */
-import Avaliação from '../pages/subpages/Avaliação';
-import AvisosGerais from '../pages/subpages/AvisosGerais';
-import AvisosInternos from '../pages/subpages/AvisosInternos';
-import Calendario from '../pages/subpages/Calendario';
-import Horarios from '../pages/subpages/Horarios';
-import Sugestoes from '../pages/subpages/Sugestões';
-import { Text, View } from 'react-native';
-
-import Redirect from './Redirect';
+import AvisosInternos from "../pages/subpages/AvisosInternos";
+import AvisosGerais from "../pages/subpages/AvisosGerais";
+import Calendario from "../pages/subpages/Calendario";
+import Sugestoes from "../pages/subpages/Sugestões";
+import Avaliação from "../pages/subpages/Avaliação";
+import Horarios from "../pages/subpages/Horarios";
 
 const Stack = createStackNavigator();
 
-export default function Routes(){
+const Routes = () => {
+  const [initialRouteName, setInitialRouteName] = useState();
 
+  useEffect(() => {
+    checkUser();
+  }, []);
 
-return (
+  const checkUser = async () => {
+    const user = await storage.getItem("user");
 
+    setInitialRouteName(user ? "Dashboard" : "SignIn");
+  };
 
+  if (!initialRouteName) return <AppLoading />;
+
+  return (
     <NavigationContainer>
-
-      <Stack.Navigator initialRouteName={'Redirect'}>
-
-
-
+      <Stack.Navigator initialRouteName={initialRouteName}>
         <Stack.Screen
           name="SignIn"
           component={SignIn}
-          options={{ headerShown: false }}
-        />
-
-        <Stack.Screen
-          name="Redirect"
-          component={Redirect}
           options={{ headerShown: false }}
         />
 
@@ -89,17 +87,7 @@ return (
         />
       </Stack.Navigator>
     </NavigationContainer>
+  );
+};
 
-)
-
-}
-
-
-
-/*
-
-
-avaliação de materia:
-
-nota < 5 = motivo obrigatorio
- */
+export default Routes;

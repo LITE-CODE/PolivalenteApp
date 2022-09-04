@@ -6,7 +6,7 @@ export const main = StyleSheet.create({
   container:{
     backgroundColor: '#F7F7F8',
 
-
+height: '100%'
     
    
 

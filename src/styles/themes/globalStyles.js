@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.View`
 font-family: 'Inter-Medium';
-height: 100%;
+flex: auto;
 `
 
 export const Name = styled.Text`
