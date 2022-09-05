@@ -17,7 +17,7 @@ export const useTheme =  () =>  {
 
     if (theme == 'auto') setTheme(deviceTheme);
 
-    switch(theme){
+    switch('light'){
         case 'dark':
             res = DarkTheme;
         break

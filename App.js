@@ -27,7 +27,7 @@ export default function App()  {
     'Inter-Light': require('./src/assets/fonts/Inter-Light.ttf'),
   });
 
-  if (!fontsLoaded) return <AppLoading />;
+  if (!fontsLoaded || !load) return <AppLoading />;
 
   return (
       <ThemeProvider theme={theme}>
