@@ -1,18 +1,21 @@
 import storage from "@react-native-async-storage/async-storage";
 import React, {useState, useEffect} from 'react'
 
-import { useTheme } from '../../hooks/useTheme'
-import {Container,Name} from './styles'
+import EmailButton from "./Buttons/Email";
+import PasswordButton from "./Buttons/Password";
+import {Container} from './styles'
 
 
 const SignIn = ({navigation}) => {
 
+  const [text,setText]= useState('')
 
   return (
     <Container>
-        <Name>
-           hello world
-        </Name>
+      <EmailButton
+      text={text.lenght}
+      onChangeText={text => setText(text)}
+      />
     </Container>
   )
 

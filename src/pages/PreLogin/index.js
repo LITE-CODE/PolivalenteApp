@@ -6,8 +6,8 @@ import { Image, Container, SignInButton, SignInText, ButtonsContainer,SignUpButt
 
 const PreLogin = ({navigation}) => {
 
-    const handleToSignIn = () => navigation.navigate('SignIn')
-    const handleToSignUp = () => navigation.navigate('SignUp')
+    const handleToSignIn = () => navigation.navigate('SignIn2')
+    const handleToSignUp = () => navigation.navigate('SignIn')
     return (
 <Container>
     <Image source={image}/>

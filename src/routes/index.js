@@ -39,7 +39,7 @@ const Routes = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'PreLogin'}>
+      <Stack.Navigator initialRouteName={'Prelogin'}>
         <Stack.Screen
           name="SignIn"
           component={SignIn}
