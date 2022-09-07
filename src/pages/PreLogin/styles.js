@@ -10,11 +10,11 @@ export const Container = styled.View`
 export const ButtonsContainer = styled.View`
     justify-content: space-around;
     align-items: center;
-    height: 120;
+    height: 120px;
     width: 100%;
 `
 export const TextContainer = styled.View`
-    height: 100;
+    height: 100px;
     width: 80%;
 `
 
@@ -24,8 +24,8 @@ export const SignInButton = styled.Pressable`
     align-items: center;
     background: #F6D03C;
     border-radius: 2;
-    height: 45;
-    width: 150;
+    height: 45px;
+    width: 150px;
 `
 
 export const SignUpButton = styled.Pressable`
@@ -34,8 +34,8 @@ export const SignUpButton = styled.Pressable`
     align-items: center;
     border-width: 2px;
     border-radius: 2;
-    height: 45;
-    width: 150;
+    height: 45px;
+    width: 150px;
 `
 
 /* Texts */
@@ -62,6 +62,6 @@ export const Description = styled.Text`
 
 /* Images */
 export const Image = styled.Image`
-    height: 280;
-    width: 280; 
+    height: 280px;
+    width: 280px; 
 ` 

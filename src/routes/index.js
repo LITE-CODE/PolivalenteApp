@@ -11,6 +11,7 @@ import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
 import SignIn2 from "../pages/SignIn2";
 import PreLogin from "../pages/PreLogin";
+import EmBreve from "../pages/EmBreve";
 
 /*  Subpages of dashboard  */
 import AvisosInternos from "../pages/subpages/AvisosInternos";
@@ -32,14 +33,14 @@ const Routes = () => {
   const checkUser = async () => {
     const user = await storage.getItem("user");
 
-    setInitialRouteName(user ? "Dashboard" : "SignIn");
+    setInitialRouteName(user ? "Dashboard" : "PreLogin");
   };
 
   if (!initialRouteName) return <AppLoading />;
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'Prelogin'}>
+      <Stack.Navigator initialRouteName={'SignIn2'}>
         <Stack.Screen
           name="SignIn"
           component={SignIn}
@@ -53,6 +54,11 @@ const Routes = () => {
         <Stack.Screen
           name="PreLogin"
           component={PreLogin}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="EmBreve"
+          component={EmBreve}
           options={{ headerShown: false }}
         />
 
