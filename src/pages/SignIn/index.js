@@ -1,183 +1,138 @@
-import { View, Image, TextInput, Text, TouchableOpacity, Keyboard} from 'react-native'
-import React, {useState, useEffect} from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Feather from "react-native-vector-icons/Feather";
+import React, { useState, useEffect } from "react";
+import { View, Keyboard } from "react-native";
 
-import { getUser } from '../../services/database/getUser.js';
-import { main, formulario, footer } from './styles.js';
-import Dashboard from '../Dashboard';
+import {
+  LoginButtonView,
+  LabelPassword,
+  TextContainer,
+  UpdatePassord,
+  GeneralError,
+  Description,
+  LoginButton,
+  GeneralText,
+  ErrorLabel,
+  InputsView,
+  Container,
+  LoginText,
+  ArrowView,
+  TitleView,
+  Label,
+  Title,
+} from "./styles";
 
+import PasswordButton from "./Buttons/Password";
+import EmailButton from "./Buttons/Email";
+import useAuth from "../../hooks/useAuth";
 
+const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-ZÀ-ú$*&@#]{4,10}$/;
+const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
-export default function SignIn({navigation}) {
+const SignIn = ({ navigation }) => {
+  const [error, setError] = useState({ value: null, message: null });
+  const [keybordStatus, setKeyboardStatus] = useState(true);
+  const [passwordView, setPasswordView] = useState(false);
+  const [password, setPassword] = useState("");
+  const [text, setText] = useState("ENTRAR");
+  const [email, setEmail] = useState("");
 
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [focusEmail, setFocusEmail] = useState(false);
-  const [focusPassword, setFocusPassword] = useState(false);
-  const [errorEmail, setErrorEmail] = useState(false);
-  const [errorPassword, setErrorPassword] = useState(false); 
-  const [userNotFound, setUserNotFound] = useState(false)
-  const [dado, setDado] = useState({});
-  const [user, setUser] = useState()
-/*
-  useEffect( () => {
-    checkUser()
-  }, []);
+  const handleToUpdatePassword = () => navigation.navigate("EmBreve");
+  const handleToPreLogin = () => navigation.navigate("PreLogin");
+  const { userSignIn } = useAuth();
 
-  const checkUser = async () => {
-    const pushUser =  await AsyncStorage.getItem('user')
-    setUser(pushUser ? 'Dashboard' : 'SignIn')
-    console.log(pushUser)
-    if (pushUser){
-      navigation.navigate('Dashboard')
-    }
-  }
-  */
-  const verifyUser = async () => {
-
-
-    if (!email) return setErrorEmail('not field');
-    if (!password) return setErrorPassword('not field')
-    setErrorEmail(false)
-    setErrorPassword(false)
-    const dado = await getUser({email: email, password: password});
-    setDado(dado)
-   
-if (dado.status === 'incorrect password'){ 
-
-  setErrorPassword('incorrect password')
-
-} else if (dado.status === 'User not found'){
-  setErrorPassword(false)
-   setUserNotFound(true)
-} else {
-setUserNotFound(false)
-
-  navigation.navigate('Dashboard')
-
-}
-  }
-
-/*
-  
   useEffect(() => {
-    pegarDado();
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () => setKeyboardStatus(false));
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => setKeyboardStatus(true));
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
   }, []);
 
-*/
-
-const [keyboardStatus, setKeyboardStatus] = useState(undefined);
-
-useEffect(() => {
-  const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
-    setKeyboardStatus("Keyboard Shown");
-  });
-  const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
-    setKeyboardStatus("Keyboard Hidden");
-  });
-
-  return () => {
-    showSubscription.remove();
-    hideSubscription.remove();
-  };
-}, []);
-
-const isFocus = () =>  !focusEmail && !focusPassword;
-  return (
-
-    
-
-
-
-
-<View style={main.container}>
-
-<View>
-
-      {keyboardStatus != 'Keyboard Shown' && (<Image
-      source={require("../../assets/imgs/vetor.png")}
-      style={main.logo}
-      />)}
-
- 
-</View>
-
-
-
-<View style={formulario.container}>
-
-<TextInput
-     style={[
-       formulario.input,
-       focusEmail ? formulario.inputFocus:'',
-       errorEmail ? formulario.inputError:''
-      ]}
-      onChangeText={text => {
-        setEmail(text)
-        setErrorEmail(false)
-      }}
-      onFocus={() => setFocusEmail(true)}
-      onBlur={() => setFocusEmail(false)}
-      autoCorrect={false}
-      multiline={false}
-
-      KeyboardType='email-address'
-      placeholder={`EMAIL ${errorEmail == 'not field' ? '*' : '' }`}
-
-     />
-
-<TextInput
-     style={[
-       formulario.input,
-       focusPassword ? formulario.inputFocus:'',
-       errorPassword ? formulario.inputError:''
-      ]}
-     
-      onChangeText={text => {
-        setPassword(text)
-        setErrorPassword(false)
-
-      }
-      }
-      secureTextEntry={true}
-      autoCorrect={false}
-      multiline={false}
-      onFocus={() => setFocusPassword(true)}
-      onBlur={() => setFocusPassword(false)}
-      placeholder={`SENHA ${errorPassword == 'not field' ? '*' : '' }`}
-     />
-
-     {
-
+  const handleToSingIn = async () => {
+    Keyboard.dismiss();
+    if (email == "") return setError({ value: "email", message: "Campo não preenchido" });
+    if (!emailRegex.test(email)) return setError({ value: "email", message: "Email invalido" });
+    if (password == "") return setError({ value: "password", message: "Campo não preenchido" });
+    setText("CARREGANDO...");
+    const response = await userSignIn({ email, password });
+    if (response.user?.id) return navigation.navigate("Dashboard");
+    setText("ENTRAR");
+    if (response?.error) {
+      setError({ value: "general", message: response.error?.message });
+      setText("ENTRAR")
      }
-   { errorPassword == 'incorrect password' && (  <Text style={formulario.errorText}>Usuario ou senha invalidos*</Text>)}
-   { errorEmail == 'not field' && (  <Text style={formulario.errorText}>Preencha o campo de email*</Text>)}
-   { errorPassword == 'not field' && (  <Text style={formulario.errorText}>Preencha o campo de senha*</Text>)}
-   {userNotFound && (  <Text style={formulario.errorText}>Usuario não cadastrado*</Text>)}
+  };
 
-<TouchableOpacity
-        style={formulario.button}
-        onPress={verifyUser}
-   
-      >
-        <Text style={formulario.buttonText}>ENTRAR</Text>
-      </TouchableOpacity>
+  return (
+    <Container>
+      {keybordStatus && (
+        <TitleView>
+          <ArrowView>
+            <Feather
+              onPress={handleToPreLogin}
+              name="arrow-left"
+              size={35}
+              color="#ACACAC"
+            />
+          </ArrowView>
+          <TextContainer>
+            <Title>Bem-vindo de volta!</Title>
+            <Description>Faça login para continuar</Description>
+          </TextContainer>
+        </TitleView>
+      )}
+      <InputsView>
+        <View>
+          <Label>Email</Label>
+          <EmailButton
+            onChangeText={(text) => {
+              setEmail(text);
+              if (error.value == "email")
+                setError({ value: null, message: null });
+            }}
+            value={email}
+            error={error.value == "email"}
+            onClearButton={() => setEmail("")}
+            clearButton={email.length > 0}
+          />
+          {error.value == "email" && <ErrorLabel>{error.message}</ErrorLabel>}
+        </View>
 
- </View>
+        <View>
+          <Label>Password</Label>
+          <PasswordButton
+            onChangeText={(text) => {
+              setPassword(text);
+              if (error.value == "password")
+                setError({ value: null, message: null });
+            }}
+            value={password}
+            error={error.value == "password"}
+            onClickEye={() => setPasswordView(!passwordView)}
+            passwordView={passwordView}
+          />
+          {error.value == "password" && (
+            <ErrorLabel>{error.message}</ErrorLabel>
+          )}
+          <UpdatePassord onPress={handleToUpdatePassword}>
+            <LabelPassword>Esqueceu a senha?</LabelPassword>
+          </UpdatePassord>
+        </View>
+        {error.value == "general" && (
+          <GeneralError>
+            <GeneralText>{error.message}</GeneralText>
+            <Feather name="alert-triangle" size={15} color="red" />
+          </GeneralError>
+        )}
+      </InputsView>
+      <LoginButtonView>
+        <LoginButton onPress={handleToSingIn}>
+          <LoginText>{text}</LoginText>
+        </LoginButton>
+      </LoginButtonView>
+    </Container>
+  );
+};
 
- {keyboardStatus != 'Keyboard Shown' && (
-<View style={footer.container}>
-<Text>Esqueceu a senha</Text>
-<Text 
-onPress={() => navigation.navigate('SignUp') }
->Criar conta</Text>
-</View>
- )}
-</View>
-
-
-
-  )
-}
-
-
+export default SignIn;

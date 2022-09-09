@@ -1,120 +1,110 @@
-import {  StyleSheet } from 'react-native'
+import styled from "styled-components";
+
+export const Container = styled.View`
+  background-color: #ffffff;
+  align-items: center;
+  flex: 1;
+`;
+
+export const Label = styled.Text`
+  margin-bottom: 2px;
+  color: #acacac;
+  font-size: 12;
+`;
+export const ErrorLabel = styled.Text`
+  margin-bottom: 2px;
+  font-size: 12;
+  color: red;
+`;
+export const LabelPassword = styled.Text`
+  margin-bottom: 2px;
+  color: #a6d3fd;
+  font-size: 12;
+`;
+export const InputsView = styled.View`
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex: 2;
+
+`;
+
+export const UpdatePassord = styled.Pressable`
+  align-items: flex-end;
+  margin: 1.5%;
+`;
+
+export const ArrowView = styled.View`
+  align-items: flex-start;
+  margin-top:  5%;
+  margin-bottom: 6.5%;
+
+  width: 100%;
 
 
-export const main = StyleSheet.create({
+`;
+export const TitleView = styled.View`
 
-  container:{
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width:' 100%',
-    flex: 1,
-  },
+  align-items: center;
+  width: 90%;
+  flex: 1.2;
+`;
+export const TextContainer = styled.View`
+align-items: flex-start;
+  width: 80%;
+`;
 
-  logo:{
-    justifyContent:'center',
-    height: 200,
-    width: 200
-  }
+export const LoginButtonView = styled.View`
+  align-items: center;
+  height: 100px;
+  width: 100%;
+  flex: 1;
+`;
 
-})
+export const LoginButton = styled.Pressable`
+  justify-content: center;
+  align-items: center;
+  background: #f6d03c;
+  border-radius: 4px;
+  height: 45px;
+  width: 150px;
+`;
 
-export const formulario = StyleSheet.create({
+export const LoginText = styled.Text`
+  font-family: "Inter-Medium";
+  color: #eeeeee;
+`;
+export const Title = styled.Text`
+  font-family: "Inter-Bold";
+  color: #363636;
+  font-size: 30;
+`;
 
-  container:{
-    justifyContent: 'center',
-    alignItems: 'center',  
-    width: '100%',
-    flex: 2,
-  },
-
-  input:{
-    borderBottomColor: '#4A504E',
-    justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderStyle: 'solid',
-    marginBottom: 15,
-    marginTop: 15,
-    paddingLeft: 10,
-    width: '70%',
-    height: 30
-    
-  },
-
-  
-  inputFocus:{
-    placeholderTextColor: '#F8DC6D',
-    borderBottomColor: '#F8DC6D',
-    borderBottomWidth: 2,
-    outlineStyle: 'none',
-    width: '72%',
-  },
-
-  inputError:{
-    placeholderTextColor: 'red',
-    borderBottomColor: 'red',
-    outlineStyle: 'none',
-  },
-
- button:{
-    backgroundColor: '#F8DC6D',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowOpacity: 0.29,
-    shadowColor: "#000",
-    shadowRadius: 4.65,
-    borderRadius: 50,
-    marginTop: 20,
-    elevation: 7,
-    width: '50%',
-    height: 45,
-
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    }
-
-    },
-  
-    buttonText:{
-      fontFamily: 'Inter-Bold',
-      color: '#F7F7F8',
-      padding: 2
-    }, 
-
-    dropdown:{
-      backgroundColor: 'red',
-      justifyContent: 'center',
-      borderColor: '#F8DC6D',
-      height: 30,
-      width: '50%'
-    },
-    dropdownText:{
-      fontFamily: "Inter-Medium",
-      color: "#4A504E"
-    },
-
-    errorText: {
-      justifyContent: 'center',
-      marginTop: 2,
-      marginBottom: 2,
-      fontFamily: 'Inter-Medium',
-      color: 'red',
-      fontSize: 12
-    }
+export const Description = styled.Text`
+  color: #acacac;
+  font-size: 15;
+`;
 
 
-})
+export const GeneralError = styled.View`
 
-export const footer = StyleSheet.create({
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-color: transparent;
+    border-bottom-width: 1.5px;
+    width: 50%;
+    height: auto;
+    padding: 4px;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+margin-top: 10px;
+    background-color: #FEBBBB;
+    border-bottom-color: red;
 
-  container:{
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    marginBottom: 15,
-    width: '100%',
-    flex: 1
-  
-  }
+`
 
-})
+export const GeneralText = styled.Text`
+    font-size: 12;
+    color: #363636;
+`
