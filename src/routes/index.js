@@ -10,6 +10,7 @@ import Dashboard from "../pages/Dashboard";
 import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
 import SignIn2 from "../pages/SignIn2";
+import SignUp2 from "../pages/SignUp2";
 import PreLogin from "../pages/PreLogin";
 import EmBreve from "../pages/EmBreve";
 
@@ -49,6 +50,11 @@ const Routes = () => {
         <Stack.Screen
           name="SignIn2"
           component={SignIn2}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignUp2"
+          component={SignUp2}
           options={{ headerShown: false }}
         />
         <Stack.Screen

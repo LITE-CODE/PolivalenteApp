@@ -1,45 +1,42 @@
+import storage from "@react-native-async-storage/async-storage";
 import Feather from "react-native-vector-icons/Feather";
 import React, { useState, useEffect } from "react";
 import { View, Keyboard } from "react-native";
-
 import {
   LoginButtonView,
-  LabelPassword,
   TextContainer,
-  UpdatePassord,
   GeneralError,
-  Description,
   LoginButton,
+  Description,
   GeneralText,
-  ErrorLabel,
   InputsView,
+  ErrorLabel,
   Container,
   LoginText,
   ArrowView,
   TitleView,
-  Label,
   Title,
+  Label,
 } from "./styles";
 
 import PasswordButton from "./Buttons/Password";
 import EmailButton from "./Buttons/Email";
+import NameButton from "./Buttons/Name";
 import useAuth from "../../hooks/useAuth";
 
 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-ZÀ-ú$*&@#]{4,10}$/;
 const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
-const SignIn = ({ navigation }) => {
+const SignUp = ({ navigation }) => {
   const [error, setError] = useState({ value: null, message: null });
   const [keybordStatus, setKeyboardStatus] = useState(true);
   const [passwordView, setPasswordView] = useState(false);
+  const [text, setText] = useState("CADASTRAR");
   const [password, setPassword] = useState("");
-  const [text, setText] = useState("ENTRAR");
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
 
-  const handleToUpdatePassword = () => navigation.navigate("EmBreve");
-  const handleToPreLogin = () => navigation.navigate("PreLogin");
-  const { userSignIn } = useAuth();
-
+  
   useEffect(() => {
     const showSubscription = Keyboard.addListener("keyboardDidShow", () => setKeyboardStatus(false));
     const hideSubscription = Keyboard.addListener("keyboardDidHide", () => setKeyboardStatus(true));
@@ -48,20 +45,24 @@ const SignIn = ({ navigation }) => {
       hideSubscription.remove();
     };
   }, []);
+  
+  const handleToPreLogin = () => navigation.navigate("PreLogin");
+  const { userSignUp } = useAuth();
 
   const handleToSingIn = async () => {
     Keyboard.dismiss();
+    if (name == "") return setError({ value: "name", message: "Campo não preenchido" });
     if (email == "") return setError({ value: "email", message: "Campo não preenchido" });
     if (!emailRegex.test(email)) return setError({ value: "email", message: "Email invalido" });
-    if (password == "") return setError({ value: "password", message: "Campo não preenchido" });
+    if (password == "")  return setError({ value: "password", message: "Campo não preenchido" });
     setText("CARREGANDO...");
-    const response = await userSignIn({ email, password });
+    const response = await userSignUp({ name, email, password });
     if (response.user?.id) return navigation.navigate("Dashboard");
-    setText("ENTRAR");
-    if (response?.error) {
-      setError({ value: "general", message: response.error?.message });
-      setText("ENTRAR")
-     }
+    setText("CADASTRAR");
+    if (response?.error){
+       setError({ value: "general", message: response.error?.message })
+       setText("CADASTRAR")
+      }
   };
 
   return (
@@ -77,12 +78,28 @@ const SignIn = ({ navigation }) => {
             />
           </ArrowView>
           <TextContainer>
-            <Title>Bem-vindo de volta!</Title>
-            <Description>Faça login para continuar</Description>
+            <Title>Ola, bem-vindo!</Title>
+            <Description>Crie uma nova conta para continuar</Description>
           </TextContainer>
         </TitleView>
       )}
+
       <InputsView>
+        <View>
+          <Label>Nome</Label>
+          <NameButton
+            onChangeText={(text) => {
+              setName(text);
+              if (error.value == "name")
+                setError({ value: null, message: null });
+            }}
+            value={name}
+            error={error.value == "name"}
+            onClearButton={() => setName("")}
+            clearButton={name.length > 0}
+          />
+          {error.value == "name" && <ErrorLabel>{error.message}</ErrorLabel>}
+        </View>
         <View>
           <Label>Email</Label>
           <EmailButton
@@ -115,9 +132,6 @@ const SignIn = ({ navigation }) => {
           {error.value == "password" && (
             <ErrorLabel>{error.message}</ErrorLabel>
           )}
-          <UpdatePassord onPress={handleToUpdatePassword}>
-            <LabelPassword>Esqueceu a senha?</LabelPassword>
-          </UpdatePassord>
         </View>
         {error.value == "general" && (
           <GeneralError>
@@ -135,4 +149,4 @@ const SignIn = ({ navigation }) => {
   );
 };
 
-export default SignIn;
+export default SignUp;

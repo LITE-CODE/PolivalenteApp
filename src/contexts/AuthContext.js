@@ -17,9 +17,10 @@ export const AuthProvider = ({children}) => {
     
     const userSignIn = async (userData) => {
     
-      const {data} = await signIn(userData);
-      if (data?.error) return data;
-      if (data?.accessToken) await storage.setItem('token', data.accessToken);
+      const response = await signIn(userData);
+      if (response?.error) return response;
+      const data = response.data;
+      if (data?.acessToken) await storage.setItem('token', data.acessToken);
       return await getCurrentUser();
     
     }
@@ -27,17 +28,26 @@ export const AuthProvider = ({children}) => {
     
     const userSignUp = async (userData) => {
     
-      const {data} = await signUp(userData);
-      if (data?.error) return data;
-      if (data?.accessToken) await storage.setItem('token', data.accessToken);
-      return await getCurrentUser();
+
+
+    const response = await signUp(userData);
+    if (response?.error) return response;
+    const data = response.data
+    if (data?.acessToken) await storage.setItem('token', data.acessToken);
+    return await getCurrentUser();
+
+ 
     
     }
     
     const getCurrentUser = async () => {
     
-      const { data } = await me();
-      if (data?.error) return data;
+      const response = await me();
+      if (response?.error) {
+        const localUser = await storage.getItem('user')
+        return localUser ? localUser : { error: { message: "User not logged"}}
+      }
+      const data = response.data
       setUser(data);
       await storage.setItem('user', JSON.stringify(data))
       return data

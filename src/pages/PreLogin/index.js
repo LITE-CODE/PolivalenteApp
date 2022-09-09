@@ -1,5 +1,5 @@
-import React from 'react';
 
+import React from 'react';
 
 import image from '../../assets/imgs/InitialLoginPage.png'
 import { Image, Container, SignInButton, SignInText, ButtonsContainer,SignUpButton, SignUpText, TextContainer, Title, Description} from './styles';
@@ -7,7 +7,7 @@ import { Image, Container, SignInButton, SignInText, ButtonsContainer,SignUpButt
 const PreLogin = ({navigation}) => {
 
     const handleToSignIn = () => navigation.navigate('SignIn2')
-    const handleToSignUp = () => navigation.navigate('SignIn')
+    const handleToSignUp = () => navigation.navigate('SignUp2')
     return (
 <Container>
     <Image source={image}/>

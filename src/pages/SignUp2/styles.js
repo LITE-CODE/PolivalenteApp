@@ -11,7 +11,11 @@ export const Label = styled.Text`
   color: #acacac;
   font-size: 12;
 `;
-
+export const ErrorLabel = styled.Text`
+  margin-bottom: 2px;
+  font-size: 12;
+  color: red;
+`;
 export const LabelPassword = styled.Text`
   margin-bottom: 2px;
   color: #a6d3fd;
@@ -22,6 +26,7 @@ export const InputsView = styled.View`
   align-items: center;
   width: 100%;
   flex: 2;
+
 `;
 
 export const UpdatePassord = styled.Pressable`
@@ -74,11 +79,6 @@ export const Title = styled.Text`
   color: #363636;
   font-size: 30;
 `;
-export const ErrorLabel = styled.Text`
-  margin-bottom: 2px;
-  font-size: 12;
-  color: red;
-`;
 
 export const Description = styled.Text`
   color: #acacac;
@@ -98,7 +98,7 @@ export const GeneralError = styled.View`
     justify-content: space-around;
     flex-direction: row;
     align-items: center;
-    margin-top: 10px;
+margin-top: 10px;
     background-color: #FEBBBB;
     border-bottom-color: red;
 
