@@ -1,112 +1,104 @@
 import { View, Text, FlatList, ActivityIndicator, TextInput, TouchableOpacity, Image } from 'react-native'
-import React, {useState} from 'react'
-
+import React, {useState, useEffect} from 'react'
+import { StyleSheet } from 'react-native';
 import Header from '../../../components/Header';
 import UserCicle from '../../../components/userCircle'
 
 import { main, list, input } from './styles';
 import sendImage from '../../../assets/imgs/send.png'
+import { getSchoolWarns } from '../../../services/resources/school';
 
 export default function AvisosGerais({navigation}) {
 
+  
+  const [data, setData] = useState([])
+  const [warnsAmount, setWarnsAmount] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(false)
+  
+  const loadRepositories = async () => {
+    if (loading) return;
+    setLoading(true);
+    const response = await getSchoolWarns(warnsAmount);
+    if (response?.error) setData([]);
+    response = response.data.warns;
+      setData([...data, response.warns])
+      setWarnsAmount(response.end)
+      setLoading(false)
+      setInitialLoading(true)
+    }
+  useEffect(() => {
+  
+      if (data.length == 0){
+        console.log('load')
+        loadRepositories()}
+  },[])
 
-const user = {
-  permissions: ['sendWarn']
-} 
-const [focus, setFocus] = useState(false);
-const [error, setError] = useState(false)
-const [text,setText] = useState();
-const [data, setData] = useState([
-  { id: 0, name: 'João Vitor', date: 1657059884299, description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget nisl mollis urna fringilla consequat.'},
-  { id: 1, name: 'Isabel Luise', date: 1379386800000 , description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget nisl mollis urna fringilla consequat.'},
-  { id: 2, name: 'Jose Vitoriano', date: 1517277600000, description: 'aorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget nisl mollis urna fringilla consequat.'}
+const renderItem = ({ item }) => {
+console.log(item)
+  return (
+    <View style={styles.listItem}>
+      <Text>{item.text}</Text>
+    </View>
+  );}
 
-])
+if (!initialLoading){
+return (
+  <View>
+  <Text>Carregando...</Text>
+</View>
+)
+}
 
-const [loading, setLoading ] = useState(false);
+return (
+<>
+<Header/>
+<FlatList
+      style={{ marginTop: 30 }}
+      contentContainerStyle={styles.list}
+      data={data}
+      renderItem={renderItem}
+      keyExtractor={item => item.id ? item.id : 0}
+      onEndReached={loadRepositories}
+      onEndReachedThreshold={0.1}
+    />
+</>
+)
 
 
-//formatação de datas
+}
+
+const styles = StyleSheet.create({
+  list: {
+    paddingHorizontal: 20,
+  },
+
+  listItem: {
+    backgroundColor: '#EEE',
+    marginTop: 20,
+    padding: 30,
+  },
+});
+
+
+/*
 const formatDate = (milliseconds) => {
   var months = ['jan.','fev.',' mar.','abr.','maio','jun.','jul.','ago.','set.','out.','nov.','dez.'];
   var getDate = new Date(milliseconds);
   return `${getDate.getDate()} de ${ months[getDate.getMonth()]}`;
 }
 
-//função para fazer request das informações na database
-const loadItems = () => {
-  setLoading(true)
-    setData([...data, ...data])
-  setLoading(false)
-}
-
-const renderItem = ({ item }) => (
   <View style={main.listItem}>
     <View  style={list.container}>
-     <UserCicle name={item.name}/>
+     <UserCicle name={item.id}/>
      <View>
-      <Text style={list.title}>{item.name}</Text>
+      <Text style={list.title}>{item.id}</Text>
       <Text  style={list.date} >{formatDate(item.date)}</Text>
      </View>
 
     </View>
     <View  style={list.textContainer}>
-      <Text  style={list.description}>{item.description}</Text>
+      <Text  style={list.description}>{item.text}</Text>
     </View>
   </View>
-);
-
-
-
-
-  return (
-    <View style={main.container}>
-      <Header navigation={navigation}/>
- 
-
-      <FlatList
-        style={{ marginTop: 30, width:'100%'}}
-        contentContainerStyle={main.list}
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        onEndReached={loadItems}
-        onEndReachedThreshold={0.1}
-       
-      />
- { user?.permissions.find(i=>i=='sendWarn') &&   (
-  <View style={input.container}>
-    <TextInput 
-    
-    placeholder='Envie um novo aviso'
-
-    style={[
-      input.text,
- 
-      error ? input.error:'',
-      focus ? input.focus:'',
-     ]}
-    
-     onChangeText={text => setText(text)}
-  
-     autoCorrect={true}
-     multiline={true}
-     onFocus={() => setFocus(true)}
-     onBlur={() => setFocus(false)}
-    />
-    <TouchableOpacity onPress={() => {
-
-      if (!text) setError(true)
-      
-    }}>
-      <Image  source={sendImage} style={input.image}/>
-    </TouchableOpacity>
-  </View>
- )
-    
-    }
-
-
-    </View>
-  )
-}
+*/

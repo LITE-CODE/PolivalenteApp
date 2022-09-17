@@ -3,8 +3,9 @@ import { ThemeProvider } from 'styled-components';
 import React, { useState, useEffect} from 'react';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
-import Routes from './src/routes';
 
+import Routes from './src/routes';
+import storage from 'react-native-sync-localstorage'
 import { Container } from './src/styles/themes/globalStyles';
 import { AuthProvider } from './src/contexts/AuthContext';
 import {LightTheme} from './src/styles/themes/LightTheme';
@@ -15,8 +16,9 @@ export default function App()  {
   
   const load = useTheme();
   const [theme, setTheme] = useState(LightTheme);
-
+  const data = storage.getAllFromLocalStorage()
   useEffect(() => {
+   // const data = await storage.init();
     if (load?.theme) setTheme(load.theme);
   }, [])
 

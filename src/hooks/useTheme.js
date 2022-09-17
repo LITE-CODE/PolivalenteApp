@@ -1,4 +1,4 @@
-import storage from '@react-native-async-storage/async-storage';
+import storage from 'react-native-sync-localstorage';
 import { useColorScheme } from 'react-native';
 import { useState } from 'react';
 
@@ -9,9 +9,9 @@ import {DarkTheme} from '../styles/themes/DarkTheme';
 export const useTheme =  () =>  {
 
  const deviceTheme = useColorScheme();
-    const [theme, setTheme] = useState(async () => {
-        const theme = await storage.getItem('theme');
-        if (!theme) await storage.setItem('theme', 'auto');
+    const [theme, setTheme] = useState( () => {
+        const theme =storage.getItem('theme');
+        if (!theme) storage.setItem('theme', 'auto');
         return theme
     });
 

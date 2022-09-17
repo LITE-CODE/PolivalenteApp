@@ -1,4 +1,4 @@
-import storage from '@react-native-async-storage/async-storage';
+import storage from 'react-native-sync-localstorage';
 import { createContext, useState } from "react";
 
 import { signIn, signUp, me } from '../services/resources/user';
@@ -9,8 +9,8 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
   
-    const [user, setUser] = useState(async () => {
-        const user = await storage.getItem('user');
+    const [user, setUser] = useState(() => {
+        const user =  storage.getItem('user');
         return user ? JSON.parse(user) : {};
     });
     
@@ -20,7 +20,7 @@ export const AuthProvider = ({children}) => {
       const response = await signIn(userData);
       if (response?.error) return response;
       const data = response.data;
-      if (data?.acessToken) await storage.setItem('token', data.acessToken);
+      if (data?.acessToken)  storage.setItem('token', data.acessToken);
       return await getCurrentUser();
     
     }
@@ -33,7 +33,7 @@ export const AuthProvider = ({children}) => {
     const response = await signUp(userData);
     if (response?.error) return response;
     const data = response.data
-    if (data?.acessToken) await storage.setItem('token', data.acessToken);
+    if (data?.acessToken) storage.setItem('token', data.acessToken);
     return await getCurrentUser();
 
  
@@ -44,13 +44,16 @@ export const AuthProvider = ({children}) => {
     
       const response = await me();
       if (response?.error) {
-        const localUser = await storage.getItem('user')
+        console.log('error')
+        const localUser = storage.getItem('user')
         return localUser ? localUser : { error: { message: "User not logged"}}
       }
-      const data = response.data
+      const data = response.data.user
       setUser(data);
-      await storage.setItem('user', JSON.stringify(data))
+      storage.setItem('user', JSON.stringify(data))
       return data
+  
+      
     
     }
 

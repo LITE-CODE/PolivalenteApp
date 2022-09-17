@@ -1,4 +1,4 @@
-import storage from "@react-native-async-storage/async-storage";
+import storage from 'react-native-sync-localstorage';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
@@ -23,23 +23,15 @@ import Horarios from "../pages/subpages/Horarios";
 const Stack = createStackNavigator();
 
 const Routes = () => {
-  const [initialRouteName, setInitialRouteName] = useState();
+const [initialRouteName, setInitialRouteName] = useState();
 
-  useEffect(() => {
-    checkUser();
-  }, []);
+const user = storage.getItem('user');
+if (!initialRouteName) setInitialRouteName(user ? 'Dashboard' : 'PreLogin');
 
-  const checkUser = async () => {
-    const user = await storage.getItem("user");
-
-    setInitialRouteName(user ? "Dashboard" : "PreLogin");
-  };
-
-  if (!initialRouteName) return <AppLoading />;
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'PreLogin'}>
+      <Stack.Navigator initialRouteName={user ? 'Dashboard' : 'PreLogin'}>
         <Stack.Screen
           name="SignIn"
           component={SignIn}

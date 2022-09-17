@@ -1,21 +1,35 @@
 import { View, ScrollView, Text, Linking} from 'react-native'
-import React from 'react'
-
+import React, {useEffect, useState} from 'react'
+import useAuth from '../../hooks/useAuth'
 import InformationContainer from '../../components/informationContainer'
 import Header from '../../components/Header/index'
 import Category from '../../components/Category'
-import { main, information, categorys, footer } from './styles' 
+import { main, informationL, categorys, footer } from './styles' 
 
 
 
 export default function Dashboard({navigation}) {
 
+  var { user, getCurrentUser } = useAuth()
+  const [information, setInformation] = useState({name: '', class:''});
+  const [load, setLoad] = useState(false);
+console.log('...')
+  
+
+useEffect(() => {
+  getCurrentUser();
+    if (user && !load) {
+      setInformation({name: user.name, class:user.class})
+      setLoad(true)
+    }
+
+  }, [])
+  
+
+
   const openProjectPage = () => {
     Linking.openURL("https://github.com/Projeto-Bonfire")
   }
-
-
-
   return (
 
  <View  style={main.container}>
@@ -23,8 +37,8 @@ export default function Dashboard({navigation}) {
    <ScrollView>
     
     
-    <View style={information.container}>
-      <InformationContainer />
+    <View style={informationL.container}>
+      <InformationContainer  value={information} />
     </View>
 
     <View style={categorys.container}>

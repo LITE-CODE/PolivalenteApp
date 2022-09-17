@@ -29,7 +29,7 @@ height: '100%'
 
 })
 
-export const information = StyleSheet.create({
+export const informationL = StyleSheet.create({
   container:{
     marginTop: '2.5%',
     marginBottom: '2.5%',

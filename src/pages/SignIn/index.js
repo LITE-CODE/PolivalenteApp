@@ -37,7 +37,12 @@ const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState("");
 
   const handleToUpdatePassword = () => navigation.navigate("EmBreve");
-  const handleToPreLogin = () => navigation.navigate("PreLogin");
+  const handleToPreLogin = () => {
+    setText("ENTRAR");
+    setEmail("")
+    setPassword("")
+    navigation.navigate("PreLogin");
+  }
   const { userSignIn } = useAuth();
 
   useEffect(() => {
@@ -56,8 +61,10 @@ const SignIn = ({ navigation }) => {
     if (password == "") return setError({ value: "password", message: "Campo não preenchido" });
     setText("CARREGANDO...");
     const response = await userSignIn({ email, password });
+    console.log(response.user)
     if (response.user?.id) return navigation.navigate("Dashboard");
     setText("ENTRAR");
+    console.log('entrar')
     if (response?.error) {
       setError({ value: "general", message: response.error?.message });
       setText("ENTRAR")
