@@ -1,9 +1,12 @@
-import storage from 'react-native-sync-localstorage';
+import storage from '@react-native-async-storage/async-storage';
+import NetInfo from "@react-native-community/netinfo";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import AppLoading from "expo-app-loading";
 import "react-native-gesture-handler";
+
+import { View, Text } from 'react-native';
 
 /*  Initial Pages  */
 import Dashboard from "../pages/Dashboard";
@@ -20,18 +23,42 @@ import Sugestoes from "../pages/subpages/Sugestões";
 import Avaliação from "../pages/subpages/Avaliação";
 import Horarios from "../pages/subpages/Horarios";
 
+const wifiState = () => NetInfo.fetch().then(state => state.isConnected);
+const Carregar = ({ navigation }) => (
+  <>
+
+    <View>
+      <Text>carregando...</Text>
+    </View>
+  </>
+);
 const Stack = createStackNavigator();
 
 const Routes = () => {
 const [initialRouteName, setInitialRouteName] = useState();
+const [load, setLoad] = useState(false)
 
-const user = storage.getItem('user');
-if (!initialRouteName) setInitialRouteName(user ? 'Dashboard' : 'PreLogin');
 
+
+const loadUser = async () =>  {
+
+    var user = await storage.getItem('user');
+    user = JSON.parse(user);
+    setInitialRouteName(user ? 'Dashboard' : 'PreLogin');
+    setLoad(true)
+}
+useEffect(() => {
+  if (!load) {
+    loadUser();
+  }
+});
+
+
+if (!load || !initialRouteName) return <Carregar/>
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={user ? 'Dashboard' : 'PreLogin'}>
+      <Stack.Navigator initialRouteName={initialRouteName}>
         <Stack.Screen
           name="SignIn"
           component={SignIn}

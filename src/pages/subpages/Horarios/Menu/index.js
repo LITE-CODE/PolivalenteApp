@@ -1,8 +1,10 @@
 import { Menu, Text } from "./styles";
-import storage from "react-native-sync-localstorage";
+import NetInfo from "@react-native-community/netinfo";
+import storage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from "react";
 import { getMenu } from "../../../../services/resources/school";
 
+const wifiState = () => NetInfo.fetch().then(state => state.isConnected);
 const Carregar = () => (
   <>
     <Text>carregando...</Text>
@@ -12,28 +14,34 @@ const Carregar = () => (
 const Menus = (props) => {
   const [load, setLoad] = useState({ storage: false, api: false });
   const [menu, setMenu] = useState();
-const storageMenu = storage.getItem("menu");
-  if (storageMenu && !load.storage) {
-    setMenu(storageMenu);
-    setLoad({ ...load, storage: true });
-  }
 
   const loadMenu = async () => {
     const shift = props.user.shift
       .replace("manhã", "afternoon")
       .replace("tarde", "morning")
       .replace("noite", "night");
-    const response = await getMenu(shift);
-    if (response?.error) {
-      console.log("error");
-    }
-    setMenu(response.data.menu);
-    storage.setItem("menu", menu);
-    props.onLoad(!menu);
+
+      if (wifiState()){
+        const response = await getMenu(shift)
+          if (response?.error) {
+            console.log("error");
+          }
+          setMenu(response.data.menu);
+          await storage.setItem("menu", JSON.stringify(response.data.menu));
+          setLoad({ ...load, api: true });
+          props.onLoad(!menu);
+        } else {
+          const storageMenu = await storage.getItem("menu");
+            setMenu(JSON.parse(storageMenu));
+            setLoad({ ...load, storage: true });
+            props.onLoad(!menu);
+        }
   };
 
   useEffect(() => {
-    loadMenu();
+    if (props.user && load.api == false) {
+      loadMenu();
+    } 
   }, []);
 
   if (!load.api && !load.storage) return <Carregar />;

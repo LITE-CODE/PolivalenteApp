@@ -1,144 +1,150 @@
-import { View, Text, FlatList, ScrollView, TextInput,TouchableOpacity} from 'react-native'
-import React,{useState} from 'react'
-
-import Header from '../../../components/Header';
-import { main,flat,observation,information } from './styles';
-
-import Icon from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feather from "react-native-vector-icons/Feather";
+import NetInfo from "@react-native-community/netinfo";
+import storage from '@react-native-async-storage/async-storage';
+import React,{ useState, useEffect} from 'react'
+import {Keyboard} from 'react-native';
 
+import SelectClass from '../../../components/SelectClass';
+import Header from '../../../components/Header';
 
+import {postAvaliation} from '../../../services/resources/statistics'
+import { getTeachers } from '../../../services/resources/class';
+import useAuth from "../../../hooks/useAuth";
 
+import { Container, Label, Title, SendButton, SendButtonText, Text, SelectContainer, Feedback, FeedbackContainer, ButtonContainer, StarsContainer, Input, GeneralError, GeneralText} from './styles';
+
+const wifiState = () => NetInfo.fetch().then(state => state.isConnected);
+const Carregar = ({ navigation }) => (
+  <>
+    <Header navigation={navigation} />
+    <Container>
+      <Text>carregando...</Text>
+    </Container>
+  </>
+);
 
 export default function Avaliação() {
 
-  const [revel, setRevel] = useState({item:null,focus:false,error:false,value:null, starts:0});
-  const [infoStatus,setInfoStatus] = useState(false)
-  const  teachers = {
-    "português": "Fabiana",
-    "matematica":"Larrissa",
-    "fisica":"Luis",
-    "geografia":"antonio",
-    "inglês":"isabella"
-}
+  var { user, getCurrentUser } = useAuth();
 
-const renderStarts = (n, item) => {
+  const [feedback, setFeedback] = useState({stars: 0, avaliation: "", select: ""});
+  const [load, setLoad] = useState({ storage: false, api: false });
+  const [keybordStatus, setKeyboardStatus] = useState(true);
+  const [focus, setFocus] = useState(false)
+  const [text, setText ] = useState("ENVIAR")
+  const [error, setError] = useState(false)
+  const [matters, setMatters] = useState();
 
-  var transformStar = (number) => {
-      setRevel({item:item,focus:false,error:false,value:null, starts:number})
+
+
+  const loadMatters = async () => {
+
+    if (wifiState()){
+    const response = await getTeachers(user.class);
+    if (response?.error) {
+      console.log("error");
+    }
+    setMatters(response.data.teachers);
+    setLoad({ ...load, api: true });
+    await storage.setItem("matters", JSON.stringify(response.data.teachers));
+  } else {
+    const storageMatters = await storage.getItem("matters");
+      setMatters(JSON.parse(storageMatters));
+      setLoad({ ...load, storage: true });
+  }
+  };
+
+  const sendAvaliation = async () => {
+    if (!feedback.select) return setError("Nenhuma materia selecionada")
+    if (!feedback.stars) return setError("Materia não avaliada")
+    setText("ENVIANDO...")
+    const response = await postAvaliation({
+      stars: feedback.stars,
+      observation: feedback.avaliation,
+      matery: feedback.select,
+      teacher: matters.find(matery => matery.matter == feedback.select)?.teacherID
+
+    })
+    setText("ENVIADO")
+    setFeedback({stars: 0, avaliation: "", select: ""})
   }
 
-var component=[];
-  for (let i=1; i<=5; i++){
+  useEffect(() => {
+    getCurrentUser();
+    if (user && !load.api) {
+      loadMatters();
+    }
+  });
 
-    component.push(
-      <View style={{marginHorizontal:1}}>
-        <Text  >
-       { n<i ? <Ionicons onPress={() => transformStar(i)}  name={'md-star-outline'} size={25} color="#555555" /> : <Ionicons name={'md-star-sharp'} onPress={() => transformStar(i)} size={25} color="#F8DC6D" />}
-    </Text>
-      </View>
-     )
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () => setKeyboardStatus(false));
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => setKeyboardStatus(true));
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+
+  if (!user || !matters) return <Carregar />;
+
+  const starProps = (id) => feedback.stars<id ? {name: 'md-star-outline', color: "#555555"} : {name: 'md-star-sharp', color: '#F8DC6D'}
+  const setStars = (id) => {
+    setFeedback({...feedback, stars: id})
+    if (error == "Materia não avaliada") setError()
   }
-
- return  component.map(x=>x)
- 
-}
-
-
-const renderItem = ({item}) => {
-
-  const text = item?.key.toLowerCase().replace(/(\s|^)\w/g, m => m.toUpperCase())
-  
   return (
-  
-  <View style={flat.container}>
-         <Text style={flat.title}>{text}</Text>
-    <View style={flat.one}>
- 
-      <Text style={main.text}>Nota:</Text>
-      <View style={flat.starts}>{renderStarts(revel.item == item.key ? revel.starts : 0, item.key)}</View>
-    </View>
-
-    <View style={flat.one}>
-      
-
-        <Text style={main.text}>Observação:</Text>
-<TextInput
-    style={[
-      observation.container,
-      revel.error ? observation.error:'',
-      revel.focus && revel.item == item.key ? observation.focus:'',
-     ]}
-    
-     onChangeText={text => setRevel({item:revel.item,focus:revel.focus,error:false,value:text,starts:revel.starts})} 
-     autoCorrect={true}
-     onFocus={() => setRevel({item:item.key,focus:true,error:false,value:revel.value,starts:revel.item == item.key ? revel.starts : 0})}
-     onBlur={() => setRevel({item:revel.item,focus:false,error:false,value:revel.value,starts:revel.item == item.key ? revel.starts : 0})}
-/>
-
-<TouchableOpacity
-        style={observation.button}
-
+    <>
+    <Header/>
+    <Container>
+    {keybordStatus && (
+       <SelectContainer>
+       <SelectClass max={1} value={[...matters.map(x => x.matter), 'portugues', 'ingles', 'ed.fisica', 'historia', 'geografia']} onUpdate={(selects) => {
+        setFeedback({...feedback, select: selects[0]})
+        if (error == "Nenhuma materia selecionada") setError()
+        }}/>
+         <Label>selecione para avaliar</Label>
+       </SelectContainer>
+    )}
+       <FeedbackContainer>
+        <Feedback>
+ <>
+ <Title>Você está satisfeito com essa materia?</Title>
+          <StarsContainer>
+            <Ionicons  onPress={() => setStars(1)} name={starProps(1).name} size={28} color={starProps(1).color} /> 
+            <Ionicons  onPress={() => setStars(2)} name={starProps(2).name} size={28} color={starProps(2).color} /> 
+            <Ionicons  onPress={() => setStars(3)} name={starProps(3).name} size={28} color={starProps(3).color} /> 
+            <Ionicons  onPress={() => setStars(4)} name={starProps(4).name} size={28} color={starProps(4).color} /> 
+            <Ionicons  onPress={() => setStars(5)} name={starProps(5).name} size={28} color={starProps(5).color} /> 
+          </StarsContainer>
+ </>
    
-      >
-        <Text style={observation.buttonText}>ENVIAR</Text>
-      </TouchableOpacity>
+        <Input 
+           placeholder={"onde posso melhorar?"}
+           maxLength={2000}
+           multiline={true}
+           numberOfLines={5}
+           value={feedback.avaliation }
+     onChangeText={text => setFeedback({...feedback, avaliation: text})}
+     onFocus={() => setFocus(true)}
+     onBlur={() => setFocus(false)}
+        />
    
-    </View>
-
-  </View>
-)}
-
-const render = () => {
-
-  
-
-var data = Object.entries(teachers).map(([key,value]) => ({key,value}))
-
-
-  return (
-    <FlatList
-    data={data}
-    contentContainerStyle={main.flatlist}
-    renderItem={renderItem}
-    keyExtractor={item=> item.id}
-  />
-  )
- 
-
-   
-}
-  return (
-    <View>
-      <Header/>
-      
-<ScrollView>
-<TouchableOpacity onPress={()=> setInfoStatus(!infoStatus)}  style={information.container}>
-<Text style={[information.title, infoStatus ? {color: '#F8DC6D'}:'']}>{infoStatus ? <Icon name={'up'} size={12} color="#555555" /> : <Icon name={'down'} size={12} color="#555555" /> } Como as avaliações das materias funcionam</Text>
-{infoStatus && (
-  <View style={information.textContainer}>
-    <Text style={information.text}>As avaliações de alunos, incluindo as avaliações da matéria por estrelas, ajudam os professores a saberem os pontos a melhorar e fazerem as modificações necessárias para que as aulas se tornem mais dinâmicas e ao mesmo tempo proveitosas para ambos. 
-Para a classificação geral por estrelas, não usamos um sistema simples. Em vez disso, nosso sistema garante a confidencialidade do aluno, ou seja, os professores não saberão que aluno mandou a avaliação. Esse sistema foi adotado, pois através dele garantiremos que as opiniões sejam sinceras. Além disso, as avaliações são analisadas para que palavras de cunho sexual ou de baixo calão não sejam utilizadas, prezando assim o bem estar do professor da matéria avaliada.</Text>
-  </View>
-)}
-</TouchableOpacity>
-
-
-<View>
-  {render()}
-</View>
-</ScrollView>
-        
-
-    </View>
+        </Feedback>
+{error && (
+          <GeneralError>
+            <GeneralText>{error}</GeneralText>
+            <Feather name="alert-triangle" size={15} color="red" />
+          </GeneralError>
+        )}
+       </FeedbackContainer>
+<ButtonContainer>
+<SendButton select={!feedback.select} onPress={sendAvaliation}>
+        <SendButtonText>{text}</SendButtonText>
+        </SendButton>
+</ButtonContainer>
+    </Container>
+    </>
   )
 }
-
-
-
-/*
-   <Text>
-     <Icon name="rocket" size={30} color="#900" />
-   </Text>
-*/
-

@@ -1,155 +1,114 @@
-import {  StyleSheet } from 'react-native'
+import styled from "styled-components";
+
+export const Container = styled.View`
+   background-color: #ffffff;
+  align-items: center;
+justify-content: space-around;
+  flex: 1;
+`;
+
+export const Text = styled.Text`
+ color: #363636;
+`
+
+export const SendButton = styled.Pressable`
+  justify-content: center;
+  align-items: center;
+  background: #f6d03c;
+  border-radius: 4px;
+  height: 45px;
+  width: 150px;
+  ${(props) => props.select? ` background-color: #ACACAC;`: ""}
+`;
+
+export const SendButtonText = styled.Text`
+  font-family: "Inter-Medium";
+  color: #eeeeee;
+`;
+
+export const Label = styled.Text`
+  margin-bottom: 2px;
+  color: #acacac;
+  font-size: 12;
+`;
+
+export const SelectContainer = styled.View`
+width: 100%;
+justify-content: center;
+align-items: center;
+flex: 1;
+`
+
+export const ButtonContainer = styled.View`
+  flex: 0.5;
+
+`
+
+export const FeedbackContainer = styled.View`
+
+  width: 100%;
+align-items: center;
+justify-content: center;
+  flex: 2;
+
+`
+
+export const Feedback = styled.View`
+    background-color: #eeeeee;
+    align-items: center;
+    border-radius: 4px;
+    padding: 15px;
+    justify-content:space-around;
+    width: 80%;
+    height: 80%;
+
+`
+export const StarsContainer = styled.View`
+  height: auto;
+  width: 60%;
+  justify-content: space-around;
+  flex-direction: row;
+  padding: 10px;
 
 
-export const main = StyleSheet.create({
+`
 
-  container:{
-    
+export const Input = styled.TextInput`
+  background-color: #acacac;
+  width: 75%;
+  height: 50%;
+  padding: 10px;
+  border-radius: 7px;
 
-    backgroundColor: '#F7F7F8',
-  },
-  flatlist:{
+text-align: center;
 
-    height: '200%',
-marginBottom: 90
+`
 
-  },
-  text:{
-    fontFamily: 'Inter-Light',
-    fontSize:11,
-    color: '#555555',
-      },
-})
+export const GeneralError = styled.View`
 
-export const flat = StyleSheet.create({
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-color: transparent;
+    border-bottom-width: 1.5px;
+    width: 50%;
+    height: auto;
+    padding: 4px;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+    background-color: #FEBBBB;
+    border-bottom-color: red;
 
-  container:{
+`
 
-    borderRadius: 10,
-    borderColor: '#55555',
-    borderStyle: 'solid',
-    borderWidth: 0.8,
-    padding: 10,
-    width: '90%',
- 
-    backgroundColor: '#F7F7F8',
- marginVertical: 5,
- shadowColor: "#000",
-shadowOffset: {
-	width: 0,
-	height: 4,
-},
-shadowOpacity: 0.46,
-shadowRadius: 11.14,
+export const GeneralText = styled.Text`
+    font-size: 12;
+    color: #363636;
+`
 
-elevation: 5,
- marginHorizontal: '5%'
-
-  },
-  one:{
-  
-//alignItems: 'center',
-//justifyContent: 'space-around',
-   // flexDirection: 'row',
-    marginHorizontal: 10,
-    marginVertical: 4
-    
-  },
-  title:{
-    width: '40%',
-    fontSize: 20,
-    marginBottom: 5,
-    marginHorizontal: 10,
-fontFamily: 'Inter-Medium'
-  },
-  starts:{
-    width: '40%',
-flexDirection: 'row',
-justifyContent: 'center'
-  }
-
-})
-
-export const observation = StyleSheet.create({
-
-  button:{
-    backgroundColor: '#F8DC6D',
-    justifyContent: 'center',
-    alignItems: 'center',
-  
-    borderRadius: 5,
-    marginTop: 20,
-  
-    width: '20%',
-    
-
-    },
-  
-    buttonText:{
-      fontFamily: 'Inter-Medium',
-      color: '#F7F7F8',
-
-      fontSize: 11.5,
-      padding: 3
-    }, 
-
-  container:{
-    marginVertical: 2,
- paddingHorizontal: 10,
-   
-
-    borderColor: '#555555',
-    borderStyle: 'solid',
-    borderWidth: 0.8,
-    borderRadius: 5,
-
-    marginRight:8,
-    width: '80%',
-  },
-
-  focus:{
- 
-      borderColor: '#F8DC6D',
-      borderWidth: 1
-  },
-
-  error:{
-    placeholderTextColor: 'red',
-    placeholderTextColor: 'red',
-    borderColor: 'red',
-  }
-
-
-})
-
-
-
-
-export const information = StyleSheet.create({
- container:{
-
-    width: '95%',
-    marginHorizontal: '2.5%',
-    marginVertical: 20,
-
-   alignItems: 'center',
-   justifyContent: 'center'
-
- },
- title:{
-fontFamily: 'Inter-Medium',
-fontSize: 15,
-color: '#555555',
- },
- textContainer:{
-  width: '80%'
-
- },
- text:{
-  textAlign: 'center',
-  fontSize: 10,
-  fontFamily: 'Inter-Light',
- 
-
- }
-})
+export const Title = styled.Text`
+    font-family: 'Inter-Bold';
+    color: #363636;
+    font-size: 14;
+`

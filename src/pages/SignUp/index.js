@@ -57,12 +57,12 @@ const SignUp = ({ navigation }) => {
     if (password == "")  return setError({ value: "password", message: "Campo não preenchido" });
     setText("CARREGANDO...");
     const response = await userSignUp({ name, email, password });
-    if (response.user?.id) return navigation.navigate("Dashboard");
-    setText("CADASTRAR");
     if (response?.error){
        setError({ value: "general", message: response.error?.message })
        setText("CADASTRAR")
       }
+      setText("CADASTRADO");
+ return navigation.navigate("Dashboard");
   };
 
   return (

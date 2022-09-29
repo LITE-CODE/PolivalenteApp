@@ -14,22 +14,22 @@ import { useTheme } from './src/hooks/useTheme';
 
 export default function App()  {
   
+
   const load = useTheme();
   const [theme, setTheme] = useState(LightTheme);
-  const data = storage.getAllFromLocalStorage()
   useEffect(() => {
-   // const data = await storage.init();
     if (load?.theme) setTheme(load.theme);
   }, [])
-
+  
   const [fontsLoaded] = useFonts({
     'Inter-Black': require('./src/assets/fonts/Inter-Black.ttf'),
     'Inter-Bold': require('./src/assets/fonts/Inter-Bold.ttf'),
     'Inter-Medium': require('./src/assets/fonts/Inter-Medium.ttf'),
     'Inter-Light': require('./src/assets/fonts/Inter-Light.ttf'),
   });
-
+  
   if (!fontsLoaded || !load) return <AppLoading />;
+
 
   return (
       <ThemeProvider theme={theme}>

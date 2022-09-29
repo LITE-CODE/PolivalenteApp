@@ -1,3 +1,4 @@
+import NetInfo from "@react-native-community/netinfo";
 import storage from "react-native-sync-localstorage";
 import React, { useState, useEffect } from "react";
 
@@ -13,6 +14,7 @@ import {
 } from "./styles";
 import { getSchedules } from "../../../../services/resources/class";
 
+const wifiState = () => NetInfo.fetch().then(state => state.isConnected);
 const Carregar = () => (
   <>
     <Text>carregando...</Text>
@@ -30,21 +32,25 @@ const Scheduless = (props) => {
       currentDay == 0 || currentDay == 6 ? "segunda" : days[currentDay - 1]
     );
 
-  const storageSchedules = storage.getItem("schedules");
-  if (storageSchedules && !load.storage) {
-    setSchedules(storageSchedules);
-    setLoad({ ...load, storage: true });
-  }
 
   const loadSchedules = async () => {
+
+    if (wifiState()){
     const response = await getSchedules(props.user.class);
-    if (response?.error) {
-      console.log("error");
+      if (response?.error) {
+        console.log("error");
+      }
+      setSchedules(response.data.schedule);
+      await storage.setItem("schedules", JSON.stringify(response.data.schedule));
+      setLoad({ ...load, api: true });
+      props.onLoad(!schedules);
+    } else {
+      const storageSchedules = await storage.getItem("schedules");
+        setSchedules(JSON.parse(storageSchedules));
+        setLoad({ ...load, storage: true });
+        props.onLoad(!schedules);
     }
-    setSchedules(response.data.schedule);
-    storage.setItem("schedules", response.data.schedule);
-    setLoad({ ...load, api: true });
-    props.onLoad(!schedules);
+
   };
 
   useEffect(() => {

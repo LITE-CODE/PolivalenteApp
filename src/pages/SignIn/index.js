@@ -61,14 +61,14 @@ const SignIn = ({ navigation }) => {
     if (password == "") return setError({ value: "password", message: "Campo não preenchido" });
     setText("CARREGANDO...");
     const response = await userSignIn({ email, password });
-    console.log(response.user)
-    if (response.user?.id) return navigation.navigate("Dashboard");
-    setText("ENTRAR");
-    console.log('entrar')
-    if (response?.error) {
-      setError({ value: "general", message: response.error?.message });
-      setText("ENTRAR")
-     }
+    
+        if (response?.error) {
+          setError({ value: "general", message: response.error?.message });
+          setText("ENTRAR")
+         }
+
+         setText("LOGADO");
+      return navigation.navigate("Dashboard");
   };
 
   return (

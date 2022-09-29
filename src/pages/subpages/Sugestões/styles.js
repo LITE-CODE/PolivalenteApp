@@ -1,112 +1,91 @@
-import {  StyleSheet } from 'react-native'
+import styled from 'styled-components';
 
+export const Container = styled.View`
+   justify-content: space-around;
+   background-color: #ffffff;
+   align-items: center;
+   flex: 1;
+`
 
-export const main = StyleSheet.create({
+export const Text = styled.Text`
+  color: #363636;
+`
 
-  container:{
+export const SendButton = styled.Pressable`
+  justify-content: center;
+  align-items: center;
+  background: #f6d03c;
+  border-radius: 4px;
+  height: 45px;
+  width: 150px;
+  ${(props) => props.select? ` background-color: #ACACAC;`: ""}
+`;
 
-  },
-  textContainer:{
-height: '20%',
-width: '70%',
-textAlign: 'center',
-marginHorizontal: '15%',
-justifyContent: 'center',
-alignItems:'center'
-
-
-  },
-
-  text:{
-    textAlign: 'center',
-    fontFamily: 'Inter-Light',
-    fontSize: 14
-  },
-  formularyContainer:{
-
-  height: '60%',
+export const SendButtonText = styled.Text`
+  font-family: "Inter-Light";
+  color: #eeeeee;
   
-justifyContent:'center',
-alignItems: 'center'
-  },
+  `;
 
-  inputContainer:{
-    width: '100%',
-    alignItems: 'center',
-    marginVertical: 5
-
-  }
-
-})
-
-
-
-export const input = StyleSheet.create({
-  button:{
-    backgroundColor: '#F8DC6D',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowOpacity: 0.29,
-    shadowColor: "#000",
-    shadowRadius: 4.65,
-    borderRadius: 50,
-    marginTop: 20,
-    elevation: 7,
-    width: '50%',
-    height: 45,
-
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    }
-
-    },
+export const ButtonContainer = styled.View`
+  flex: 0.5;
   
-    buttonText:{
-      fontFamily: 'Inter-Bold',
-      color: '#F7F7F8',
-      padding: 2
-    }, 
-  container:{
-   
-    }, 
+  `
 
-    textLenght:{
-      
- color: '#555555',
- fontFamily:'Inter-Light',
- fontSize: 8
-    },
-    lengthContainer:{
-width: '70%',
-alignItems: 'flex-end'
-    },
+export const IntroductionContainer = styled.View`
+justify-content: center;
+align-items: center;
+  margin-top: 50px;
+  background-color: #eeeeee;
+  border-radius: 4px;
+  width: 90%;
+  padding: 15px;
+  flex: 0.3;
 
+`;
+export const InputContainer = styled.View`
+justify-content: space-evenly;
+align-items: center;
+  margin: 25px 0 ;
+  background-color: #eeeeee;
+  border-radius: 4px;
+  width: 90%;
+  padding: 15px;
+  flex: 0.9;
 
-    text:{
-    
-textAlign: 'center',
-   
-      paddingVertical: 5,
-      borderColor: '#555555',
-      borderStyle: 'solid',
-      borderWidth: 0.8,
-      borderRadius: 10,
+`;
 
-      marginRight:8,
-      width: '80%',
-    
-    },
-    focus:{
-      placeholderTextColor: '#F8DC6D',
-      borderColor: '#F8DC6D',
-      borderWidth: 1
-    },
-    error:{
-      placeholderTextColor: 'red',
-      placeholderTextColor: 'red',
-      borderColor: 'red',
- 
-    },
+export const TitleInput = styled.TextInput`
+  background-color: #acacac;
+  width: 75%;
+  height: 50px;
+  padding: 10px;
+  border-radius: 7px;
 
-})
+text-align: center;
+
+`
+export const DescriptionInput = styled.TextInput`
+  background-color: #acacac;
+  width: 65%;
+  height: 100px;
+  padding: 10px;
+  border-radius: 7px;
+
+text-align: center;
+
+`
+export const Label = styled.Text`
+  margin-bottom: 2px;
+  color: #acacac;
+  font-size: 12;
+`;
+
+export const  TitleContainer = styled.View`
+width: 100%;
+align-items: center;
+`
+export const  DescriptionContainer = styled.View`
+width: 100%;
+align-items: center;
+`

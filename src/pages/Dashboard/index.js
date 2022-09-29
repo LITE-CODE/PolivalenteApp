@@ -10,19 +10,20 @@ import { main, informationL, categorys, footer } from './styles'
 
 export default function Dashboard({navigation}) {
 
-  var { user, getCurrentUser } = useAuth()
+  var { getCurrentUser } = useAuth()
   const [information, setInformation] = useState({name: '', class:''});
   const [load, setLoad] = useState(false);
-console.log('...')
-  
+
+  const loadUser = async () => {
+    const user = await getCurrentUser();
+    setInformation({name: user.name, class:user.class})
+    setLoad(true)
+  }
 
 useEffect(() => {
-  getCurrentUser();
-    if (user && !load) {
-      setInformation({name: user.name, class:user.class})
-      setLoad(true)
+    if (!load) {
+      loadUser()
     }
-
   }, [])
   
 

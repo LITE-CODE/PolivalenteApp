@@ -1,85 +1,129 @@
-import { View, Text, TextInput,  TouchableOpacity} from 'react-native'
-import React, {useState} from 'react'
+import React, { useState, useEffect } from "react";
+import { Keyboard } from "react-native";
+import NetInfo from "@react-native-community/netinfo";
 
-import Header from '../../../components/Header';
-import { main, input } from './styles';
+import Header from "../../../components/Header";
+import {
+  Container,
+  Text,
+  ButtonContainer,
+  SendButton,
+  SendButtonText,
+  IntroductionContainer,
+  InputContainer,
+  TitleInput,
+  DescriptionInput,
+  Label,
+  TitleContainer,
+  DescriptionContainer,
+} from "./styles";
 
+import { postChat } from "../../../services/resources/statistics";
+const wifiState = () => NetInfo.fetch().then((state) => state.isConnected);
+const Carregar = ({ navigation }) => (
+  <>
+    <Header navigation={navigation} />
+    <Container>
+      <Text>carregando...</Text>
+    </Container>
+  </>
+);
 
-export default function Sugestoes() {
+const Sugestoes = ({ navigation }) => {
+  const [feedback, setFeedback] = useState({ title: "", description: "" });
+  const [keybordStatus, setKeyboardStatus] = useState(true);
+  const [text, setText] = useState("ENVIAR");
+  const [focus, setFocus] = useState(null);
 
-const [title, setTitle] = useState({focus:false,error:false,value:null}); 
-const [description, setDescription] = useState({focus:false,error:false,value:null}); 
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () =>
+      setKeyboardStatus(false)
+    );
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+      setFocus(null);
+      setKeyboardStatus(true);
+    });
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
+  const sendChat = async () => {
+    if (!feedback.title || !feedback.description)
+      return setError("Complete todos os campos");
 
+    setText("ENVIANDO...");
 
+    const response = await postChat({
+      type: "general",
+      title: feedback.title,
+      description: feedback.description,
+    });
+    setText("ENVIADO");
+    setFeedback({ title: "", description: "" });
+  };
 
   return (
-    <View style={main.container}>
-    <Header/>
+    <>
+      <Header navigation={navigation} />
+      <Container>
+        {keybordStatus && (
+          <IntroductionContainer>
+            <Text>
+              Envie sugestões, denuncias, críticas para melhoria da escola e do
+              aplicativo, Todas mensagens enviadas são totalmente anonimas para
+              melhor confiança e proteção dos alunos.
+            </Text>
+          </IntroductionContainer>
+        )}
+        <InputContainer>
+          {focus != "description" || focus == null ? (
+            <TitleContainer>
+              <Label>titulo</Label>
+              <TitleInput
+                placeholder={"telhado da escola"}
+                maxLength={150}
+                value={feedback.title}
+                onChangeText={(text) =>
+                  setFeedback({ ...feedback, title: text })
+                }
+                onFocus={() => setFocus("title")}
+                onBlur={() => setFocus(null)}
+              />
+            </TitleContainer>
+          ) : (
+            <></>
+          )}
+          {focus != "title" || focus == null ? (
+            <DescriptionContainer>
+              <Label>Descrição</Label>
+              <DescriptionInput
+                placeholder={"trocar as telhas..."}
+                maxLength={2000}
+                multiline={true}
+                numberOfLines={5}
+                value={feedback.description}
+                onChangeText={(text) =>
+                  setFeedback({ ...feedback, description: text })
+                }
+                onFocus={() => setFocus("description")}
+                onBlur={() => setFocus(null)}
+              />
+            </DescriptionContainer>
+          ) : (
+            <></>
+          )}
+        </InputContainer>
 
-   <View style={main.textContainer}> 
-        <Text style={main.text}>Envie uma sugestão ou crítica para a escola, a direção da escola nem os professores saberão quem enviou tal comentario.</Text>
-   </View>
+        <ButtonContainer>
+          <SendButton onPress={sendChat}>
+            <SendButtonText>{text}</SendButtonText>
+          </SendButton>
+        </ButtonContainer>
+      </Container>
+    </>
+  );
+};
 
-   <View style={main.formularyContainer}>
-
-
-  <View style={ main.inputContainer}>
-  <TextInput 
-    
-    placeholder='titulo'  
-    style={[
-      input.text,
-      title.error ? input.error:'',
-      title.focus==true ? input.focus:'',
-     ]}
-
-     onChangeText={text => setTitle({focus:false,error:false,value:text})}
-     maxLength={150}
-     autoCorrect={true}
-     onFocus={() => setTitle({focus:true,error:false,value:title.value})}
-     onBlur={() => setTitle({focus:false,error:false,value:title.value})}
-    />
-    <View style={input.lengthContainer}> 
-    <Text style={input.textLenght}>{(150 - (title.value ? title.value.length: 0))}</Text>
-    </View>
-    
-  </View>
-
-  <View style={ main.inputContainer}>
-  <TextInput 
-    
-    placeholder='descrição'  
-    style={[
-      input.text,
-      description.error ? input.error:'',
-      description.focus==true ? input.focus:'',
-     ]}
-
-     onChangeText={text => setDescription({focus:description.focus,error:false,value:text})}
-     maxLength={2000}
-     multiline={true}
-     numberOfLines={5}
-     autoCorrect={true}
-     onFocus={() => setDescription({focus:true,error:false,value:description.value})}
-     onBlur={() => setDescription({focus:false,error:false,value:description.value})}
-    />
-   <View style={input.lengthContainer}> 
-   <Text style={input.textLenght}>{(2000 - (description.value ? description.value.length: 0))}</Text>
-   </View>
-  </View>
-
-
-    <TouchableOpacity style={input.button} onPress={() => {
-
-        if (!title.value) return setTitle({focus:title.focus,error:true,value:title.value})
-        if (!title.value) return setDescription({focus:false,error:true,value:description.value})
-    }}>
-     
-     <Text style={input.buttonText}>ENVIAR</Text>
-    </TouchableOpacity>
-   </View>
-
-    </View>
-  )
-}
+export default Sugestoes;

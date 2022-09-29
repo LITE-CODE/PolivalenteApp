@@ -17,13 +17,23 @@ const Carregar = ({ navigation }) => (
 );
 
 const Horarios = ({ navigation }) => {
-  var { user, getCurrentUser } = useAuth();
+  var {getCurrentUser } = useAuth();
   const [schedule, setSchedule] = useState({ load: false, render: true });
   const [menu, setMenu] = useState({ load: false, render: false });
+  const [load, setLoad] = useState(false);
+  const [user, setUser] = useState()
 
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
+  const loadUser = async () => {
+    const loadUser = await getCurrentUser();
+    setUser(loadUser)
+    setLoad(true)
+  }
+
+useEffect(() => {
+    if (!load) {
+      loadUser()
+    }
+  }, [])
 
   if (!user) return <Carregar />;
 
