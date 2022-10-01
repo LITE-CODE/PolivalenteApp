@@ -37,7 +37,8 @@ export const AuthProvider = ({ children }) => {
       return localUser
         ? JSON.parse(localUser)
         : { error: { message: "User not logged" } };
-    }
+    }else {
+
 
     const response = await me();
 
@@ -52,6 +53,7 @@ export const AuthProvider = ({ children }) => {
     setUser(data);
     await storage.setItem("user", JSON.stringify(data));
     return data;
+  }
   };
 
   return (

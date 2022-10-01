@@ -1,112 +1,101 @@
-import { View, Text, FlatList, ActivityIndicator, TextInput, TouchableOpacity, Image } from 'react-native'
-import React, {useState} from 'react'
+import React, { useEffect, useState } from "react";
+import { View, ActivityIndicator } from "react-native";
 
-import Header from '../../../components/Header';
-import UserCicle from '../../../components/userCircle'
+import Header from "../../../components/Header";
+import Item from "./item";
 
-import { main, list, input } from './styles';
-import sendImage from '../../../assets/imgs/send.png'
+import { getSchoolWarns } from "../../../services/resources/school";
+import { getClassWarns } from "../../../services/resources/class";
+import useAuth from "../../../hooks/useAuth";
 
-export default function AvisosGerais({navigation}) {
+import { Container, Text, FlatList, FooterContainer, Content } from "./styles";
+import Carregar from "../../../components/Carregar";
 
+const AvisosGerais = ({ navigation }) => {
 
-const user = {
-  permissions: []
-} 
-const [focus, setFocus] = useState(false);
-const [error, setError] = useState(false)
-const [text,setText] = useState();
-const [data, setData] = useState([
-  { id: 0, name: 'João Vitor', date: 1657059884299, description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget nisl mollis urna fringilla consequat.'},
-  { id: 1, name: 'Isabel Luise', date: 1379386800000 , description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget nisl mollis urna fringilla consequat.'},
-  { id: 2, name: 'Jose Vitoriano', date: 1517277600000, description: 'aorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget nisl mollis urna fringilla consequat.'}
+  const {user} = useAuth()
+  const [state, setState] = useState({
+    loading: false,
+    perPage: 0,
+    end: false,
+    initial: true,
+  });
+  const [data, setData] = useState([]);
 
-])
+  const loadRepositories = async () => {
+    if (state.loading || state.end) return;
+    setState({ ...state, loading: true });
+    const response = await getClassWarns(
+      user.class,
+      state.initial ? state.perPage : state.perPage + 8
+    );
 
-const [loading, setLoading ] = useState(false);
+    if (response.data?.error) setData([]);
+    var warns = response.data.warns;
+/*
 
+      warns.forEach(item => {
+        var permissions = item.permissions;
+        if (permissions){
+          permissions.some(x => {
+            if (!user.permissions) return true;
+            if (!user.permissions.includes(x)) return warns.filter(y => y.id != x.id)
+            return false
+        })
+      }
+      })
+*/
+console.log(warns)
+    setData(data.length == 0 ? warns : [...new Set([...data, ...warns])]);
+    setState({
+      initial: false,
+      perPage: Number(state.perPage) + 8,
+      loading: false,
+      end: response.data.warns.amount < state.perPage || warns.length == 0,
+    });
+  };
 
-//formatação de datas
-const formatDate = (milliseconds) => {
-  var months = ['jan.','fev.',' mar.','abr.','maio','jun.','jul.','ago.','set.','out.','nov.','dez.'];
-  var getDate = new Date(milliseconds);
-  return `${getDate.getDate()} de ${ months[getDate.getMonth()]}`;
-}
+  useEffect(() => {
+    if (data.length == 0) {
+        loadRepositories();
+    }
+  }, []);
 
-//função para fazer request das informações na database
-const loadItems = () => {
-  setLoading(true)
-    setData([...data, ...data])
-  setLoading(false)
-}
+  const FooterList = () => {
+    if (state.loading) {
+      return (
+        <View>
+          <ActivityIndicator size={25} color={"#363636"} />
+        </View>
+      );
+    } else if (state.end) {
+      return (
+        <FooterContainer>
+          <Text>não há mais...</Text>
+        </FooterContainer>
+      );
+    }
+    return null;
+  };
 
-const renderItem = ({ item }) => (
-  <View style={main.listItem}>
-    <View  style={list.container}>
-     <UserCicle name={item.name}/>
-     <View>
-      <Text style={list.title}>{item.name}</Text>
-      <Text  style={list.date} >{formatDate(item.date)}</Text>
-     </View>
-
-    </View>
-    <View  style={list.textContainer}>
-      <Text  style={list.description}>{item.description}</Text>
-    </View>
-  </View>
-);
-
-
-
+  if (data.length == 0) return <Carregar navigation={navigation} />;
 
   return (
-    <View style={main.container}>
-      <Header navigation={navigation}/>
-    
+    <>
+      <Header navigation={navigation}></Header>
+      <Container>
+        <FlatList
+          data={data}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({item}) => <Item user={user} item={item}/>}
+          onEndReached={loadRepositories}
+          onEndReachedThreshold={0.1}
+          style={Content}
+          ListFooterComponent={<FooterList />}
+        />
+      </Container>
+    </>
+  );
+};
 
-      <FlatList
-        style={{ marginTop: 30, width:'100%'}}
-        contentContainerStyle={main.list}
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        onEndReached={loadItems}
-        onEndReachedThreshold={0.1}
-       
-      />
- { user?.permissions.find(i=>i=='sendWarn') &&   (
-  <View style={input.container}>
-    <TextInput 
-    
-    placeholder='Envie um novo aviso'
-
-    style={[
-      input.text,
- 
-      error ? input.error:'',
-      focus ? input.focus:'',
-     ]}
-    
-     onChangeText={text => setText(text)}
-  
-     autoCorrect={true}
-     multiline={true}
-     onFocus={() => setFocus(true)}
-     onBlur={() => setFocus(false)}
-    />
-    <TouchableOpacity onPress={() => {
-
-      if (!text) setError(true)
-      
-    }}>
-      <Image  source={sendImage} style={input.image}/>
-    </TouchableOpacity>
-  </View>
- )
-    
-    }
-
-
-    </View>
-  )
-}
+export default AvisosGerais;

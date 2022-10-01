@@ -6,15 +6,9 @@ import Header from "../../../components/Header";
 import useAuth from "../../../hooks/useAuth";
 import Schedules from "./Schedules";
 import Menu from "./Menu";
+import Carregar from "../../../components/Carregar";
 
-const Carregar = ({ navigation }) => (
-  <>
-    <Header navigation={navigation} />
-    <Container>
-      <Text>carregando...</Text>
-    </Container>
-  </>
-);
+
 
 const Horarios = ({ navigation }) => {
   var {getCurrentUser } = useAuth();
@@ -35,7 +29,7 @@ useEffect(() => {
     }
   }, [])
 
-  if (!user) return <Carregar />;
+  if (!user) return <Carregar navigation={navigation} />;
 
   return schedule.render ? (
     <>

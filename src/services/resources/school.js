@@ -1,8 +1,7 @@
 import api from '../api';
 
 export const getSchoolWarns = async (start) => {
-  const params = start ? { params: { start } } : {};
-  return api.get('/school/warns', null, params).catch((error) => {
+  return api.get('/school/warns?start=' + start).catch((error) => {
     return  error.response?.data;
   });
 };

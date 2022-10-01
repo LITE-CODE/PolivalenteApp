@@ -1,104 +1,97 @@
-import { View, Text, FlatList, ActivityIndicator, TextInput, TouchableOpacity, Image } from 'react-native'
-import React, {useState, useEffect} from 'react'
-import { StyleSheet } from 'react-native';
-import Header from '../../../components/Header';
-import UserCicle from '../../../components/userCircle'
+import React, { useEffect, useState } from "react";
+import { View, ActivityIndicator } from "react-native";
 
-import { main, list, input } from './styles';
-import sendImage from '../../../assets/imgs/send.png'
-import { getSchoolWarns } from '../../../services/resources/school';
+import Header from "../../../components/Header";
+import Item from "./item";
 
-export default function AvisosGerais({navigation}) {
+import { getSchoolWarns } from "../../../services/resources/school";
+import useAuth from "../../../hooks/useAuth";
 
-  
-  const [data, setData] = useState([])
-  const [warnsAmount, setWarnsAmount] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [initialLoading, setInitialLoading] = useState(false)
-  
+import { Container, Text, FlatList, FooterContainer, Content } from "./styles";
+import Carregar from "../../../components/Carregar";
+
+const AvisosGerais = ({ navigation }) => {
+
+  const {user} = useAuth()
+  const [state, setState] = useState({
+    loading: false,
+    perPage: 0,
+    end: false,
+    initial: true,
+  });
+  const [data, setData] = useState([]);
+
   const loadRepositories = async () => {
-    if (loading) return;
-    setLoading(true);
-    const response = await getSchoolWarns(warnsAmount);
-    if (response?.error) setData([]);
-    response = response.data.warns;
-      setData([...data, response.warns])
-      setWarnsAmount(response.end)
-      setLoading(false)
-      setInitialLoading(true)
-    }
-  useEffect(() => {
-  
-      if (data.length == 0){
-        console.log('load')
-        loadRepositories()}
-  },[])
-
-const renderItem = ({ item }) => {
-console.log(item)
-  return (
-    <View style={styles.listItem}>
-      <Text>{item.text}</Text>
-    </View>
-  );}
-
-if (!initialLoading){
-return (
-  <View>
-  <Text>Carregando...</Text>
-</View>
-)
-}
-
-return (
-<>
-<Header/>
-<FlatList
-      style={{ marginTop: 30 }}
-      contentContainerStyle={styles.list}
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={item => item.id ? item.id : 0}
-      onEndReached={loadRepositories}
-      onEndReachedThreshold={0.1}
-    />
-</>
-)
-
-
-}
-
-const styles = StyleSheet.create({
-  list: {
-    paddingHorizontal: 20,
-  },
-
-  listItem: {
-    backgroundColor: '#EEE',
-    marginTop: 20,
-    padding: 30,
-  },
-});
-
-
+    if (state.loading || state.end) return;
+    setState({ ...state, loading: true });
+    const response = await getSchoolWarns(
+      state.initial ? state.perPage : state.perPage + 8
+    );
+    if (response.data?.error) setData([]);
+    var warns = response.data.warns.warns;
 /*
-const formatDate = (milliseconds) => {
-  var months = ['jan.','fev.',' mar.','abr.','maio','jun.','jul.','ago.','set.','out.','nov.','dez.'];
-  var getDate = new Date(milliseconds);
-  return `${getDate.getDate()} de ${ months[getDate.getMonth()]}`;
-}
 
-  <View style={main.listItem}>
-    <View  style={list.container}>
-     <UserCicle name={item.id}/>
-     <View>
-      <Text style={list.title}>{item.id}</Text>
-      <Text  style={list.date} >{formatDate(item.date)}</Text>
-     </View>
-
-    </View>
-    <View  style={list.textContainer}>
-      <Text  style={list.description}>{item.text}</Text>
-    </View>
-  </View>
+      warns.forEach(item => {
+        var permissions = item.permissions;
+        if (permissions){
+          permissions.some(x => {
+            if (!user.permissions) return true;
+            if (!user.permissions.includes(x)) return warns.filter(y => y.id != x.id)
+            return false
+        })
+      }
+      })
 */
+    setData(data.length == 0 ? warns : [...new Set([...data, ...warns])]);
+    setState({
+      initial: false,
+      perPage: Number(state.perPage) + 8,
+      loading: false,
+      end: response.data.warns.amount < state.perPage || warns.length == 0,
+    });
+  };
+
+  useEffect(() => {
+    if (data.length == 0) {
+        loadRepositories();
+    }
+  }, []);
+
+  const FooterList = () => {
+    if (state.loading) {
+      return (
+        <View>
+          <ActivityIndicator size={25} color={"#363636"} />
+        </View>
+      );
+    } else if (state.end) {
+      return (
+        <FooterContainer>
+          <Text>não há mais...</Text>
+        </FooterContainer>
+      );
+    }
+    return null;
+  };
+
+  if (data.length == 0) return <Carregar navigation={navigation} />;
+
+  return (
+    <>
+      <Header navigation={navigation}></Header>
+      <Container>
+        <FlatList
+          data={data}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({item}) => <Item user={user} item={item}/>}
+          onEndReached={loadRepositories}
+          onEndReachedThreshold={0.1}
+          style={Content}
+          ListFooterComponent={<FooterList />}
+        />
+      </Container>
+    </>
+  );
+};
+
+export default AvisosGerais;

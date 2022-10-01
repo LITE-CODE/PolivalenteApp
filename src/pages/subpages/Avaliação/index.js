@@ -13,20 +13,14 @@ import { getTeachers } from '../../../services/resources/class';
 import useAuth from "../../../hooks/useAuth";
 
 import { Container, Label, Title, SendButton, SendButtonText, Text, SelectContainer, Feedback, FeedbackContainer, ButtonContainer, StarsContainer, Input, GeneralError, GeneralText} from './styles';
+import Carregar from '../../../components/Carregar';
 
 const wifiState = () => NetInfo.fetch().then(state => state.isConnected);
-const Carregar = ({ navigation }) => (
-  <>
-    <Header navigation={navigation} />
-    <Container>
-      <Text>carregando...</Text>
-    </Container>
-  </>
-);
 
-export default function Avaliação() {
 
-  var { user, getCurrentUser } = useAuth();
+export default function Avaliação({navigation}) {
+
+  var { user } = useAuth();
 
   const [feedback, setFeedback] = useState({stars: 0, avaliation: "", select: ""});
   const [load, setLoad] = useState({ storage: false, api: false });
@@ -71,11 +65,10 @@ export default function Avaliação() {
   }
 
   useEffect(() => {
-    getCurrentUser();
-    if (user && !load.api) {
+    if (user && !load.api && !load.storage ) {
       loadMatters();
-    }
-  });
+    } 
+      });
 
 
   useEffect(() => {
@@ -87,7 +80,8 @@ export default function Avaliação() {
     };
   }, []);
 
-  if (!user || !matters) return <Carregar />;
+
+  if (!user || !matters) return <Carregar navigation={navigation} />;
 
   const starProps = (id) => feedback.stars<id ? {name: 'md-star-outline', color: "#555555"} : {name: 'md-star-sharp', color: '#F8DC6D'}
   const setStars = (id) => {
@@ -100,7 +94,7 @@ export default function Avaliação() {
     <Container>
     {keybordStatus && (
        <SelectContainer>
-       <SelectClass max={1} value={[...matters.map(x => x.matter), 'portugues', 'ingles', 'ed.fisica', 'historia', 'geografia']} onUpdate={(selects) => {
+       <SelectClass max={1} value={[...matters.map(x => x.matter)]} onUpdate={(selects) => {
         setFeedback({...feedback, select: selects[0]})
         if (error == "Nenhuma materia selecionada") setError()
         }}/>

@@ -4,7 +4,9 @@ import React from 'react'
 import { main } from './styles'
 
 export default function Header(props) {
-
+if (!props.name) return <View style={[main.container, {backgroundColor: generateColor()}]}>
+<Text style={main.text}>?</Text>  
+</View>
 var name = props.name.split(" ");
 var letters = name.length == 1 ? name[0].slice(0,1) : name[0].slice(0,1) + name[name.length - 1].slice(0,1);
 function generateColor() {
@@ -18,9 +20,11 @@ function generateColor() {
   return color;
   
 }
+
+
   return (
-<View style={[main.container, {backgroundColor: generateColor()}]}>
-    <Text style={main.text}>{letters}</Text>  
+<View style={[main.container, {backgroundColor: '#40E0D0'}]}>
+    <Text style={main.text}>{letters.toUpperCase()}</Text>  
 </View>
   )
 }

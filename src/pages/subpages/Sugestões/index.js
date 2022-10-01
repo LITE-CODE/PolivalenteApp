@@ -20,14 +20,6 @@ import {
 
 import { postChat } from "../../../services/resources/statistics";
 const wifiState = () => NetInfo.fetch().then((state) => state.isConnected);
-const Carregar = ({ navigation }) => (
-  <>
-    <Header navigation={navigation} />
-    <Container>
-      <Text>carregando...</Text>
-    </Container>
-  </>
-);
 
 const Sugestoes = ({ navigation }) => {
   const [feedback, setFeedback] = useState({ title: "", description: "" });
