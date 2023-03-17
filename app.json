@@ -4,10 +4,10 @@
     "slug": "app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/icon.png",
+    "icon": "./src/assets/imgs/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./src/assets/splash.png",
+      "image": "./src/assets/imgs/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#eeeeee"
     },
@@ -19,12 +19,19 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./src/assets/imgs/adaptive-icon.png",
+        "backgroundColor": "#060606"
+      },
+      "package": "com.darknx.app"
     },
     "web": {
-      "favicon": "./src/assets/favicon.png"
-    }
+      "favicon": "./src/assets/imgs/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f764e530-4b90-405c-8a33-f00bef08998d"
+      }
+    },
+    "owner": "darknx"
   }
 }
