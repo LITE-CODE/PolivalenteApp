@@ -1,6 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import useNetworkStatus from './useNetworkStatus';
 import { useState, useEffect } from 'react';
+
+import storage from '../utils/storage';
 
 const useUserStatus = () => {
     const [hasUser, setHasUser] = useState(null);
@@ -10,7 +11,7 @@ const useUserStatus = () => {
     useEffect(() => {
       const getUserStatus = async () => {
         try {
-          const value = await AsyncStorage.getItem('user');
+          const value = await storage.get('user');
           if (value !== null) {
             setHasUser(true);
           } else {
