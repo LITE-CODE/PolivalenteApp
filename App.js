@@ -37,7 +37,7 @@ export default function App() {
   return (
     <ThemeProvider theme={styles.LightTheme}>
         <AuthProvider> 
-          <StatusBar  bbackgroundColor={"#F6D03C"} barStyle="light-content"></StatusBar>
+          <StatusBar  backgroundColor={"#F6D03C"} barStyle="light-content"></StatusBar>
             <Router/>
         </AuthProvider>
     </ThemeProvider>
