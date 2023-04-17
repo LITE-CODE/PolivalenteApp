@@ -1,25 +1,31 @@
 import Constants from 'expo-constants';
 import { View, Text } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Feather from "react-native-vector-icons/Feather";
 import { StatusBar } from 'expo-status-bar';
 import { LightTheme } from '../../styles/themes/LightTheme';
 
-
+import { AuthContext } from '../../contexts/AuthContext';
 import Button from '../../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import { Container,ButtonsContainer, BackContainer, TextContainer, Title, Description, InputContainer, Label, LabelContainer} from './styles';
 import Input from '../../components/Input';
 import useKeyboardStatus from '../../hooks/useKeyboardStatus';
 import api from '../../utils/api';
+
 const Signin = () => {
+  const {user,signIn} = useContext(AuthContext);
   const [email, setEmail] = useState({value:"", error:false})
   const [password, setPassword] = useState({value:"", error:false, view:false})
   const keyboardStatus = useKeyboardStatus()
 
   const navigation = useNavigation()
   const login = async () => {
-    var response = await api
+    var response = await signIn({
+      email: email.value,
+      password: password.value
+    })
+
     
   }
   const backPage = () => navigation.goBack();
@@ -71,7 +77,7 @@ const Signin = () => {
        {
         !keyboardStatus && (
           <ButtonsContainer>
-           <Button type={1} text={"ENTRAR"} onPress={() => login}/>
+           <Button type={1} text={"ENTRAR"} onPress={() => login()}/>
           </ButtonsContainer>
         )
        }

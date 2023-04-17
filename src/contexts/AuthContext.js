@@ -1,13 +1,38 @@
 import React, { createContext, useState } from "react";
 
+import axios from "axios";
+import storage from "../utils/storage";
+import api from "../utils/api";
+
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
     
     const [user, setUser] = useState(null);
 
-    const getCurrentUser= async () => {}
-    const signIn = async () => {}
+    const getCurrentUser= async (token) => {
+      var response = await api.get('/user/me',{ 
+        headers: { 'authorization': token }
+      });
+      const data = response.data.user;
+      setUser(data);
+      await storage.set("user", data);
+      return data;
+    }
+    const signIn = async (email, password) => {
+      try {
+        var response = await axios.get('http://localhost:3000/v1/ping', {email,password})        
+      } catch (error) {
+        console.log(error)
+      }
+      return 
+      if (response?.error) return response;
+      const data = response.data;
+      if (data?.acessToken) await storage.set('token');
+      console.log('teste')
+      return await getCurrentUser(data?.acessToken);
+    
+    }
     const signUp = async () => {}
 
     return (
