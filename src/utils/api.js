@@ -3,7 +3,7 @@ import axios from 'axios';
 import storage from './storage';
 
 const api = axios.create({
-    baseURL:'https://api.eepolivalente.com/v1'
+    baseURL:'http://localhost:3000/v1'
  })
  
  api.interceptors.request.use(async (config) => {

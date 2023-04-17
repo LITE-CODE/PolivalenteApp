@@ -7,10 +7,11 @@ import Calendar from '../pages/calendar';
 import Settings from '../pages/settings';
 import Warnings from '../pages/warnings';
 import Loading from '../pages/loading';
+import Signin from '../pages/Signin';
 import Home from '../pages/home';
 import News from '../pages/news';
 
-const routes = [Calendar, Settings, Warnings, Loading, Home, News, InitialLoginPage]
+const routes = [Calendar, Settings, Warnings, Loading, Home, News, InitialLoginPage, Signin]
 const Stack = createNativeStackNavigator();
 
 const Router = () => {
