@@ -14,11 +14,11 @@ import News from '../pages/news';
 const routes = [Calendar, Settings, Warnings, Loading, Home, News, InitialLoginPage, Signin]
 const Stack = createNativeStackNavigator();
 
-const Router = () => {
+const Router = ({hasUser}) => {
   
   return (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName="InitialLoginPage">
+    <Stack.Navigator initialRouteName={hasUser ? "Home" : "InitialLoginPage"}>
       {
         routes.map((screen, i) => (
           <Stack.Screen key={i} name={screen.name} component={screen} options={{ headerShown: false }}/>

@@ -3,12 +3,12 @@ import axios from 'axios';
 import storage from './storage';
 
 const api = axios.create({
-    baseURL:'http://localhost:3000/v1'
+    baseURL:'https://poli.darknx.repl.co/v1'
  })
  
  api.interceptors.request.use(async (config) => {
  
-  const token =  await storage.get('token') || '';
+  const token =  await storage.get('token').response || '';
  
   
   config.headers = {

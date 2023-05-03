@@ -12,7 +12,7 @@ const useUserStatus = () => {
       const getUserStatus = async () => {
         try {
           const value = await storage.get('user');
-          if (value !== null) {
+          if (value.response !== null) {
             setHasUser(true);
           } else {
             setHasUser(false);

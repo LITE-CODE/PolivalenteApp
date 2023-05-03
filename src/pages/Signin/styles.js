@@ -59,6 +59,12 @@ export const Label = styled.Text`
   font-size: 12px;
 `;
 
+export const ErrorMessage = styled.Text`
+  margin-bottom: 2px;
+  font-size: 12px;
+  color: red;
+`;
+
 export const LabelContainer = styled.View`
 width: 70%;
 margin: 0 15%;

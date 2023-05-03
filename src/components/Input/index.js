@@ -9,7 +9,7 @@ const Input = (props) => {
   return (
     <Container error={props.error} focus={focus}>
       {
-        props?.icon && <Feather color={LightTheme.colors.secondaryText} size={25} name={props.icon}/>
+        props?.icon && <Feather color={LightTheme.colors.text} size={25} name={props.icon}/>
       }
       <InputContainer
           onFocus={() => setFocus(true)}

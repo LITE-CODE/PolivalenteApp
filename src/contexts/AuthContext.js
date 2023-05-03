@@ -1,6 +1,7 @@
 import React, { createContext, useState } from "react";
-
 import axios from "axios";
+
+import useNetworkStatus from '../hooks/useNetworkStatus';
 import storage from "../utils/storage";
 import api from "../utils/api";
 
@@ -8,28 +9,38 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
     
-    const [user, setUser] = useState(null);
-
-    const getCurrentUser= async (token) => {
-      var response = await api.get('/user/me',{ 
-        headers: { 'authorization': token }
-      });
+  const { isConnected } = useNetworkStatus();
+  const [user, setUser] = useState(null);
+  
+  const getCurrentUser = async (token) => {
+    try {
+        if (isConnected){
+          const { response, json } = await storage.get('user');
+          return json(response);
+        }
+        if (!token) token = await storage.get('token');
+        if (!token?.response) return { error: 'not JWT token'};
+        var response = await axios.get('https://poli.darknx.repl.co/v1/user/me',{ 
+          headers: { 'authorization': token?.response }
+        });
+      } catch (error) {
+        console.log(error)
+        return error.response?.data;
+      }
       const data = response.data.user;
       setUser(data);
       await storage.set("user", data);
       return data;
+      
     }
-    const signIn = async (email, password) => {
+    const signIn = async (datas) => {
       try {
-        var response = await axios.get('http://localhost:3000/v1/ping', {email,password})        
+        var response = await api.post('/user/signin', datas)  
       } catch (error) {
-        console.log(error)
+        return error.response?.data;
       }
-      return 
-      if (response?.error) return response;
       const data = response.data;
-      if (data?.acessToken) await storage.set('token');
-      console.log('teste')
+      if (data?.acessToken) await storage.set('token', data.acessToken);
       return await getCurrentUser(data?.acessToken);
     
     }

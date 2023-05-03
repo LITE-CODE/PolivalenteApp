@@ -32,13 +32,14 @@ export default function App() {
 
 
   if (!loaded) return <Loading text={"carregando informações..."}/>
+  if (hasUser === null) return <Loading text={"carregando usuario..."}/>
 
 
   return (
     <ThemeProvider theme={styles.LightTheme}>
         <AuthProvider> 
           <StatusBar  backgroundColor={"#F6D03C"} barStyle="light-content"></StatusBar>
-            <Router/>
+            <Router isConnected={isConnected} hasUser={hasUser}/>
         </AuthProvider>
     </ThemeProvider>
 
