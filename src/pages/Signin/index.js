@@ -32,13 +32,15 @@ const Signin = () => {
       email: email.value,
       password: password.value
     })
+
     if (response?.error) return setError(response?.error.message) & setIsLoading(false);
     setError("");
     setIsLoading(false);
     if (response?.id) return navigation.reset({
       index: 0,
-      routes: [{ name: 'InitialLoginPage' }],
+      routes: [{ name: 'Home' }],
     });
+
     setError("Erro ao entrar.")
   }
   const backPage = () => navigation.goBack();

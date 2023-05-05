@@ -14,25 +14,71 @@ export const AuthProvider = ({ children }) => {
   
   const getCurrentUser = async (token) => {
     try {
-        if (isConnected){
+        if (!isConnected){
           const { response, json } = await storage.get('user');
-          return json(response);
+          return {...json(response), isConnected: false};
         }
-        if (!token) token = await storage.get('token');
-        if (!token?.response) return { error: 'not JWT token'};
+        if (!token) {
+          token = await storage.get('token');
+          if (!token?.response) return { error: 'not JWT token'};
+          token = token?.response
+        }
         var response = await axios.get('https://poli.darknx.repl.co/v1/user/me',{ 
-          headers: { 'authorization': token?.response }
+          headers: { 'authorization':  token }
         });
       } catch (error) {
-        console.log(error)
         return error.response?.data;
       }
       const data = response.data.user;
       setUser(data);
       await storage.set("user", data);
+      return {...data, acessToken: token};
+      
+    }
+
+  const getCurrentMenu = async (token, shift) => {
+    try {
+        if (!isConnected){
+          const { response, json } = await storage.get('menu');
+          if (!response) return { error: 'sem cardapio'}
+          return json(response);
+        }
+        if (!token) token = await storage.get('token');
+        if (!token?.response) return { error: 'not JWT token'};
+        var response = await axios.get('https://poli.darknx.repl.co/v1/school/menu/' + shift,{ 
+          headers: { 'authorization': token?.response }
+        });
+      } catch (error) {
+        return error.response?.data;
+      }
+      const data = response.data.menu;
+      await storage.set("menu", data);
+
       return data;
       
     }
+
+    const getCurrentWarns = async (token, size) => {
+      try {
+          if (!isConnected){
+            const { response, json } = await storage.get('warns');
+            if (!response) return { error: 'sem avisos'}
+            return json(response);
+          }
+          if (!token) token = await storage.get('token');
+          if (!token?.response) return { error: 'not JWT token'};
+          var response = await axios.get('https://poli.darknx.repl.co/v1/school/warns/',{ 
+            headers: { 'authorization': token?.response }
+          });
+        } catch (error) {
+          return error.response?.data;
+        }
+        const data = response.data.warns;
+        if (!size) await storage.set("warns", data);
+        return data;
+        
+      }
+
     const signIn = async (datas) => {
       try {
         var response = await api.post('/user/signin', datas)  
@@ -47,7 +93,7 @@ export const AuthProvider = ({ children }) => {
     const signUp = async () => {}
 
     return (
-        <AuthContext.Provider value={{ user, signIn, signUp, getCurrentUser }}>
+        <AuthContext.Provider value={{ user, signIn, signUp, getCurrentUser, getCurrentMenu, getCurrentWarns}}>
           {children}
         </AuthContext.Provider>
       );

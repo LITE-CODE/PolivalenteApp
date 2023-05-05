@@ -44,7 +44,7 @@ const DashboardLayout = ({ children, navigationActive }) => {
         </NavbarSearch>
       </Navbar>
       <Children keyboardStatus={keyboardStatus}>
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1, width: '100%', padding: '5%'}}>
           {children}
         </ScrollView>
       </Children>
