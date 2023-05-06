@@ -19,6 +19,9 @@ const CreateClass = () => {
   const [user, setUser] = useState();
   const [data, setData] = useState({id: "", name: "", create: Date.now(), shift: 'manhã', author: null, error: false})
 
+const sendData = async () => {
+
+}
 
 useEffect(() => {
   const fetchData = async () => {
