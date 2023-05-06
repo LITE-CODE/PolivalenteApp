@@ -9,13 +9,6 @@ import DashboardLayout from '../../components/dashboardLayout';
 import { Container, FlatList, RedirectText, WarnRedirectText,  WarnTitleContainer, WarnRedirect, ItemsContainer, Item, ExpansiveButton, ItemText, Warn, Redirect, FoodContainer, FoodIcon, FoodInformations, FoodTitle, FoodText, FoodDate, WarnFlatlist, WarnsContainer, WarnFooter} from './styles';
 import { LightTheme } from '../../styles/themes/LightTheme';
 
-const formatarData = timestamp => {
-  const data = new Date(timestamp);
-  const dia = data.getDate().toString().padStart(2, '0');
-  const mes = (data.getMonth() + 1).toString().padStart(2, '0');
-  const ano = data.getFullYear();
-  return `${dia}/${mes}/${ano}`;
-};
 
 
 const Home = () => {
@@ -28,17 +21,20 @@ const Home = () => {
   const [warns, setWarns] = useState(null);
 
   const data = [
-    { id: 1, text: 'Horarios', icon: 'clock'},
-    { id: 2, text: 'Boletim', icon: 'file-text'},
-    { id: 3, text: 'Turma', icon: 'users'},
-    { id: 4, text: 'Criar turma', icon: 'plus-square'},
-    { id: 5, text: 'Cadastrar aluno', icon: 'user-plus'},
-    { id: 6, text: 'Novo aviso', icon: 'inbox'},
+    { id: 1, text: 'Horarios', icon: 'clock', route: "CreateClass"},
+    { id: 2, text: 'Boletim', icon: 'file-text', route: "CreateClass"},
+    { id: 3, text: 'Turma', icon: 'users', route: "CreateClass"},
+    { id: 4, text: 'Criar turma', icon: 'plus-square', route: "CreateClass"},
+    { id: 5, text: 'Cadastrar aluno', icon: 'user-plus', route: "CreateClass"},
+    { id: 6, text: 'Novo aviso', icon: 'inbox', route: "CreateClass"},
   ];
   const Element = ({ item }) => {
+    
+    const setRoute = () =>  navigation.navigate(item.route);     
+
     return (
-      <Item style={{ flex: 1, margin: 8 }}>
-        <Feather onPress={(x) => {}} name={item.icon} size={45} color={LightTheme.colors.primary} />
+      <Item onPress={setRoute} style={{ flex: 1, margin: 8 }}>
+        <Feather name={item.icon} size={45} color={LightTheme.colors.primary} />
         <ItemText>{item.text}</ItemText>
       </Item>
     );

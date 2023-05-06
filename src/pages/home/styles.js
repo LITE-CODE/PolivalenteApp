@@ -63,7 +63,7 @@ export const ExpansiveButton = styled.View`
        height: auto;
 `
 
-export const Item = styled.View`
+export const Item = styled.TouchableOpacity`
      flex: 1;
      width: 100%;
        height: 100px;
@@ -72,7 +72,6 @@ export const Item = styled.View`
        justify-content: space-between;
        padding: 10px 5px;
        align-items: center;
-  
        background-color: ${({theme}) => theme.colors.secondaryBackground};
 `
 export const Warn = styled.View`

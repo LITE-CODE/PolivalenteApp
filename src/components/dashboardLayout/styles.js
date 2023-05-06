@@ -58,6 +58,7 @@ export const Input = styled.TextInput`
 export const Children = styled.View`
        height: ${props => props.keyboardStatus ? vh(85) : vh(70)};
        width: 100%;
+       flex: 1;
        
 `
 

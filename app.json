@@ -2,7 +2,7 @@
   "expo": {
     "name": "Polivalente",
     "slug": "app",
-    "version": "2.0.4",
+    "version": "2.0.5",
     "orientation": "portrait",
     "icon": "./src/assets/imgs/icon.png",
     "userInterfaceStyle": "light",
@@ -19,10 +19,9 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/imgs/adaptive-icon.png",
-        "backgroundColor": "#060606"
+        "foregroundImage": "./src/assets/imgs/adaptive-icon.png"
       },
-      "package": "com.darknx.app"
+      "package": "com.polivalente.bonfire"
     },
     "web": {
       "favicon": "./src/assets/imgs/favicon.png"

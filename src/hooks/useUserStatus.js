@@ -12,13 +12,13 @@ const useUserStatus = () => {
       const getUserStatus = async () => {
         try {
           const value = await storage.get('user');
-          if (value.response !== null) {
+          if (value) {
             setHasUser(true);
           } else {
             setHasUser(false);
           }
         } catch (error) {
-          console.log(error);
+          console.log('getUserStatus-error: ', error);
         }
       };
       if (isConnected) {

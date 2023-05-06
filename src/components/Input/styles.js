@@ -18,10 +18,14 @@ export const Container = styled.View`
         background-color: #FEBBBB;
         border-bottom-color: red;
     `}
+     ${props => props?.border && `
+        border-radius: ${props?.border};
+    `}
+
+    
 `
 
 export const InputContainer = styled.TextInput`
-margin: 0 10px;
-width: 70%;
- 
+flex: 1;
+margin: 0 10px; 
 `
