@@ -25,7 +25,7 @@ const Home = () => {
     { id: 2, text: 'Boletim', icon: 'file-text', route: "CreateClass"},
     { id: 3, text: 'Turma', icon: 'users', route: "CreateClass"},
     { id: 4, text: 'Criar turma', icon: 'plus-square', route: "CreateClass"},
-    { id: 5, text: 'Cadastrar aluno', icon: 'user-plus', route: "CreateClass"},
+    { id: 5, text: 'Cadastrar aluno', icon: 'user-plus', route: "CreateUser"},
     { id: 6, text: 'Novo aviso', icon: 'inbox', route: "CreateClass"},
   ];
   const Element = ({ item }) => {

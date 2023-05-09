@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect,useState, useContext} from 'react';
 import { Text as Title, View, ActivityIndicator } from 'react-native';
-import { Container, Text, ButtonsContainer, RadioContainer, Radio, ErrorMessage, RadioText, InputsContainer,Label} from './styles';
+import { Container, Text, ButtonsContainer, LabelContainer, RadioContainer, Radio, ErrorMessage, RadioText, InputsContainer,Label} from './styles';
 import Button from '../../components/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Fontisto from 'react-native-vector-icons/Fontisto'
@@ -14,14 +14,14 @@ import Input from '../../components/Input';
 import { LightTheme } from '../../styles/themes/LightTheme';
 import axios from 'axios';
 import useKeyboardStatus from '../../hooks/useKeyboardStatus';
-const CreateClass = () => {
+const CreateUser = () => {
   const { getCurrentUser, getCurrentMenu, getCurrentWarns} = useContext(AuthContext);
   const navigation = useNavigation();
   const [user, setUser] = useState();
   const [error, setError] = useState("");
   const keyboardStatus = useKeyboardStatus();
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState({id: "", name: "", created: Date.now(), shift: 'manhã', author: null, errorName: false, errorId: false})
+  const [data, setData] = useState({id: "", name: "", created: Date.now(), type: "normal", shift: 'manhã', author: null, errorName: false, errorId: false})
 
 const sendData = async () => {
   if (data.name == "") return setData({...data, errorName: true})
@@ -63,19 +63,19 @@ if (!user) return <Loading text={"carregando dados..."}/>
      
       <Container>
       <InputsContainer>
-      <Label>Nome da turma</Label>
+      <Label>Nome completo do aluno</Label>
         <Input 
           icon={"type"}
-          placeholder={"1° reg 1"}
+          placeholder={"Carlos Eduardo Silva"}
           button={data.name.length > 0 ? 'x-circle' : ''}
           onChangeText={(text) => setData({...data, errorName:false, name: text})}
           onButtonClick={() => setData({...data, name: ""})}
           error={data.errorName}
           value={data.name}
         />
-        <Label>Identificador</Label>
+        <Label>Identificador da sala</Label>
         <Input 
-          icon={"paperclip"}
+          icon={"users"}
           placeholder={"1reg1"}
           button={data.id.length > 0 ? 'x-circle' : ''}
           onChangeText={(text) => setData({...data, errorId:false, id: text})}
@@ -86,7 +86,9 @@ if (!user) return <Loading text={"carregando dados..."}/>
 
         <ErrorMessage>{error}</ErrorMessage>
       </InputsContainer>
-   
+<LabelContainer>
+<Label>Turno do aluno</Label>
+</LabelContainer>
       <RadioContainer>
           <Radio onPress={() => setData({...data, shift: "manhã"})}>
             <Fontisto  name={data.shift == 'manhã' ? "radio-btn-active" : "radio-btn-passive"}color={LightTheme.colors.secondaryText} size={20} />
@@ -101,8 +103,27 @@ if (!user) return <Loading text={"carregando dados..."}/>
             <RadioText>noite</RadioText>
           </Radio>
         </RadioContainer>
+
+
+        <LabelContainer>
+<Label>Tipo de conta</Label>
+</LabelContainer>
+      <RadioContainer>
+          <Radio onPress={() => setData({...data, type: "normal"})}>
+            <Fontisto  name={data.type == 'normal' ? "radio-btn-active" : "radio-btn-passive"}color={LightTheme.colors.secondaryText} size={20} />
+            <RadioText>normal</RadioText>
+          </Radio>
+          <Radio onPress={() => setData({...data, type: "esportista"})}>
+          <Fontisto name={data.type == 'esportista' ? "radio-btn-active" : "radio-btn-passive"}color={LightTheme.colors.secondaryText} size={20} />
+            <RadioText>esportista</RadioText>
+          </Radio>
+          <Radio onPress={() => setData({...data, type: "cap.turma"})}>
+          <Fontisto name={data.type == 'cap.turma' ? "radio-btn-active" : "radio-btn-passive"}color={LightTheme.colors.secondaryText} size={20} />
+            <RadioText>cap.turma</RadioText>
+          </Radio>
+        </RadioContainer>
       <ButtonsContainer>
-        <Button onPress={sendData} text={isLoading ? <ActivityIndicator color={LightTheme.colors.background} size={25}/> : 'Criar Turma'}/>
+        <Button onPress={sendData} text={isLoading ? <ActivityIndicator color={LightTheme.colors.background} size={25}/> : 'Cadastrar Aluno'}/>
         <Button onPress={() => setData({id: "", name: "", create: Date.now(), shift: 'manhã', author: null, error: false})}type={2} text={"Limpar campos"} />
       </ButtonsContainer>
     
@@ -111,4 +132,4 @@ if (!user) return <Loading text={"carregando dados..."}/>
   )
 }
 
-export default CreateClass
+export default CreateUser

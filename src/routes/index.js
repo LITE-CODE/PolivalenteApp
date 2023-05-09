@@ -4,6 +4,7 @@ import React from 'react';
 
 import InitialLoginPage from '../pages/InitialLoginPage';
 import CreateClass from '../pages/createClass';
+import CreateUser from '../pages/createUser';
 import Calendar from '../pages/calendar';
 import Settings from '../pages/settings';
 import Warnings from '../pages/warnings';
@@ -12,7 +13,7 @@ import Signin from '../pages/Signin';
 import Home from '../pages/home';
 import News from '../pages/news';
 
-const routes = [Calendar, Settings, Warnings, Loading, Home, News, InitialLoginPage, Signin, CreateClass]
+const routes = [Calendar, Settings, Warnings, Loading, Home, News, InitialLoginPage, Signin, CreateClass, CreateUser]
 const Stack = createNativeStackNavigator();
 
 const Router = ({hasUser}) => {

@@ -29,8 +29,8 @@ export const ButtonsContainer = styled.View`
 `
 
 export const RadioContainer = styled.View`
-       flex-direction: column;
-       justify-content: space-around;
+       flex-direction: row;
+       justify-content: space-between;
        align-items: flex-start;
        width: 100%;
        height: auto;
@@ -60,3 +60,7 @@ export const ErrorMessage = styled.Text`
   font-size: 12px;
   color: red;
 `;
+
+export const LabelContainer = styled.View`
+width: 100%;
+`
