@@ -21,19 +21,16 @@ const CreateUser = () => {
   const [error, setError] = useState("");
   const keyboardStatus = useKeyboardStatus();
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState({id: "", name: "", created: Date.now(), type: "normal", shift: 'manhã', author: null, errorName: false, errorId: false})
+  const [data, setData] = useState({id: "", name: "", created: Date.now(), type: "aluno", shift: 'manhã', author: null, errorName: false, errorId: false, leader: false, sport: false})
 
 const sendData = async () => {
   if (data.name == "") return setData({...data, errorName: true})
   if (data.id == "") return setData({...data, errorId: true})
   setIsLoading(true)
   try {
-    var response = await axios.post('https://poli.darknx.repl.co/v1/class/create', {
-      id: data.id,
-      name: data.name,
-      created: data.created,
-      shift: data.shift,
-      author:user?.id
+    var response = await axios.post('https://poli.darknx.repl.co/v1/user/create', {
+      author: user?.id,
+      ...data
     })
     setIsLoading(false)
   } catch (error) {
@@ -63,7 +60,7 @@ if (!user) return <Loading text={"carregando dados..."}/>
      
       <Container>
       <InputsContainer>
-      <Label>Nome completo do aluno</Label>
+      <Label>Nome completo do usuario</Label>
         <Input 
           icon={"type"}
           placeholder={"Carlos Eduardo Silva"}
@@ -73,10 +70,10 @@ if (!user) return <Loading text={"carregando dados..."}/>
           error={data.errorName}
           value={data.name}
         />
-        <Label>Identificador da sala</Label>
+        <Label>Identificador(es) da(s) sala(s)</Label>
         <Input 
           icon={"users"}
-          placeholder={"1reg1"}
+          placeholder={"1reg1 ou 1reg1,1reg2"}
           button={data.id.length > 0 ? 'x-circle' : ''}
           onChangeText={(text) => setData({...data, errorId:false, id: text})}
           onButtonClick={() => setData({...data, id: ""})}
@@ -87,7 +84,7 @@ if (!user) return <Loading text={"carregando dados..."}/>
         <ErrorMessage>{error}</ErrorMessage>
       </InputsContainer>
 <LabelContainer>
-<Label>Turno do aluno</Label>
+<Label>Turno do usuario</Label>
 </LabelContainer>
       <RadioContainer>
           <Radio onPress={() => setData({...data, shift: "manhã"})}>
@@ -104,24 +101,55 @@ if (!user) return <Loading text={"carregando dados..."}/>
           </Radio>
         </RadioContainer>
 
-
         <LabelContainer>
-<Label>Tipo de conta</Label>
+<Label>Aluno ou Professor ?</Label>
 </LabelContainer>
       <RadioContainer>
-          <Radio onPress={() => setData({...data, type: "normal"})}>
-            <Fontisto  name={data.type == 'normal' ? "radio-btn-active" : "radio-btn-passive"}color={LightTheme.colors.secondaryText} size={20} />
-            <RadioText>normal</RadioText>
+          <Radio onPress={() => setData({...data, type: "aluno"})}>
+            <Fontisto  name={data.type == 'aluno' ? "radio-btn-active" : "radio-btn-passive"}color={LightTheme.colors.secondaryText} size={20} />
+            <RadioText>aluno</RadioText>
           </Radio>
-          <Radio onPress={() => setData({...data, type: "esportista"})}>
-          <Fontisto name={data.type == 'esportista' ? "radio-btn-active" : "radio-btn-passive"}color={LightTheme.colors.secondaryText} size={20} />
-            <RadioText>esportista</RadioText>
+          <Radio onPress={() => setData({...data, type: "professor"})}>
+          <Fontisto name={data.type == 'professor' ? "radio-btn-active" : "radio-btn-passive"}color={LightTheme.colors.secondaryText} size={20} />
+            <RadioText>professor</RadioText>
           </Radio>
-          <Radio onPress={() => setData({...data, type: "cap.turma"})}>
-          <Fontisto name={data.type == 'cap.turma' ? "radio-btn-active" : "radio-btn-passive"}color={LightTheme.colors.secondaryText} size={20} />
-            <RadioText>cap.turma</RadioText>
+         
+        </RadioContainer>
+
+      {
+        data.type == "aluno" && (
+          <>
+
+        <LabelContainer>
+<Label>O usuario é um esportista?</Label>
+</LabelContainer>
+      <RadioContainer>
+          <Radio onPress={() => setData({...data, sport: false})}>
+            <Fontisto  name={data.sport == false ? "radio-btn-active" : "radio-btn-passive"}color={LightTheme.colors.secondaryText} size={20} />
+            <RadioText>não</RadioText>
+          </Radio>
+          <Radio onPress={() => setData({...data, sport: true})}>
+          <Fontisto name={data.sport == true ? "radio-btn-active" : "radio-btn-passive"}color={LightTheme.colors.secondaryText} size={20} />
+            <RadioText>sim</RadioText>
           </Radio>
         </RadioContainer>
+        <LabelContainer>
+<Label>O usuario é um chefe de turma?</Label>
+</LabelContainer>
+      <RadioContainer>
+          <Radio onPress={() => setData({...data, leader: false})}>
+            <Fontisto  name={data.leader == false ? "radio-btn-active" : "radio-btn-passive"}color={LightTheme.colors.secondaryText} size={20} />
+            <RadioText>não</RadioText>
+          </Radio>
+          <Radio onPress={() => setData({...data, leader: false})}>
+          <Fontisto name={data.leader == true ? "radio-btn-active" : "radio-btn-passive"}color={LightTheme.colors.secondaryText} size={20} />
+            <RadioText>sim</RadioText>
+          </Radio>
+        </RadioContainer>
+          </>
+        )
+      }
+
       <ButtonsContainer>
         <Button onPress={sendData} text={isLoading ? <ActivityIndicator color={LightTheme.colors.background} size={25}/> : 'Cadastrar Aluno'}/>
         <Button onPress={() => setData({id: "", name: "", create: Date.now(), shift: 'manhã', author: null, error: false})}type={2} text={"Limpar campos"} />

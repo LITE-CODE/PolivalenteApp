@@ -30,20 +30,23 @@ export const ButtonsContainer = styled.View`
 
 export const RadioContainer = styled.View`
        flex-direction: row;
-       justify-content: space-between;
+       justify-content: space-around;
        align-items: flex-start;
        width: 100%;
-       height: auto;
+       height: 30px;
+
 `
 export const RadioText = styled.Text`
        padding-left: 10px;
+       width: auto;
+       height: auto;
        color: ${({theme}) => theme.colors.secondaryText};
 `
 
 export const Radio = styled.TouchableOpacity`
   flex-direction: row;
   width: 20%;
-  padding: 5px 0 ;
+  padding: 2.5px 0 ;
 
 
   align-items: center;
@@ -51,9 +54,10 @@ export const Radio = styled.TouchableOpacity`
 `
 
 export const Label = styled.Text`
-  margin-bottom: 2px;
+  margin-bottom: 1px;
   color: ${({theme}) => theme.colors.secondaryText};
   font-size: 12px;
+
 `;
 export const ErrorMessage = styled.Text`
   margin-bottom: 2px;
