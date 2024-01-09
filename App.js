@@ -4,6 +4,7 @@ import Router from './src/routes';
 import { ThemeProvider } from 'styled-components';
 import { LightTheme } from './src/styles/themes/light';
 import { useFonts } from 'expo-font';
+import Loading from './src/components/loading';
 
 export default function App() {
 
@@ -15,11 +16,11 @@ export default function App() {
     'bold': require('./assets/fonts/Inter-Bold.ttf'),
   });
 
-  if (!loaded) return <View><Text>carregando fonte...</Text></View>
+  if (!loaded) return<Loading text={'carregando...'}/>
 
   return (
     <ThemeProvider theme={LightTheme}>
-               <Router/>
+        <Router/>
     </ThemeProvider>
   );
 }
