@@ -1,18 +1,36 @@
+// InitialPage.js
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../../redux/actions/user.js'; // Certifique-se de importar sua ação correta
+import { setUser } from '../../redux/actions/user.js';
+import { useEffect } from 'react';
+import api from '../../utils/api.js';
 
 const InitialPage = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(user.name || '');
 
-  const handleSaveToRedux = () => {
-    // Despacha a ação setUser com o valor do input
-    dispatch(setUser(inputValue));
+  const handleSaveToRedux = (data) => {
+    // Despacha a ação setUser com os novos dados
+    dispatch(setUser({user,  ...data.user}));
   };
+  const getUserData = async () => {
+      try {
+          var response = await api.get('user/get-user');
+         handleSaveToRedux(response.data)
+          
+      } catch (error) {
+        //console.log(error)
+       console.log('API error:', error.response.data);
+      }
+  }
+  useEffect(() => {
+
+    //getUserData()
+  }, [])
+  
 
   return (
     <View style={styles.container}>
@@ -23,9 +41,8 @@ const InitialPage = () => {
         onChangeText={(text) => setInputValue(text)}
         value={inputValue}
       />
-      <Button title="Salvar no Redux" onPress={handleSaveToRedux} />
-      <Text>Valor no Redux: {user && typeof user === 'object' ? JSON.stringify(user) : user}</Text>
-
+      <Button title="Salvar no Redux" onPress={getUserData} />
+      <Text>Valor no Redux: {user.name}</Text>
       <StatusBar style="auto" />
     </View>
   );

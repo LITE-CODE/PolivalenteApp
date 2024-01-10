@@ -11,7 +11,9 @@ import { LightTheme } from './src/styles/themes/light';
 import { useFonts } from 'expo-font';
 import Loading from './src/components/loading';
 
+
 export default function App() {
+
   const [loaded] = useFonts({
     'regular': require('./assets/fonts/Inter-Regular.ttf'),
     'medium': require('./assets/fonts/Inter-Medium.ttf'),
