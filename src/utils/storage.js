@@ -11,9 +11,10 @@ const get =  async (key) => {
     }
 } 
 
-const set = async (key, value) => {
+const setItem = async (key, value) => {
     try {
-        if (typeof value === 'object') value = JSON.stringify(value);
+       // if (typeof value === 'object') value = JSON.stringify(value);
+       console.log(key, data)
         const response = await AsyncStorage.setItem(key, value);
         return true;
     } catch (error) {
@@ -32,4 +33,4 @@ const remove = async (key) => {
     }
 }
 
-export default { get, set, remove } 
+export default { get, setItem, remove } 
