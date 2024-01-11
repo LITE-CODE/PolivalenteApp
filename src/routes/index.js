@@ -3,9 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 
 import InitialPage from '../screens/initialPage';
+import SignUp from '../screens/signUp';
 import SignIn from '../screens/signIn';
 
-const routes = [ InitialPage, SignIn]
+const routes = [ InitialPage, SignIn, SignUp]
 const Stack = createNativeStackNavigator();
 
 const Router = ({}) => {

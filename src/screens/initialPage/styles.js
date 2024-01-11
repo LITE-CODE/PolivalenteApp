@@ -31,3 +31,10 @@ export const Description = styled.Text`
     color: ${({theme}) => theme.colors.secondaryText};
     font-size: 15px;
 `
+
+export const ButtonsContainer = styled.View`
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 100%;
+`
