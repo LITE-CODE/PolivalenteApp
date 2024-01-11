@@ -1,31 +1,17 @@
-// InitialPage.js
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
-import React, { useState, useEffect} from 'react';
-import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import Constants from 'expo-constants';
+
+import Backnav from '../../components/backnav';
+import { Container } from './styles';
 
 const SignIn = () => {
  
   return (
-    <View style={styles.container}>
-      <Text>sign in</Text>
-    </View>
+      <Container  statusBarHeight={Constants.statusBarHeight}>
+          <Backnav type={2}  text='VOLTAR'/>
+
+      </Container>
   );
 };
 
 export default SignIn;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 8,
-  },
-});
