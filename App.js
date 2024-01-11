@@ -1,45 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { store, persistor } from './src/redux/store/configureStore.js';  // Substitua pelo caminho correto
-
+import { store, persistor } from './src/redux/store/configureStore.js';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import Router from './src/routes';
 import { ThemeProvider } from 'styled-components';
 import { LightTheme } from './src/styles/themes/light';
-import { useFonts } from 'expo-font';
 import Loading from './src/components/loading';
-
+import { hideAsync, preventAutoHideAsync} from 'expo-splash-screen';
+import * as Font from 'expo-font';
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_700Bold,
+  Inter_900Black,
+} from '@expo-google-fonts/inter';
 
 export default function App() {
 
-  const [loaded] = useFonts({
-    'regular': require('./assets/fonts/Inter-Regular.ttf'),
-    'medium': require('./assets/fonts/Inter-Medium.ttf'),
-    'black': require('./assets/fonts/Inter-Black.ttf'),
-    'light': require('./assets/fonts/Inter-Light.ttf'),
-    'bold': require('./assets/fonts/Inter-Bold.ttf'),
-  });
+const [appIsReady, setAppIsReady] = useState(false);
 
-  if (!loaded) return <Loading text={'carregando...'} />;
+  useEffect(() => {
+    (async () => {
+      try {
+   //     await preventAutoHideAsync();
+        await Font.loadAsync({ 
+           'Black': Inter_900Black,
+           'Bold': Inter_700Bold,
+           'Medium': Inter_500Medium,
+           'Regular': Inter_400Regular
+         });
+      }
+      catch(err) {
+        console.log(err)
+      }
+      finally {
+        setAppIsReady(true);
+      }
+    })();
+  }, []);
+
+
+  if (!appIsReady) {
+    return <Loading text='fonte não carregada'/>;
+  } else {
+//     hideAsync()
+  }
 
   return (
     <Provider store={store}>
-      <PersistGate loading={<Loading text={'carregando...'} />} persistor={persistor}>
+      <PersistGate loading={<Loading text={'Carregando...'} />} persistor={persistor}>
         <ThemeProvider theme={LightTheme}>
-          <View style={styles.container}>
-            <Router />
-          </View>
+            <StatusBar  backgroundColor={"#F6D03C"} barStyle="light-content" />
+            <Router/>
         </ThemeProvider>
       </PersistGate>
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
