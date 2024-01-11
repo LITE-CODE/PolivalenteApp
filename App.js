@@ -1,61 +1,52 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { Provider } from 'react-redux';
+import { hideAsync, preventAutoHideAsync} from 'expo-splash-screen';
 import { PersistGate } from 'redux-persist/integration/react';
-import { store, persistor } from './src/redux/store/configureStore.js';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text } from 'react-native';
-import Router from './src/routes';
+import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
+import { StatusBar } from 'expo-status-bar';
+import { Provider } from 'react-redux';
+import * as Font from 'expo-font';
+
+import { store, persistor } from './src/redux/store/configureStore.js';
 import { LightTheme } from './src/styles/themes/light';
 import Loading from './src/components/loading';
-import { hideAsync, preventAutoHideAsync} from 'expo-splash-screen';
-import * as Font from 'expo-font';
-import {
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_700Bold,
-  Inter_900Black,
-} from '@expo-google-fonts/inter';
+import fonts from './src/styles/fonts.js';
+import Router from './src/routes';
 
-export default function App() {
+const App = () => {
 
-const [appIsReady, setAppIsReady] = useState(false);
+  const [appIsReady, setAppIsReady] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      try {
-   //     await preventAutoHideAsync();
-        await Font.loadAsync({ 
-           'Black': Inter_900Black,
-           'Bold': Inter_700Bold,
-           'Medium': Inter_500Medium,
-           'Regular': Inter_400Regular
-         });
-      }
-      catch(err) {
-        console.log(err)
-      }
-      finally {
-        setAppIsReady(true);
-      }
-    })();
-  }, []);
+    useEffect(() => {
+      (async () => {
+        try {
+          await preventAutoHideAsync();
+          await Font.loadAsync(fonts);
+        }
+        catch {
+        }
+        finally {
+          setAppIsReady(true);
+        }
+      })();
+    }, []);
 
 
-  if (!appIsReady) {
-    return <Loading text='fonte não carregada'/>;
-  } else {
-//     hideAsync()
-  }
+    if (!appIsReady) {
+      return <Loading text='carregando...'/>;
+    } else {
+      hideAsync()
+    }
 
   return (
     <Provider store={store}>
       <PersistGate loading={<Loading text={'Carregando...'} />} persistor={persistor}>
         <ThemeProvider theme={LightTheme}>
-            <StatusBar  backgroundColor={"#F6D03C"} barStyle="light-content" />
+            <StatusBar  backgroundColor={LightTheme.colors.primary} barStyle="light-content" />
             <Router/>
         </ThemeProvider>
       </PersistGate>
     </Provider>
   );
 }
+
+export default App
