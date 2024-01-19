@@ -5,7 +5,7 @@ const { vh, vw} = useViewport()
 
 export const Container = styled.View`
      margin-top: ${({statusBarHeight}) => statusBarHeight ? statusBarHeight : 100}px;
-     background-color: ${({theme}) => theme.colors.background};
+     background-color: ${({theme}) => theme.colors.secondaryBackground};
      flex: 1;
 `
 export const Children = styled.View`

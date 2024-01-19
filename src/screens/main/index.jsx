@@ -4,6 +4,7 @@ import Constants from 'expo-constants';
 import React, {useState} from 'react';
 
 import { Container, TitleContainer, Title, Description } from './styles';
+import Services from '../../components/services';
 import Layout from '../../components/layout';
 
 const Main = () => {
@@ -11,10 +12,7 @@ const Main = () => {
 
   return (
       <Layout Layout>
-          <TitleContainer>
-              <Title>Bem-vindo de volta!</Title>
-              <Description>{user.name}</Description>
-          </TitleContainer>
+            <Services/>
       </Layout>
   );
 };
