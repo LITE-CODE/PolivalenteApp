@@ -10,7 +10,7 @@ const Main = () => {
   const user = useSelector((state) => state.user);
 
   return (
-      <Layout>
+      <Layout Layout>
           <TitleContainer>
               <Title>Bem-vindo de volta!</Title>
               <Description>{user.name}</Description>

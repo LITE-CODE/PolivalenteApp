@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+import useViewport from "../../hooks/useViewport";
+const { vh, vw} = useViewport()
+
 export const Container = styled.View`
      margin-top: ${({statusBarHeight}) => statusBarHeight ? statusBarHeight : 100}px;
      background-color: ${({theme}) => theme.colors.background};
@@ -7,4 +10,27 @@ export const Container = styled.View`
 `
 export const Children = styled.View`
      padding: ${({padding}) => padding};
+`
+
+export const SearchContainer = styled.View`
+     background-color: ${({theme}) => theme.colors.primary};
+     justify-content: start;
+     align-items: center;
+     height: ${ vh(7) };
+`
+
+export const SearchInputContainer = styled.View`
+     background-color: ${({theme}) => theme.colors.background};
+     justify-content: space-between;
+     align-items: center;
+     flex-direction: row;
+     border-radius: 5px;
+     padding: 5px 20px;
+     height: auto;
+     width: 60%;
+`
+export const SearchInput = styled.TextInput`
+     border-radius: 10px;
+     height: auto;
+     width: auto;
 `
