@@ -12,10 +12,11 @@ import { signIn } from '../../actions';
 const SignUp = () => {
   const { reset } = useNavigation();
   const dispatch = useDispatch();
-  const [data, setData] = useState({email:"carlosjosep@gmail.co", password:"12345678", error: false});
+  const [data, setData] = useState({email:"carlosjosep@gmail.com", password:"12345678", name: "", error: false});
   const [password, setPassword] = useState(true);
  
   const sendData = async () => {
+    if (!data.name) return setData({...data, error: 'name'});
     if (!data.email) return setData({...data, error: 'email'});
     if (!data.password) return setData({...data, error: 'password'});
     var response = await signIn(data, dispatch);
@@ -34,6 +35,15 @@ const SignUp = () => {
               <Description>Crie uma conta para iniciar essa jornada</Description>
           </TitleContainer>
           <InputContainer>
+              <Input 
+                onChangeText={(x) => setData({...data, name: x, error: false})}
+                onButtonClick={() => setData({...data, name:"", error: false})}
+                buttonIcon={ data.name.length ? 'x-circle' : ''}
+                placeholder={'Nome completo'}
+                error={data.error == 'name'}
+                value={data.name}
+                initialIcon='user'
+              />
               <Input 
                 onChangeText={(x) => setData({...data, email: x, error: false})}
                 onButtonClick={() => setData({...data, email:"", error: false})}
@@ -54,10 +64,10 @@ const SignUp = () => {
                 initialIcon='lock'
               />
               {
-                data.error ? <ErrorMessage>{data.error}</ErrorMessage> : <></>
+                data.error && !['name','password','email'].find(i => i == data.error) ? <ErrorMessage>{data.error}</ErrorMessage> : <></>
               }
           </InputContainer>
-          <Button text='ENTRAR ' onPress={sendData}/>
+          <Button text='CADASTRAR' onPress={sendData}/>
 
       </Container>
   );
