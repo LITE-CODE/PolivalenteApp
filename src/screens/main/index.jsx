@@ -4,6 +4,7 @@ import Constants from 'expo-constants';
 import React, {useState} from 'react';
 
 import { Container, TitleContainer, Title, Description } from './styles';
+import Layout from '../../components/layout';
 
 const Main = () => {
   const user = useSelector((state) => state.user);
