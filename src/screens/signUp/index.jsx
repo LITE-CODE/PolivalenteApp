@@ -7,19 +7,19 @@ import { Container, TitleContainer, Title, Description, InputContainer, ErrorMes
 import Backnav from '../../components/backnav';
 import Button from '../../components/button';
 import Input from '../../components/input';
-import { signIn } from '../../actions';
+import { signUp } from '../../actions';
 
 const SignUp = () => {
+  const [data, setData] = useState({email:"", password:"", name: "", error: false});
+  const [password, setPassword] = useState(true);
   const { reset } = useNavigation();
   const dispatch = useDispatch();
-  const [data, setData] = useState({email:"carlosjosep@gmail.com", password:"12345678", name: "", error: false});
-  const [password, setPassword] = useState(true);
  
   const sendData = async () => {
     if (!data.name) return setData({...data, error: 'name'});
     if (!data.email) return setData({...data, error: 'email'});
     if (!data.password) return setData({...data, error: 'password'});
-    var response = await signIn(data, dispatch);
+    var response = await signUp(data, dispatch);
     if (response?.error) return setData({...data, error: response.error.msg});
     reset({
       index: 0,
