@@ -9,10 +9,10 @@ import Button from '../../components/button';
 import Input from '../../components/input';
 import { signIn } from '../../actions';
 
-const SignIn = () => {
+const SignUp = () => {
   const { reset } = useNavigation();
   const dispatch = useDispatch();
-  const [data, setData] = useState({email:"", password:"", error: false});
+  const [data, setData] = useState({email:"carlosjosep@gmail.co", password:"12345678", error: false});
   const [password, setPassword] = useState(true);
  
   const sendData = async () => {
@@ -30,8 +30,8 @@ const SignIn = () => {
       <Container  statusBarHeight={Constants.statusBarHeight}>
           <Backnav type={2}  text='' padding={'0'}/>
           <TitleContainer>
-              <Title>Bem-vindo de volta!</Title>
-              <Description>Faça login para continuar</Description>
+              <Title>Seja bem-vindo!</Title>
+              <Description>Crie uma conta para iniciar essa jornada</Description>
           </TitleContainer>
           <InputContainer>
               <Input 
@@ -63,4 +63,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

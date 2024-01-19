@@ -4,7 +4,7 @@ import React from 'react';
 
 import InitialPage from '../screens/initialPage';
 import Main from '../screens/main';
-import SignUp from '../screens/signUp';
+import SignUp from '../screens/signUp/index.jsxx';
 import SignIn from '../screens/signIn';
 
 const routes = [ InitialPage, SignIn, SignUp, Main]
@@ -14,7 +14,7 @@ const Router = ({}) => {
   
   return (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName='SignIn'>
+    <Stack.Navigator initialRouteName='SignUp'>
       {
         routes && routes.map((screen, i) => (
           <Stack.Screen key={i} name={screen.name} component={screen} options={{ headerShown: false }}/>
