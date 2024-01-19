@@ -9,44 +9,44 @@ const Services = () => {
 
     const services = [
         {
-            name:'Home',
-            route: '/Main',
-            icon: 'home'
+            name:'Avisos',
+            route: 'Warns',
+            icon: 'info'
         },
         {
-            name:'Home',
-            route: '/Main',
-            icon: 'home'
+            name:'Cardápio',
+            route: 'Menu',
+            icon: 'coffee'
         },
         {
-            name:'Home',
-            route: 'Main',
-            icon: 'home'
+            name:'Horários',
+            route: 'Schedules',
+            icon: 'clock'
         },
         {
-            name:'Home',
-            route: 'Main',
-            icon: 'home'
+            name:'Boletim',
+            route: 'Report',
+            icon: 'file-text'
         },
         {
-            name:'Home',
-            route: 'Main',
-            icon: 'home'
+            name:'Turma',
+            route: 'Classes',
+            icon: 'users'
         },
         {
-            name:'Home',
-            route: 'Main',
-            icon: 'home'
+            name:'SAC',
+            route: 'Sac',
+            icon: 'frown'
         },
         {
-            name:'Home',
-            route: 'Main',
-            icon: 'home'
+            name:'Biblioteca',
+            route: 'Library',
+            icon: 'package'
         },
         {
-            name:'Home',
-            route: 'Main',
-            icon: 'home'
+            name:'Ajuda',
+            route: 'Help',
+            icon: 'help-circle'
         },
     ];
 
