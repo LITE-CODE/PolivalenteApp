@@ -19,6 +19,7 @@ const SignUp = () => {
     if (!data.name) return setData({...data, error: 'name'});
     if (!data.email) return setData({...data, error: 'email'});
     if (!data.password) return setData({...data, error: 'password'});
+    if (data.password.length < 8) return setData({...data, error: 'Mínimo de 8 caracteres.'});
     var response = await signUp(data, dispatch);
     if (response?.error) return setData({...data, error: response.error.msg});
     reset({

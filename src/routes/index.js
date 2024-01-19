@@ -14,7 +14,7 @@ const Router = ({}) => {
   
   return (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName='SignUp'>
+    <Stack.Navigator initialRouteName='InitialPage'>
       {
         routes && routes.map((screen, i) => (
           <Stack.Screen key={i} name={screen.name} component={screen} options={{ headerShown: false }}/>
