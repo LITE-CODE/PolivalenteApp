@@ -54,7 +54,7 @@ const SignIn = () => {
                 initialIcon='lock'
               />
               {
-                data.error ? <ErrorMessage>{data.error}</ErrorMessage> : <></>
+                data.error && !['password','email'].find(i => i == data.error) ? <ErrorMessage>{data.error}</ErrorMessage> : <></>
               }
           </InputContainer>
           <Button text='ENTRAR ' onPress={sendData}/>

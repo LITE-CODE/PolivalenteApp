@@ -41,8 +41,8 @@ const SignUp = () => {
                 buttonIcon={ data.name.length ? 'x-circle' : ''}
                 placeholder={'Nome completo'}
                 error={data.error == 'name'}
-                value={data.name}
                 initialIcon='user'
+                value={data.name}
               />
               <Input 
                 onChangeText={(x) => setData({...data, email: x, error: false})}
