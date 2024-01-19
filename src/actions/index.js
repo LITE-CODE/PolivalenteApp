@@ -29,4 +29,19 @@ const signIn = async (body, dispatch) => {
   }
 };
 
-export { getUser, signIn };
+const signUp = async (body, dispatch) => {
+  try {
+    const response = await api.post('user/signup', body);
+    const data = response.data?.token;
+    if (!data) return  {
+      error: { msg: "erro na autenticação" }
+    }
+    storage.setItem('token', data);
+    var user = await getUser(dispatch);
+    return user;
+  } catch (error) {
+    return { error: error?.response?.data };
+  }
+};
+
+export { getUser, signIn, signUp };
