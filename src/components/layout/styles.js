@@ -24,7 +24,7 @@ export const SearchInputContainer = styled.View`
      justify-content: space-between;
      align-items: center;
      flex-direction: row;
-     border-radius: 5px;
+     border-radius: 10px;
      padding: 5px 20px;
      height: auto;
      width: 60%;
@@ -32,5 +32,5 @@ export const SearchInputContainer = styled.View`
 export const SearchInput = styled.TextInput`
      border-radius: 10px;
      height: auto;
-     width: auto;
+     width: 80%;
 `

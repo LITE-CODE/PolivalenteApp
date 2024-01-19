@@ -14,7 +14,7 @@ const Layout = ({children, padding='5%'}) => {
             <SearchContainer>
                 <SearchInputContainer>
                     <SearchInput placeholder='pesquisar...'/>
-                    <Feather color={'#363636'} name='search' size={15}/>
+                    <Feather color={'#F6D03C'} name='search' size={20}/>
                 </SearchInputContainer>
             </SearchContainer>
             <Children padding={padding}>
