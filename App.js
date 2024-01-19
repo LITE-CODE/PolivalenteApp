@@ -39,7 +39,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <PersistGate loading={<Loading text={'Carregando...'} />} persistor={persistor}>
+      <PersistGate loading={<Loading text={'carregando dados...'} />} persistor={persistor}>
         <ThemeProvider theme={LightTheme}>
             <StatusBar  backgroundColor={LightTheme.colors.primary} barStyle="light-content" />
             <Router/>
