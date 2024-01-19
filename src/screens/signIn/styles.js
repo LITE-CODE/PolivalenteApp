@@ -32,3 +32,8 @@ export const InputContainer = styled.View`
     height: ${vh(50)};
     width: 100%;
 `
+
+export const ErrorMessage = styled.Text`
+    color: ${({theme}) => theme.colors.error};
+    font-size: 13.5px;
+`

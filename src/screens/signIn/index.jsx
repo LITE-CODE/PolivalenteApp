@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Constants from 'expo-constants';
 import React, {useState} from 'react';
 
-import { Container, TitleContainer, Title, Description, InputContainer } from './styles';
+import { Container, TitleContainer, Title, Description, InputContainer, ErrorMessage } from './styles';
 import Backnav from '../../components/backnav';
 import Button from '../../components/button';
 import Input from '../../components/input';
@@ -12,15 +12,14 @@ import { signIn } from '../../actions';
 const SignIn = () => {
   const { reset } = useNavigation();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const [data, setData] = useState({email:"", password:"", error: false});
+  const [data, setData] = useState({email:"carlosjosep@gmail.co", password:"12345678", error: false});
   const [password, setPassword] = useState(true);
  
   const sendData = async () => {
     if (!data.email) return setData({...data, error: 'email'});
     if (!data.password) return setData({...data, error: 'password'});
     var response = await signIn(data, dispatch);
-    if (response?.error) return setData({...data, error: response.error.message});
+    if (response?.error) return setData({...data, error: response.error.msg});
     reset({
       index: 0,
       routes: [{ name: 'Main' }],
@@ -54,6 +53,9 @@ const SignIn = () => {
                 password={password}
                 initialIcon='lock'
               />
+              {
+                data.error ? <ErrorMessage>{data.error}</ErrorMessage> : <></>
+              }
           </InputContainer>
           <Button text='ENTRAR ' onPress={sendData}/>
 

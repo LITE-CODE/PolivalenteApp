@@ -4,6 +4,8 @@ export  const LightTheme = {
         background: '#FFFFFF',
         text: '#363636',
         secondaryBackground: '#EEEEEE',
-        secondaryText: '#ACACAC'
+        secondaryText: '#ACACAC',
+        sucess: '',
+        error: '#FF9494'
     }
 }
