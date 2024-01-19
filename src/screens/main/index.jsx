@@ -10,12 +10,12 @@ const Main = () => {
   const user = useSelector((state) => state.user);
 
   return (
-      <Container  statusBarHeight={Constants.statusBarHeight}>
+      <Layout>
           <TitleContainer>
               <Title>Bem-vindo de volta!</Title>
               <Description>{user.name}</Description>
           </TitleContainer>
-      </Container>
+      </Layout>
   );
 };
 

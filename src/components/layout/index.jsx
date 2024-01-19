@@ -1,13 +1,17 @@
-import { Constants } from "expo-constants";
+import Constants from "expo-constants";
 import react from "react";
 
-import { Container } from './styles';
+import { Container, Children } from './styles';
+import Navbar from "../navbar";
 
-const Layout = ({children}) => {
+const Layout = ({children, padding='5%'}) => {
 
     return (
         <Container statusBarHeight={Constants.statusBarHeight}>
-            {children}
+            <Navbar padding={padding}/>
+            <Children padding={padding}>
+              {children}
+            </Children>
         </Container>
     )
 
