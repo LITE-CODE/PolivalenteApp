@@ -48,9 +48,6 @@ export const DateContainer = styled.View`
    width: auto;
    width: auto;
 `;
-
-
-
 export const Type = styled.Text`
     background-color: ${({theme}) => theme.colors.secondaryText};
     color: ${({theme}) => theme.colors.background};
@@ -62,7 +59,6 @@ export const Type = styled.Text`
     height: auto;
     width: auto;
 `
-
 export const OpenButton = styled.TouchableOpacity`
 
 `
