@@ -19,7 +19,7 @@ const Warn = ({ title, description, date, type = 'todos' }) => {
           <Title>{title}</Title>
         </TitleContainer>
         <Description numberOfLines={expanded ? 0 : 1}>
-          {description.repeat(10)}
+          {description}
         </Description>
       </Content>
       <FooterContainer>
