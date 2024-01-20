@@ -5,14 +5,17 @@ import React, {useState} from 'react';
 
 import { Container, TitleContainer, Title, Description } from './styles';
 import Services from '../../components/services';
+import DashboardSelect from '../../components/dashboardSelect';
 import Layout from '../../components/layout';
 
 const Main = () => {
   const user = useSelector((state) => state.user);
 
   return (
-      <Layout Layout>
+      <Layout>
             <Services/>
+            <DashboardSelect title='Ultimos avisos' route=''/>
+  
       </Layout>
   );
 };

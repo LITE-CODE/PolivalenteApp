@@ -7,7 +7,6 @@ export const Container = styled.View`
     justify-content: space-between;
     flex-direction: row;
     flex-wrap: wrap;
-    flex: 1;
 `
 
 export const Service = styled.TouchableOpacity`

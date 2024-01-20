@@ -10,6 +10,7 @@ export const Container = styled.View`
 `
 export const Children = styled.View`
      padding: ${({padding}) => padding};
+     flex: 1;
 `
 
 export const SearchContainer = styled.View`
