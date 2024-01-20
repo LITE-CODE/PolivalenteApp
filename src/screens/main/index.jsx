@@ -6,6 +6,7 @@ import React, {useEffect, useState} from 'react';
 import { Container, TitleContainer, Title, Description } from './styles';
 import Services from '../../components/services';
 import DashboardSelect from '../../components/dashboardSelect';
+import Warn from '../../components/Warn';
 import Layout from '../../components/layout';
 import { getWarns } from '../../actions/warn';
 
@@ -19,20 +20,19 @@ const Main = () => {
   }
   useEffect(() => { getData() }, [])
 
+
   return (
       <Layout>
             <Services/>
             <DashboardSelect title='Ultimos avisos' route=''/>
             {
-              warns.lenght < 0 && warns.map((item, index) => {
+            warns.slice(0, 5).map(({title, description}, index) => {
 
-                return (
-                    <Title>
-                      {item.title}
-                    </Title>
-                )
+              return (
+                 <Warn title={title} description={description} key={index}/>
+              )
 
-              })
+            })
             }
   
       </Layout>
