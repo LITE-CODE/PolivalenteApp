@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
 import { LightTheme } from '../../styles/themes/light';
 import react from "react";
@@ -7,47 +8,48 @@ import { Container, Service, ServiceIcon, ServiceText} from './styles';
 
 const Services = () => {
 
+    const { navigate } = useNavigation();
     const services = [
         {
             name:'Avisos',
-            route: 'Warns',
+            route: 'Main',
             icon: 'info'
         },
         {
             name:'Cardápio',
-            route: 'Menu',
+            route: 'Main',
             icon: 'coffee'
         },
         {
             name:'Horários',
-            route: 'Schedules',
+            route: 'Main',
             icon: 'clock'
         },
         {
             name:'Boletim',
-            route: 'Report',
+            route: 'Main',
             icon: 'file-text'
         },
         {
             name:'Turma',
-            route: 'Classes',
+            route: 'Main',
             icon: 'users'
         },
         {
             name:'SAC',
-            route: 'Sac',
+            route: 'Main',
             icon: 'frown'
         },
         {
             name:'Biblioteca',
-            route: 'Library',
+            route: 'Main',
             icon: 'package'
         },
         {
             name:'Ajuda',
-            route: 'Help',
+            route: 'Main',
             icon: 'help-circle'
-        },
+        }
     ];
 
     return (
@@ -55,8 +57,8 @@ const Services = () => {
             {
                 services.map(({name, route, icon}, index) => {
                     return (
-                        <Service>
-                            <ServiceIcon>
+                        <Service key={index}>
+                            <ServiceIcon onPress={() => navigate(route)}>
                                 <Feather color={LightTheme.colors.secondaryText} size={30} name={icon}/>
                             </ServiceIcon>
                             <ServiceText>
