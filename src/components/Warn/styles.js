@@ -5,7 +5,8 @@ const { vh, vw} = useViewport()
 
 export const Container = styled.View`
     background-color: ${({theme}) => theme.colors.background};
-    min-height: ${vh(20)};
+    justify-content: space-between;
+    min-height: ${vh(15)};
     border-radius: 5px;
     padding: 10px 20px;
     margin: 5px 0;
@@ -22,18 +23,33 @@ export const Description = styled.Text`
     color: ${({theme}) => theme.colors.secondaryText};
     font-family: Medium;
 `;
+export const Date = styled.Text`
+    color: ${({theme}) => theme.colors.secondaryText};
+    font-family: Regular;
+    margin-left: 10px;
+`;
 export const TitleContainer = styled.View`
    justify-content: start;
    flex-direction: row;
 `;
+export const Content = styled.View`
+   justify-content: start;
+   flex-direction: column;
+`;
 export const FooterContainer = styled.View`
    justify-content: space-between;
    flex-direction: row;
+   margin-top: 10px;
 `;
 export const DateContainer = styled.View`
-   justify-content: space-between;
+   justify-content: start;
+   align-items: center;
    flex-direction: row;
+   width: auto;
+   width: auto;
 `;
+
+
 
 export const Type = styled.Text`
     background-color: ${({theme}) => theme.colors.secondaryText};

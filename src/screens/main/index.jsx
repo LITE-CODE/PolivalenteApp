@@ -26,10 +26,10 @@ const Main = () => {
             <Services/>
             <DashboardSelect title='Ultimos avisos' route=''/>
             {
-            warns.slice(0, 5).map(({title, description}, index) => {
+            warns.slice(0, 5).map(({title, description, date}, index) => {
 
               return (
-                 <Warn title={title} description={description} key={index}/>
+                 <Warn title={title} description={description} date={date} key={index}/>
               )
 
             })

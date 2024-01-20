@@ -10,7 +10,7 @@ const formatDate = (date, includeTime = false) => {
     if (includeTime) {
       const hours = dateObj.getHours().toString().padStart(2, '0');
       const minutes = dateObj.getMinutes().toString().padStart(2, '0');
-      formattedDate += ` ${hours}:${minutes}`;
+      formattedDate += ` - ${hours}:${minutes}`;
     }
   
     return formattedDate;
