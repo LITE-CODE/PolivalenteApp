@@ -3,7 +3,7 @@ import { setUser } from '../redux/actions/user';
 import api from "../utils/api";
 
 
-const getUser = async (dispatch) => {
+export const getUser = async (dispatch) => {
   try {
     const response = await api.get('user/get-user');
     const data = response.data?.user;
@@ -14,7 +14,7 @@ const getUser = async (dispatch) => {
   }
 };
 
-const signIn = async (body, dispatch) => {
+export const signIn = async (body, dispatch) => {
   try {
     const response = await api.post('user/signin', body);
     const data = response.data?.token;
@@ -29,7 +29,7 @@ const signIn = async (body, dispatch) => {
   }
 };
 
-const signUp = async (body, dispatch) => {
+export const signUp = async (body, dispatch) => {
   try {
     const response = await api.post('user/signup', body);
     const data = response.data?.token;
@@ -43,5 +43,3 @@ const signUp = async (body, dispatch) => {
     return { error: error?.response?.data };
   }
 };
-
-export { getUser, signIn, signUp };

@@ -6,8 +6,8 @@ import React, {useState} from 'react';
 import { Container, TitleContainer, Title, Description, InputContainer, ErrorMessage } from './styles';
 import Backnav from '../../components/backnav';
 import Button from '../../components/button';
+import { signUp } from '../../actions/user';
 import Input from '../../components/input';
-import { signUp } from '../../actions';
 
 const SignUp = () => {
   const [data, setData] = useState({email:"", password:"", name: "", error: false});

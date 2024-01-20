@@ -6,8 +6,8 @@ import React, {useState} from 'react';
 import { Container, TitleContainer, Title, Description, InputContainer, ErrorMessage } from './styles';
 import Backnav from '../../components/backnav';
 import Button from '../../components/button';
+import { signIn } from '../../actions/user';
 import Input from '../../components/input';
-import { signIn } from '../../actions';
 
 const SignIn = () => {
   const { reset } = useNavigation();

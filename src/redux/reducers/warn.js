@@ -1,16 +1,13 @@
 import { SET_WARN } from '../constants/actionTypes.js';
 
-const initialState = {
-  warn: null
-};
+const initialState = [
+  
+];
 
 const warnReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_WARN:
-      return {
-        ...state,
-        warn: action.payload,
-      };
+      return action.payload
     default:
       return state;
   }
