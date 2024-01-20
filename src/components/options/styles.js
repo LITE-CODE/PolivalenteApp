@@ -12,13 +12,13 @@ export const OptionsContainer = styled.View`
     `
 
 export const OptionButton = styled.TouchableOpacity`
-    background-color: ${({theme, select}) => select ? theme.colors.primary : 'transparent'};
+    background-color: ${({theme, select}) => select ? theme.colors.primary : theme.colors.background};
     border: 1px solid ${({theme}) => theme.colors.primary };
     justify-content: center;
     border-radius: 5px;
     align-items: center;
     height: ${vh(5)};
-    width: ${vw(22)};
+    width: ${vw(20)};
     `
 export const OptionText = styled.Text`
     color: ${({theme, select}) => select ? theme.colors.background : theme.colors.primary };
