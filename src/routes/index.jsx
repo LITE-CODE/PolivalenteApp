@@ -6,9 +6,10 @@ import React from 'react';
 import InitialPage from '../screens/initialPage/index.jsx';
 import SignUp from '../screens/signUp/index.jsx';
 import SignIn from '../screens/signIn/index.jsx';
+import Warns from '../screens/Warns/index.jsx';
 import Main from '../screens/main/index.jsx';
 
-const routes = [ InitialPage, SignIn, SignUp, Main]
+const routes = [ InitialPage, SignIn, SignUp, Main, Warns]
 const Stack = createNativeStackNavigator();
 
 const Router = ({}) => {

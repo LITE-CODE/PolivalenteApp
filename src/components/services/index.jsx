@@ -12,7 +12,7 @@ const Services = () => {
     const services = [
         {
             name:'Avisos',
-            route: 'Main',
+            route: 'Warns',
             icon: 'info'
         },
         {
