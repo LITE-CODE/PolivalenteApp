@@ -39,7 +39,7 @@ export const Content = styled.View`
 export const FooterContainer = styled.View`
    justify-content: space-between;
    flex-direction: row;
-   margin-top: 10px;
+   margin-top: 15px;
 `;
 export const DateContainer = styled.View`
    justify-content: start;
