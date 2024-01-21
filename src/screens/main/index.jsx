@@ -11,6 +11,7 @@ import Warn from '../../components/Warn';
 import Layout from '../../components/layout';
 import { getWarns } from '../../actions/warn';
 import { LightTheme } from '../../styles/themes/light';
+import { getUser } from '../../actions/user';
 
 const Main = () => {
   const user = useSelector((state) => state.user);
@@ -19,6 +20,7 @@ const Main = () => {
 
   const getData = async () => {
     await getWarns(dispatch)
+    await getUser(dispatch)
   }
   const handleOpenSupport = () => {
     const supportLink = 'https://docs.google.com/forms/d/e/1FAIpQLSet53UYiRV8xHXJF-b3F8haTL3X15NRL_KSTPoLH8W39ZBDZQ/viewform?usp=sharing';

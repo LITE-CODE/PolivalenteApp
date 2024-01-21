@@ -5,12 +5,12 @@ import Constants from 'expo-constants';
 
 import DaysOptions from '../../components/daysOptions';
 import Backnav from '../../components/backnav';
-import { Container, Content, IconContainer, Grade, GradeContainer, Table, Days, DaysText} from './styles';
+import { Container, Content, IconContainer, Grade, GradeContainer, Table, Days, DaysText, IconButton} from './styles';
 import { LightTheme } from '../../styles/themes/light';
 
 const Schedules = () => {
 
-  const warns = useSelector((state) => state.warn);
+  const classe = useSelector((state) => state.class);
   const [options, setOptions] = useState([
     { name: 'seg',   select: false},
     { name: 'ter',   select: false},
@@ -18,6 +18,25 @@ const Schedules = () => {
     { name: 'qui',   select: false},
     { name: 'sex',   select: true},
   ]);
+
+  const handleOptions = (type) => {
+    const currentIndex = options.findIndex((item) => item.select === true);
+    const totalOptions = options.length;
+  
+    let nextIndex;
+    if (type === '-') {
+      nextIndex = (currentIndex - 1 + totalOptions) % totalOptions;
+    } else {
+      nextIndex = (currentIndex + 1) % totalOptions;
+    }
+  
+    const newOptions = options.map((item, index) => ({
+      ...item,
+      select: index === nextIndex,
+    }));
+  
+    setOptions(newOptions);
+  };
 
   const schedules = [
     [
@@ -59,9 +78,11 @@ const Schedules = () => {
       'recreio',
       'portugues',
       'ed. fisica',
-    ],
+    ]
   ]
 
+  if (!classe.schedule) return <Loading text='carregando...'/>
+  
   return (
     <Container statusBarHeight={Constants.statusBarHeight}>
       <Backnav text='HÓRARIOS'/>
@@ -69,12 +90,14 @@ const Schedules = () => {
         <DaysOptions options={options} setOptions={setOptions}/>
         <Table>
           <IconContainer>
-              <Feather color={LightTheme.colors.secondaryText} size={40} name='chevron-left'/>
+              <IconButton onPress={() => handleOptions('-')}>
+                 <Feather color={LightTheme.colors.secondaryText} size={40} name='chevron-left'/>
+              </IconButton>
           </IconContainer>
           <GradeContainer>
             <Grade>
             {
-                  schedules[0].map((item, index) => {
+                 classe.schedule[options.findIndex(s => s.select == true)].map((item, index) => {
                     return (
                       <Days key={index}>
                         <DaysText>
@@ -87,7 +110,9 @@ const Schedules = () => {
             </Grade>
           </GradeContainer>
           <IconContainer>
-              <Feather color={LightTheme.colors.secondaryText} size={40} name='chevron-right'/>
+          <IconButton onPress={() => handleOptions('+')}>
+                <Feather color={LightTheme.colors.secondaryText} size={40} name='chevron-right'/>
+              </IconButton>
           </IconContainer>
         </Table>
       </Content>

@@ -1,5 +1,6 @@
 import storage from '@react-native-async-storage/async-storage';
 import { setUser } from '../redux/actions/user';
+import { getClass } from './class';
 import api from "../utils/api";
 
 
@@ -8,6 +9,7 @@ export const getUser = async (dispatch) => {
     const response = await api.get('user/get-user');
     const data = response.data?.user;
     dispatch(setUser(data));
+    if (data?.userClass) getClass(data?.userClass, dispatch);
     return data;
   } catch (error) {
     return { error: error?.response?.data };
