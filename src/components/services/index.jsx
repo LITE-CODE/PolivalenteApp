@@ -17,7 +17,7 @@ const Services = () => {
         },
         {
             name:'Cardápio',
-            route: 'Main',
+            route: 'Menu',
             icon: 'coffee'
         },
         {

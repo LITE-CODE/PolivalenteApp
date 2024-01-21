@@ -1,17 +1,16 @@
-import Constants from 'expo-constants';
+import { useSelector } from 'react-redux';
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import Constants from 'expo-constants';
 
+import filterDates from '../../utils/filterDates';
 import Backnav from '../../components/backnav';
-import Warn from '../../components/Warn';
 import Options from '../../components/options';
 import { Container, Content } from './styles';
-import filterDates from '../../utils/filterDates';
+import Warn from '../../components/Warn';
 
 const Warns = () => {
 
   const warns = useSelector((state) => state.warn);
-  const dispatch = useDispatch();
   const [options, setOptions] = useState([
     { name: 'Hoje',   size: 1, select: false},
     { name: 'Semana', size: 7, select: false},
@@ -32,7 +31,7 @@ const Warns = () => {
               )
 
             })
-            }
+        }
       </Content>
     </Container>
   );
