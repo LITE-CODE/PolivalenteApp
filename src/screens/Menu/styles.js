@@ -24,8 +24,8 @@ export const MenuContainer = styled.View`
 `
 
 export const MenuImage = styled.Image`
-    width: 250px;
-    height: 250px;
+    width: ${vw(35)};
+    height:${vw(35)};
 `
 
 export const MenuText = styled.Text`
@@ -34,6 +34,8 @@ export const MenuText = styled.Text`
     font-family: Bold;
 `
 export const MenuContainerImage = styled.View`
+    justify-content: center;
+    align-items: center;
     height: 80%;
     width: 100%;
 `

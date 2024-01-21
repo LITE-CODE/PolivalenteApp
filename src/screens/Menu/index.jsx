@@ -1,9 +1,13 @@
 import { useSelector } from 'react-redux';
-import React, { useState } from 'react';
 import Constants from 'expo-constants';
+import React from 'react';
 
-import Backnav from '../../components/backnav';
 import { Container, Content, Row, MenuContainer, MenuContainerImage, MenuContainerText, MenuImage, MenuText} from './styles';
+import clock from '../../../assets/imgs/menu/relogio.png'
+import food from '../../../assets/imgs/menu/prato.png'
+import fruit from '../../../assets/imgs/menu/fruta.png'
+import drink from '../../../assets/imgs/menu/suco.png'
+import Backnav from '../../components/backnav';
 
 const Menu = () => {
 
@@ -34,7 +38,7 @@ const Menu = () => {
         <Row>
           <MenuContainer>
             <MenuContainerImage>
-              <MenuImage source={{uri: getRandomLink(foodList)}}/>
+             <MenuImage source={food}/>
             </MenuContainerImage>
             <MenuContainerText>
                 <MenuText>Macarrão</MenuText>
@@ -43,7 +47,7 @@ const Menu = () => {
 
           <MenuContainer>
             <MenuContainerImage>
-              <MenuImage source={{ uri: getRandomLink(drinkList)}}/>
+              <MenuImage source={drink}/>
             </MenuContainerImage>
             <MenuContainerText>
                 <MenuText>Macarrão</MenuText>
@@ -54,7 +58,7 @@ const Menu = () => {
         <Row>
           <MenuContainer>
             <MenuContainerImage>
-              <MenuImage source={{ uri: getRandomLink(fruitList)}}/>
+              <MenuImage source={fruit}/>
             </MenuContainerImage>
             <MenuContainerText>
                 <MenuText>Macarrão</MenuText>
@@ -63,7 +67,7 @@ const Menu = () => {
 
           <MenuContainer>
             <MenuContainerImage>
-              <MenuImage source={{uri: getRandomLink(clockList)}}/>
+              <MenuImage source={clock}/>
             </MenuContainerImage>
             <MenuContainerText>
                 <MenuText>Macarrão</MenuText>
