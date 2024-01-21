@@ -32,7 +32,7 @@ const Services = () => {
         },
         {
             name:'Turma',
-            route: 'Main',
+            route: 'Classe',
             icon: 'users'
         },
         {

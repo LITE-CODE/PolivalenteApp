@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux';
 import React, { useState } from 'react';
 import Constants from 'expo-constants';
 
-import DaysOptions from '../../components/daysOptions';
-import Backnav from '../../components/backnav';
 import { Container, Content, IconContainer, Grade, GradeContainer, Table, Days, DaysText, IconButton} from './styles';
+import DaysOptions from '../../components/daysOptions';
 import { LightTheme } from '../../styles/themes/light';
+import Backnav from '../../components/backnav';
+import Loading from '../../components/loading';
 
 const Schedules = () => {
 
@@ -82,7 +83,7 @@ const Schedules = () => {
   ]
 
   if (!classe.schedule) return <Loading text='carregando...'/>
-  
+
   return (
     <Container statusBarHeight={Constants.statusBarHeight}>
       <Backnav text='HÓRARIOS'/>

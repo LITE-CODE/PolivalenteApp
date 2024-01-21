@@ -7,11 +7,12 @@ import InitialPage from '../screens/initialPage/index.jsx';
 import Schedules from '../screens/schedules/index.jsx';
 import SignUp from '../screens/signUp/index.jsx';
 import SignIn from '../screens/signIn/index.jsx';
+import Classe from '../screens/class/index.jsx';
 import Warns from '../screens/warns/index.jsx';
 import Menu from '../screens/menu/index.jsx';
 import Main from '../screens/main/index.jsx';
 
-const routes = [ InitialPage, SignIn, SignUp, Main, Warns, Menu, Schedules ]
+const routes = [ InitialPage, SignIn, SignUp, Main, Warns, Menu, Schedules, Classe ]
 const Stack = createNativeStackNavigator();
 
 const Router = ({}) => {
