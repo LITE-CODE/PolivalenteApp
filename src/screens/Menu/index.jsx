@@ -3,12 +3,13 @@ import Constants from 'expo-constants';
 import React, { useEffect } from 'react';
 
 import { Container, Content, Row, MenuContainer, MenuContainerImage, MenuContainerText, MenuImage, MenuText} from './styles';
-import { getMenu } from '../../actions/menu';
 import clock from '../../../assets/imgs/menu/relogio.png';
 import fruit from '../../../assets/imgs/menu/fruta.png';
 import food from '../../../assets/imgs/menu/prato.png';
 import drink from '../../../assets/imgs/menu/suco.png';
+import formatDate from '../../utils/formatDate';
 import Backnav from '../../components/backnav';
+import { getMenu } from '../../actions/menu';
 
 const Menu = () => {
 
@@ -16,9 +17,7 @@ const Menu = () => {
   const menu = useSelector((state) => state.menu);
 
   const getData = async () => {
-    console.log('...')
     const response = await getMenu(dispatch);
-    if (response.error) console.log(response.error)
   }
 
   useEffect(() => {getData()}, []);
@@ -52,7 +51,7 @@ const Menu = () => {
              <MenuImage source={food}/>
             </MenuContainerImage>
             <MenuContainerText>
-                <MenuText>Macarrão</MenuText>
+                <MenuText>{menu.food}</MenuText>
             </MenuContainerText>
           </MenuContainer>
 
@@ -61,7 +60,7 @@ const Menu = () => {
               <MenuImage source={drink}/>
             </MenuContainerImage>
             <MenuContainerText>
-                <MenuText>Macarrão</MenuText>
+                <MenuText>{menu.drink}</MenuText>
             </MenuContainerText>
           </MenuContainer>
         </Row>
@@ -72,7 +71,7 @@ const Menu = () => {
               <MenuImage source={fruit}/>
             </MenuContainerImage>
             <MenuContainerText>
-                <MenuText>Macarrão</MenuText>
+                <MenuText>{menu.fruit}</MenuText>
             </MenuContainerText>
           </MenuContainer>
 
@@ -81,7 +80,7 @@ const Menu = () => {
               <MenuImage source={clock}/>
             </MenuContainerImage>
             <MenuContainerText>
-                <MenuText>Macarrão</MenuText>
+                <MenuText>{menu.lastUpdate ? formatDate(menu.lastUpdate) : menu.lastUpdate}</MenuText>
             </MenuContainerText>
           </MenuContainer>
         </Row>
