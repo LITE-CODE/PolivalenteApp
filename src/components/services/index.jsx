@@ -22,7 +22,7 @@ const Services = () => {
         },
         {
             name:'Horários',
-            route: 'Main',
+            route: 'Schedules',
             icon: 'clock'
         },
         {

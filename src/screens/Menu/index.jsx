@@ -38,12 +38,11 @@ const Menu = () => {
     'https://imgur.com/JmpGqmt'
   ]
 
-  console.log(menu)
   const getRandomLink = (links) => links[Math.floor(Math.random() * links.length)];
 
   return (
     <Container statusBarHeight={Constants.statusBarHeight}>
-      <Backnav text='Cardápio'/>
+      <Backnav text='CARDÁPIO'/>
       <Content>
         <Row>
           <MenuContainer>

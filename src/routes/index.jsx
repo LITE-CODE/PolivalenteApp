@@ -4,13 +4,14 @@ import { useSelector } from 'react-redux';
 import React from 'react';
 
 import InitialPage from '../screens/initialPage/index.jsx';
+import Schedules from '../screens/schedules/index.jsx';
 import SignUp from '../screens/signUp/index.jsx';
 import SignIn from '../screens/signIn/index.jsx';
-import Warns from '../screens/Warns/index.jsx';
-import Menu from '../screens/Menu/index.jsx';
+import Warns from '../screens/warns/index.jsx';
+import Menu from '../screens/menu/index.jsx';
 import Main from '../screens/main/index.jsx';
 
-const routes = [ InitialPage, SignIn, SignUp, Main, Warns, Menu]
+const routes = [ InitialPage, SignIn, SignUp, Main, Warns, Menu, Schedules ]
 const Stack = createNativeStackNavigator();
 
 const Router = ({}) => {
