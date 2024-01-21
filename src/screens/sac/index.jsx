@@ -6,6 +6,7 @@ import Dropdown from '../../components/dropdown';
 import Backnav from '../../components/backnav';
 import { Container, Content } from './styles';
 import Input from '../../components/input';
+import Button from '../../components/button';
 
 const Sac = () => {
   const [options, setOptions] = useState([
@@ -14,6 +15,10 @@ const Sac = () => {
   ]);
   const [text, setText] = useState("");
 
+  const sendData = () => {
+
+  }
+
   return (
     <Container statusBarHeight={Constants.statusBarHeight}>
       <Backnav text='SAC'/>
@@ -21,13 +26,14 @@ const Sac = () => {
         <Dropdown options={options} setOptions={setOptions}/>
         <Input 
         error={false} 
-        placeholder="descrição..." 
+        placeholder="Descrição..." 
         initialIcon={'italic'}
         onButtonClick={() => setText("")}
         value={text}
         onChangeText={(x) => setText(x)}
         buttonIcon={ text.length ? 'x-circle' : ''}
         />
+        <Button text={'ENVIAR'} onPress={sendData} width='100%'/>
 
       </Content>
     </Container>
