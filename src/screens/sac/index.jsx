@@ -2,12 +2,12 @@ import { useSelector, useDispatch} from 'react-redux';
 import Constants from 'expo-constants';
 import React, { useState } from 'react';
 
+import { Container, Content, Text } from './styles';
 import Dropdown from '../../components/dropdown';
 import Backnav from '../../components/backnav';
-import { Container, Content } from './styles';
-import Input from '../../components/input';
-import Button from '../../components/button';
 import { createSac } from '../../actions/sac';
+import Button from '../../components/button';
+import Input from '../../components/input';
 
 const Sac = () => {
   const user = useSelector((state) => state.user);
@@ -42,6 +42,7 @@ const Sac = () => {
     <Container statusBarHeight={Constants.statusBarHeight}>
       <Backnav text='SAC'/>
       <Content>
+        <Text>Relate de forma anônima e segura atividades suspeitas ou violações. Sua contribuição é vital para manter nossa comunidade segura. Priorizamos seu anonimato e garantimos confidencialidade total. Junte-se a nós na promoção de um ambiente justo e saudável para todos.</Text>
         <Dropdown options={options} setOptions={setOptions}/>
         <Input 
             onChangeText={(x) => setText(x) & setTextError(false) & setSend(false)}

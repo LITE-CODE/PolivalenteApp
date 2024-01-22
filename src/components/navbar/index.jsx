@@ -4,15 +4,15 @@ import React from "react";
 
 import { Container, IconButton } from "./styles";
 
-const Navbar = ({padding}) => {
+const Navbar = ({padding, onMenu}) => {
 
     return (
         <Container padding={padding}>       
-            <IconButton>
-                <Feather name="menu" color={'#eeeeee'} size={25} />
+            <IconButton onPress={onMenu}>
+                <Feather name="menu" color={'#FFFFFF'} size={25} />
             </IconButton>
             <IconButton>
-                <Feather name="user" color={'#eeeeee'} size={25} />
+                <Feather name="settings" color={'#FFFFFF'} size={25} />
             </IconButton>
         </Container>
     )

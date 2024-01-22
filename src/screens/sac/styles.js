@@ -10,8 +10,14 @@ export const Container = styled.View`
     `
 
 export const Content = styled.View`
-    justify-content: center;
     align-items: center;
-    flex: 1;
     padding: 5%;
+    flex: 1;
+`
+
+export const Text = styled.Text`
+    color: ${({theme}) => theme.colors.secondaryText};
+    font-family: Medium;
+    margin: ${vh(7)} 0;
+    width: 100%;
 `

@@ -12,7 +12,7 @@ const Layout = ({children, padding='5%'}) => {
     return (
         <Container statusBarHeight={Constants.statusBarHeight}>
             <ScrollView>                
-                <Navbar padding={padding}/>
+                <Navbar padding={padding} />
                 <SearchContainer>
                     <SearchInputContainer>
                         <SearchInput placeholder='pesquisar...'/>
