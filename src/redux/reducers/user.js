@@ -1,7 +1,7 @@
-import { SET_USER } from '../constants/actionTypes.js';
+import { RESET_USER, SET_USER } from '../constants/actionTypes.js';
 
 const initialState = {
-
+  auth: false
 };
 
 const userReducer = (state = initialState, action) => {
@@ -10,6 +10,8 @@ const userReducer = (state = initialState, action) => {
       return {
         ...action.payload, 
       };
+    case RESET_USER:
+      return initialState;
     default:
       return state;
   }

@@ -8,9 +8,16 @@ export const getUser = async (dispatch) => {
   try {
     const response = await api.get('user/get-user');
     const data = response.data?.user;
-    dispatch(setUser(data));
+    dispatch(setUser({...data, auth: true}));
     if (data?.userClass) getClass(data?.userClass, dispatch);
     return data;
+  } catch (error) {
+    return { error: error?.response?.data };
+  }
+};
+export const resetUser = async (dispatch) => {
+  try {
+    dispatch(resetUser());
   } catch (error) {
     return { error: error?.response?.data };
   }

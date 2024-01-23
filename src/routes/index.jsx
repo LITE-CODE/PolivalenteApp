@@ -19,10 +19,10 @@ const Stack = createNativeStackNavigator();
 const Router = ({}) => {
 
   const user = useSelector((state) => state.user);
-  
+
   return (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName={user ? 'Main' : 'InitialPage'}>
+    <Stack.Navigator initialRouteName={user?.auth ? 'Main' : 'InitialPage'}>
       {
         routes && routes.map((screen, i) => (
           <Stack.Screen key={i} name={screen.name} component={screen} options={{ headerShown: false }}/>

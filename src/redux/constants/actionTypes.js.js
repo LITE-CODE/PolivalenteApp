@@ -1,4 +1,5 @@
 export const SET_USER = 'SET_USER';
+export const RESET_USER = 'RESET_USER';
 export const SET_CLASS = 'SET_CLASS';
 export const SET_MENU = 'SET_MENU';
 export const SET_WARN = 'SET_WARN';
