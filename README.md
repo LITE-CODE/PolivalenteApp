@@ -28,5 +28,4 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para m
 
 ## Autores
 
-Nome do Autor 1 - GitHub
-Nome do Autor 2 - GitHub
+- @odutra
