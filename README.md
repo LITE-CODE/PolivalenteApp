@@ -28,4 +28,4 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para m
 
 ## Autores
 
-- @odutra
+[@odutra](https://github.com/DARKnx)
